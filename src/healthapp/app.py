@@ -1,6 +1,7 @@
 """
 Health Application to detect chronic conditions with machine learning for decision making and pose detection
 """
+from ast import Try
 import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN, CENTER
@@ -57,7 +58,24 @@ class HealthApp(toga.App):
         self.main_window.show()
 
     def analyse_gait_handler(self, widget):
-        #add logic
+        
+
+        import requests, os
+        # TODO: Get a video/file from device ???
+        f = open("C:\\Users\\Jack\\Desktop\\tm\\test.mp4", 'rb')
+        try:
+            response = requests.post('http://127.0.0.1:1234/gait_analysis', data=f.read(os.path.getsize('C:\\Users\\Jack\\Desktop\\tm\\test.mp4')))
+            if(response.status_code == 200):
+                print(response.content)
+                #Handle results here...
+            else:
+                raise requests.exceptions.ConnectionError("Status code was not 200, instead received: " + str(response.status_code) + " (" + response.content + ")")
+        except requests.exceptions.ConnectionError as e:
+            print("Failed to connect to server.")
+            print(e)
+        finally:
+            f.close()
+
         print("Analyse Gait button pressed!")
 
     def physical_handler(self, widget):
