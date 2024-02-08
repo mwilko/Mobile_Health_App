@@ -2,6 +2,11 @@ import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN, CENTER
 
+#-------------------------------------------------------------------------------------------------------#
+# NOT USED YET / UNSURE IF .PY FILE CAN BE USED AS A CLASS AND USED IN THE MAIN APP.PY FILE
+#-------------------------------------------------------------------------------------------------------#
+
+
 class ChoiceMenu(toga.App):
     def startup(self):
         choice_box = toga.Box(style=Pack(direction=COLUMN, padding=20))
