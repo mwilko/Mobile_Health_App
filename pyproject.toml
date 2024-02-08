@@ -1,7 +1,7 @@
 # This project was generated with 0.3.16 using template: https://github.com/beeware/briefcase-template@v0.3.16
 [tool.briefcase]
 project_name = "Health App"
-bundle = "com.example"
+bundle = "org.lincoln"
 version = "0.0.1"
 url = "https://example.com/healthapp"
 license = "BSD license"
@@ -22,6 +22,8 @@ test_sources = [
 ]
 
 requires = [
+    "numpy",
+    "pandas"
 ]
 test_requires = [
     "pytest",
@@ -30,13 +32,13 @@ test_requires = [
 [tool.briefcase.app.healthapp.macOS]
 universal_build = true
 requires = [
-    "toga-cocoa~=0.4.0",
+    "toga-cocoa~=0.4.2",
     "std-nslog~=1.0.0"
 ]
 
 [tool.briefcase.app.healthapp.linux]
 requires = [
-    "toga-gtk~=0.4.0",
+    "toga-gtk~=0.4.2",
 ]
 
 [tool.briefcase.app.healthapp.linux.system.debian]
@@ -150,24 +152,26 @@ flatpak_sdk = "org.gnome.Sdk"
 
 [tool.briefcase.app.healthapp.windows]
 requires = [
-    "toga-winforms~=0.4.0",
+    "toga-winforms~=0.4.2",
 ]
 
 # Mobile deployments
 [tool.briefcase.app.healthapp.iOS]
 requires = [
-    "toga-iOS~=0.4.0",
+    "toga-iOS~=0.4.2",
     "std-nslog~=1.0.0"
 ]
+permission.camera = true
 
 [tool.briefcase.app.healthapp.android]
 requires = [
-    "toga-android~=0.4.0"
+    "toga-android~=0.4.2"
 ]
+permission.camera = true
 
 # Web deployments
 [tool.briefcase.app.healthapp.web]
 requires = [
-    "toga-web~=0.4.0",
+    "toga-web~=0.4.2",
 ]
 style_framework = "Shoelace v2.3"
