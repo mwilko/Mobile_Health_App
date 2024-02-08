@@ -30,12 +30,13 @@ test_requires = [
 ]
 
 [tool.briefcase.app.healthapp.macOS]
-universal_build = true
+universal_build = false
 requires = [
     "toga-cocoa~=0.4.2",
     "std-nslog~=1.0.0"
 ]
-info.camera = "You can use the camera to take a photo of yourself for gait/pose analysis."
+entitlement."com.apple.security.device.camera" = true
+info."NSCameraUsageDescription" = "You can use the camera to take a photo of yourself for gait/pose analysis."
 
 [tool.briefcase.app.healthapp.linux]
 requires = [
