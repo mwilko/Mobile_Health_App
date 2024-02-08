@@ -108,10 +108,9 @@ class ChoiceMenu:
 #-------------------------------------------------------------------------------------------------------#
 
 class AnalyseGait():
-    print("AnalyseGait class created")
     def __init__(self, main_window, app):
-        # store app in a variable
         self.app = app 
+        self.main_window = main_window
 
         # Create the main container
         main_container = toga.Box(style=Pack(direction=COLUMN))
@@ -127,6 +126,11 @@ class AnalyseGait():
 
         choice_box.add(analyse_gait_button)
 
+        # add choice_box to the main container
+        main_container.add(choice_box)
+
+        # set the main container as the content of the main window
+        self.main_window.content = main_container
 
     async def analyse_gait_handler(self, widget):
         # Here to make sure numpy gets added (think of it as a little test)
@@ -150,7 +154,6 @@ class AnalyseGait():
 #-------------------------------------------------------------------------------------------------------#
 
 class Physical():
-    print("Physical class created")
     def __init__(self, main_window, app):  # accept a main_window argument
         self.main_window = main_window 
         self.app = app
@@ -164,6 +167,13 @@ class Physical():
         # button for physical analysis
         physical_button = toga.Button('Physical', on_press=self.physical_handler, style=Pack(padding=10))
 
+        main_box.add(physical_button)
+
+        # add main_box to the main container
+        main_container.add(main_box)
+
+        # set the main container as the content of the main window
+        self.main_window.content = main_container
 
     def physical_handler(self, widget):
         #add logic
@@ -173,7 +183,6 @@ class Physical():
 #-------------------------------------------------------------------------------------------------------#
 
 class Behavioural():
-    print("Behavioural class created")
     def __init__(self, main_window, app):  # accept a main_window argument
         self.main_window = main_window
         self.app = app
@@ -186,6 +195,14 @@ class Behavioural():
 
         # button for behavioural analysis
         behavioural_button = toga.Button('Behavioural', on_press=self.behavioural_handler, style=Pack(padding=10))
+
+        main_box.add(behavioural_button)
+
+        # add main_box to the main container
+        main_container.add(main_box)
+
+        # set the main container as the content of the main window
+        self.main_window.content = main_container
 
     def behavioural_handler(self, widget):
         #add logic
