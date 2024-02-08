@@ -1,12 +1,24 @@
 """
 Health Application to detect chronic conditions with machine learning for decision making and pose detection
 """
+#-------------------------------------------------------------------------------------------------------#
+
+# base imported modules
 from os import mkdir
 import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN, CENTER
 
+# import the Machine Learning model
+import numpy as np
+import pandas as pd
 
+# import the Image Processing library
+# import torchvision as tv # unsure if this lib works, not tested
+
+#-------------------------------------------------------------------------------------------------------#
+
+# class for start menu of the app
 class HealthApp(toga.App):
 
     def startup(self):
@@ -35,11 +47,35 @@ class HealthApp(toga.App):
         # add main_box to the main container
         main_container.add(main_box)
 
+        # set the main container as the content of the main window
+        self.main_window.content = main_container
+
+        # Show the main window
+        self.main_window.show()
+
+    def start_button_handler(self, widget):
+        # add logic for start button
+        print("Start button pressed!")
+        # pass self as the app instance to the ChoiceMenu class
+        ChoiceMenu(self.main_window, self)
+
+#-------------------------------------------------------------------------------------------------------#
+
+# ChoiceMenu class for the choice menu
+class ChoiceMenu:
+    def __init__(self, main_window, app):
+        # store app and main_window in a variable
+        self.app = app 
+        self.main_window = main_window  # store main_window
+
         # Choice box for additional content
         choice_box = toga.Box(style=Pack(padding=20))
 
+        # Create the main container
+        main_container = toga.Box(style=Pack(direction=COLUMN))
+
         # button for choices
-        analyse_gait_button = toga.Button('Analyse Gait', on_press=self.analyse_gait_handler, style=Pack(padding=10))
+        analyse_gait_button = toga.Button('Analyse Gait', on_press=self.gait_analysis_handler, style=Pack(padding=10))
         physical_button = toga.Button('Physical', on_press=self.physical_handler, style=Pack(padding=10))
         behavioural_button = toga.Button('Behavioural', on_press=self.behavioural_handler, style=Pack(padding=10))
 
@@ -53,13 +89,50 @@ class HealthApp(toga.App):
 
         # set the main container as the content of the main window
         self.main_window.content = main_container
+    
+    # buttons to select the choice, takes the user to the respective page
+    def gait_analysis_handler(self, widget):
+        #add logic
+        print("Gait Analysis button pressed!")
+        AnalyseGait(self.main_window, self.app)
 
-        # Show the main window
-        self.main_window.show()
+    def physical_handler(self, widget):
+        print("Physical button pressed!")
+        Physical(self.main_window, self.app) 
+
+    def behavioural_handler(self, widget):
+        print("Behavioural button pressed!")
+        Behavioural(self.main_window, self.app)
+
+
+#-------------------------------------------------------------------------------------------------------#
+
+class AnalyseGait():
+    def __init__(self, main_window, app):
+        self.app = app 
+        self.main_window = main_window
+
+        # Create the main container
+        main_container = toga.Box(style=Pack(direction=COLUMN))
+
+        # Main box for the initial content
+        main_box = toga.Box(style=Pack(padding=20))
+
+        # Choice box for additional content
+        choice_box = toga.Box(style=Pack(padding=20))
+    
+        # button for gait analysis
+        analyse_gait_button = toga.Button('Analyse Gait', on_press=self.analyse_gait_handler, style=Pack(padding=10))
+
+        choice_box.add(analyse_gait_button)
+
+        # add choice_box to the main container
+        main_container.add(choice_box)
+
+        # set the main container as the content of the main window
+        self.main_window.content = main_container
 
     async def analyse_gait_handler(self, widget):
-        import numpy as np
-
         # Here to make sure numpy gets added (think of it as a little test)
         n = np.array([1,2,3])
         print(n)
@@ -77,17 +150,66 @@ class HealthApp(toga.App):
         else:
             print("No permission for photo.")
 
+
+#-------------------------------------------------------------------------------------------------------#
+
+class Physical():
+    def __init__(self, main_window, app):  # accept a main_window argument
+        self.main_window = main_window 
+        self.app = app
+
+        # Create the main container
+        main_container = toga.Box(style=Pack(direction=COLUMN))
+
+        # Main box for the initial content
+        main_box = toga.Box(style=Pack(padding=20))
+
+        # button for physical analysis
+        physical_button = toga.Button('Physical', on_press=self.physical_handler, style=Pack(padding=10))
+
+        main_box.add(physical_button)
+
+        # add main_box to the main container
+        main_container.add(main_box)
+
+        # set the main container as the content of the main window
+        self.main_window.content = main_container
+
     def physical_handler(self, widget):
         #add logic
         print("Physical button pressed!")
 
+
+#-------------------------------------------------------------------------------------------------------#
+
+class Behavioural():
+    def __init__(self, main_window, app):  # accept a main_window argument
+        self.main_window = main_window
+        self.app = app
+
+        # Create the main container
+        main_container = toga.Box(style=Pack(direction=COLUMN))
+
+        # Main box for the initial content
+        main_box = toga.Box(style=Pack(padding=20))
+
+        # button for behavioural analysis
+        behavioural_button = toga.Button('Behavioural', on_press=self.behavioural_handler, style=Pack(padding=10))
+
+        main_box.add(behavioural_button)
+
+        # add main_box to the main container
+        main_container.add(main_box)
+
+        # set the main container as the content of the main window
+        self.main_window.content = main_container
+
     def behavioural_handler(self, widget):
         #add logic
         print("Behavioural button pressed!")
+    
 
-    def start_button_handler(self, widget):
-        # add logic for start button
-        print("Start button pressed!")
+#-------------------------------------------------------------------------------------------------------#
 
 def main():
     return HealthApp()
