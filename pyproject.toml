@@ -35,6 +35,7 @@ requires = [
     "toga-cocoa~=0.4.2",
     "std-nslog~=1.0.0"
 ]
+info.camera = "You can use the camera to take a photo of yourself for gait/pose analysis."
 
 [tool.briefcase.app.healthapp.linux]
 requires = [
@@ -161,7 +162,7 @@ requires = [
     "toga-iOS~=0.4.2",
     "std-nslog~=1.0.0"
 ]
-permission.camera = true
+info.camera = "You can use the camera to take a photo of yourself for gait/pose analysis."
 
 [tool.briefcase.app.healthapp.android]
 requires = [
