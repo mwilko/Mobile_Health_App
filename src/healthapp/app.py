@@ -4,7 +4,7 @@ Health Application to detect chronic conditions with machine learning for decisi
 #-------------------------------------------------------------------------------------------------------#
 
 # base imported modules
-from os import mkdir
+from os import mkdir, path
 import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN, CENTER
@@ -21,9 +21,16 @@ import pandas as pd
 # class for start menu of the app
 class HealthApp(toga.App):
 
-    def startup(self):
+    def startup(self, main_window=None):
+        # Some initial data saving.
+        if not path.exists(str(self.paths.data)):
+            mkdir(str(self.paths.data))
+
         # Create the main window
-        self.main_window = toga.MainWindow(title=self.formal_name)
+        if main_window is None:
+            self.main_window = toga.MainWindow(title=self.formal_name)
+        else:
+            self.main_window = main_window
         
         # Create the main container
         main_container = toga.Box(style=Pack(direction=COLUMN))
@@ -134,7 +141,7 @@ class ChoiceMenu:
     def back_handler(self, widget):
         print("Back button pressed!")
         # call the startup method of the app instance
-        self.app.startup()
+        self.app.startup(self.main_window)
 #-------------------------------------------------------------------------------------------------------#
 
 class AnalyseGait():
@@ -175,13 +182,14 @@ class AnalyseGait():
         # Note this doesnt return on iOS/macOS yet, fully working on android.
         if await self.app.camera.request_permission():
             photo = await self.app.camera.take_photo()
-            # make dir if not exist (does not exist by default on android unconfirmed on ios)
-            # mkdir(str(self.paths.data))
-            file = str(self.app.paths.data) + "/paths.png"
-            print("Saved picture to: " + file)
+            if photo is None:
+                # User cancelled.
+                return
+            file = str(self.app.paths.data) + "/picture.png"
             photo.save(file)
+            self.main_window.info_dialog("Success!", "Photo has been saved to: " + file)
         else:
-            print("No permission for photo.")
+            self.main_window.info_dialog("Oh no!", "You have not granted permission to take photos")
 
     def back_handler(self, widget):
         print("Back button pressed!")
