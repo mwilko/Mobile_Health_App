@@ -76,13 +76,24 @@ class ChoiceMenu:
 
         # button for choices
         analyse_gait_button = toga.Button('Analyse Gait', on_press=self.gait_analysis_handler, style=Pack(padding=10))
-        physical_button = toga.Button('Physical', on_press=self.physical_handler, style=Pack(padding=10))
-        behavioural_button = toga.Button('Behavioural', on_press=self.behavioural_handler, style=Pack(padding=10))
+        personal_details_button = toga.Button('Personal Details', on_press=self.personal_details_handler, style=Pack(padding=10))
+        sleep_button = toga.Button('Sleep', on_press=self.sleep_handler, style=Pack(padding=10))
+        lifestyle_button = toga.Button('Lifestyle', on_press=self.lifestyle_handler, style=Pack(padding=10))
+        cognition_button = toga.Button('Cognition', on_press=self.cognition_handler, style=Pack(padding=10))
+        heart_rate_button = toga.Button('Heart Rate', on_press=self.heart_rate_handler, style=Pack(padding=10))
+        nutrition_button = toga.Button('Nutrition', on_press=self.nutrition_handler, style=Pack(padding=10))
+        #return to main menu with back button
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=10)) 
 
         # add buttons to the choice box
         choice_box.add(analyse_gait_button)
-        choice_box.add(physical_button)
-        choice_box.add(behavioural_button)
+        choice_box.add(personal_details_button)
+        choice_box.add(sleep_button)
+        choice_box.add(lifestyle_button)
+        choice_box.add(cognition_button)
+        choice_box.add(heart_rate_button)
+        choice_box.add(nutrition_button)
+        choice_box.add(back_button)
 
         # add choice_box to the main container
         main_container.add(choice_box)
@@ -96,15 +107,34 @@ class ChoiceMenu:
         print("Gait Analysis button pressed!")
         AnalyseGait(self.main_window, self.app)
 
-    def physical_handler(self, widget):
-        print("Physical button pressed!")
-        Physical(self.main_window, self.app) 
+    def personal_details_handler(self, widget):
+        print("Personal Details button pressed!")
+        PersonalDetails(self.main_window, self.app) 
 
-    def behavioural_handler(self, widget):
-        print("Behavioural button pressed!")
-        Behavioural(self.main_window, self.app)
+    def sleep_handler(self, widget):
+        print("Sleep button pressed!")
+        Sleep(self.main_window, self.app)
 
+    def lifestyle_handler(self, widget):
+        print("Lifestyle button pressed!")
+        Lifestyle(self.main_window, self.app)
 
+    def cognition_handler(self, widget):
+        print("Cognition button pressed!")
+        Cognition(self.main_window, self.app)
+
+    def heart_rate_handler(self, widget):
+        print("Heart Rate button pressed!")
+        HeartRate(self.main_window, self.app)
+
+    def nutrition_handler(self, widget):
+        print("Nutrition button pressed!")
+        Nutrition(self.main_window, self.app)
+
+    def back_handler(self, widget):
+        print("Back button pressed!")
+        # call the startup method of the app instance
+        self.app.startup()
 #-------------------------------------------------------------------------------------------------------#
 
 class AnalyseGait():
@@ -123,21 +153,24 @@ class AnalyseGait():
     
         # button for gait analysis
         analyse_gait_button = toga.Button('Analyse Gait', on_press=self.analyse_gait_handler, style=Pack(padding=10))
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=10))
 
-        choice_box.add(analyse_gait_button)
+        main_box.add(analyse_gait_button)
+        main_box.add(back_button)
 
         # add choice_box to the main container
+        main_container.add(main_box)
         main_container.add(choice_box)
 
         # set the main container as the content of the main window
         self.main_window.content = main_container
 
     async def analyse_gait_handler(self, widget):
+        print("Analyse Gait button pressed!")
+
         # Here to make sure numpy gets added (think of it as a little test)
         n = np.array([1,2,3])
         print(n)
-
-        print("Analyse Gait button pressed!")
 
         # Note this doesnt return on iOS/macOS yet, fully working on android.
         if await self.app.camera.request_permission():
@@ -150,10 +183,15 @@ class AnalyseGait():
         else:
             print("No permission for photo.")
 
+    def back_handler(self, widget):
+        print("Back button pressed!")
+        # pass self as the app instance to the ChoiceMenu class
+        ChoiceMenu(self.main_window, self.app)
+
 
 #-------------------------------------------------------------------------------------------------------#
 
-class Physical():
+class PersonalDetails():
     def __init__(self, main_window, app):  # accept a main_window argument
         self.main_window = main_window 
         self.app = app
@@ -163,26 +201,34 @@ class Physical():
 
         # Main box for the initial content
         main_box = toga.Box(style=Pack(padding=20))
+        choice_box = toga.Box(style=Pack(padding=20))
 
         # button for physical analysis
-        physical_button = toga.Button('Physical', on_press=self.physical_handler, style=Pack(padding=10))
+        pd_button = toga.Button('Personal Details', on_press=self.pd_class_handler, style=Pack(padding=10))
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=10))
 
-        main_box.add(physical_button)
+        main_box.add(pd_button)
+        main_box.add(back_button)
 
         # add main_box to the main container
         main_container.add(main_box)
+        main_container.add(choice_box)
 
         # set the main container as the content of the main window
         self.main_window.content = main_container
 
-    def physical_handler(self, widget):
+    def pd_class_handler(self, widget):
         #add logic
-        print("Physical button pressed!")
+        print("Personal Details button pressed!")
 
+    def back_handler(self, widget):
+        print("Back button pressed!")
+        # pass self as the app instance to the ChoiceMenu class
+        ChoiceMenu(self.main_window, self.app)
 
 #-------------------------------------------------------------------------------------------------------#
 
-class Behavioural():
+class Sleep():
     def __init__(self, main_window, app):  # accept a main_window argument
         self.main_window = main_window
         self.app = app
@@ -192,22 +238,178 @@ class Behavioural():
 
         # Main box for the initial content
         main_box = toga.Box(style=Pack(padding=20))
+        choice_box = toga.Box(style=Pack(padding=20))
 
         # button for behavioural analysis
-        behavioural_button = toga.Button('Behavioural', on_press=self.behavioural_handler, style=Pack(padding=10))
+        s_button = toga.Button('Sleep', on_press=self.s_class_handler, style=Pack(padding=10))
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=10))
 
-        main_box.add(behavioural_button)
+        main_box.add(s_button)
+        main_box.add(back_button)
 
         # add main_box to the main container
         main_container.add(main_box)
+        main_container.add(choice_box)
 
         # set the main container as the content of the main window
         self.main_window.content = main_container
 
-    def behavioural_handler(self, widget):
+    def s_class_handler(self, widget):
         #add logic
-        print("Behavioural button pressed!")
-    
+        print("Sleep button pressed!")
+
+    def back_handler(self, widget):
+        print("Back button pressed!")
+        # pass self as the app instance to the ChoiceMenu class
+        ChoiceMenu(self.main_window, self.app)  
+
+#-------------------------------------------------------------------------------------------------------#
+
+class Lifestyle():
+    def __init__(self, main_window, app):  # accept a main_window argument
+        self.main_window = main_window
+        self.app = app
+
+        # Create the main container
+        main_container = toga.Box(style=Pack(direction=COLUMN))
+
+        # Main box for the initial content
+        main_box = toga.Box(style=Pack(padding=20))
+        choice_box = toga.Box(style=Pack(padding=20))
+
+        # button for behavioural analysis
+        ls_button = toga.Button('Lifestyle', on_press=self.ls_class_handler, style=Pack(padding=10))
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=10))
+
+        main_box.add(ls_button)
+        main_box.add(back_button)
+
+        # add main_box to the main container
+        main_container.add(main_box)
+        main_container.add(choice_box)
+
+        # set the main container as the content of the main window
+        self.main_window.content = main_container
+
+    def ls_class_handler(self, widget):
+        #add logic
+        print("Lifestyle button pressed!")
+
+    def back_handler(self, widget):
+        print("Back button pressed!")
+        # pass self as the app instance to the ChoiceMenu class
+        ChoiceMenu(self.main_window, self.app)
+
+#-------------------------------------------------------------------------------------------------------#
+        
+class Cognition():
+    def __init__(self, main_window, app):  # accept a main_window argument
+        self.main_window = main_window
+        self.app = app
+
+        # Create the main container
+        main_container = toga.Box(style=Pack(direction=COLUMN))
+
+        # Main box for the initial content
+        main_box = toga.Box(style=Pack(padding=20))
+        choice_box = toga.Box(style=Pack(padding=20))
+
+        # button for behavioural analysis
+        c_button = toga.Button('Cognition', on_press=self.c_class_handler, style=Pack(padding=10))
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=10))
+
+        main_box.add(c_button)
+        main_box.add(back_button)
+
+        # add main_box to the main container
+        main_container.add(main_box)
+        main_container.add(choice_box)
+
+        # set the main container as the content of the main window
+        self.main_window.content = main_container
+
+    def c_class_handler(self, widget):
+        #add logic
+        print("Cognitive button pressed!")
+
+    def back_handler(self, widget):
+        print("Back button pressed!")
+        # pass self as the app instance to the ChoiceMenu class
+        ChoiceMenu(self.main_window, self.app)
+
+#-------------------------------------------------------------------------------------------------------#
+        
+class HeartRate():
+    def __init__(self, main_window, app):  # accept a main_window argument
+        self.main_window = main_window
+        self.app = app
+
+        # Create the main container
+        main_container = toga.Box(style=Pack(direction=COLUMN))
+
+        # Main box + choice box for the initial content
+        main_box = toga.Box(style=Pack(padding=20))
+        choice_box = toga.Box(style=Pack(padding=20))
+
+        # button for behavioural analysis
+        hr_button = toga.Button('Heart Rate', on_press=self.hr_class_handler, style=Pack(padding=10))
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=10))
+
+        main_box.add(hr_button)
+        main_box.add(back_button)
+
+        # add main_box to the main container
+        main_container.add(main_box)
+        main_container.add(choice_box)
+
+        # set the main container as the content of the main window
+        self.main_window.content = main_container
+
+    def hr_class_handler(self, widget):
+        #add logic
+        print("Heart Rate button pressed!")
+
+    def back_handler(self, widget):
+        print("Back button pressed!")
+        # pass self as the app instance to the ChoiceMenu class
+        ChoiceMenu(self.main_window, self.app)
+
+#-------------------------------------------------------------------------------------------------------#
+
+class Nutrition():
+    def __init__(self, main_window, app):  # accept a main_window argument
+        self.main_window = main_window
+        self.app = app
+
+        # Create the main container
+        main_container = toga.Box(style=Pack(direction=COLUMN))
+
+        # Main box for the initial content
+        main_box = toga.Box(style=Pack(padding=20))
+        choice_box = toga.Box(style=Pack(padding=20))
+
+        # button for behavioural analysis
+        n_button = toga.Button('Nutrition', on_press=self.n_class_handler, style=Pack(padding=10))
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=10))
+
+        main_box.add(n_button)
+        main_box.add(back_button)
+
+        # add main_box to the main container
+        main_container.add(main_box)
+        main_container.add(choice_box)
+
+        # set the main container as the content of the main window
+        self.main_window.content = main_container
+
+    def n_class_handler(self, widget):
+        #add logic
+        print("Nutrition button pressed!")
+
+    def back_handler(self, widget):
+        print("Back button pressed!")
+        # pass self as the app instance to the ChoiceMenu class
+        ChoiceMenu(self.main_window, self.app)
 
 #-------------------------------------------------------------------------------------------------------#
 
