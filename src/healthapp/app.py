@@ -176,7 +176,7 @@ class AnalyseGait():
         if await self.app.camera.request_permission():
             photo = await self.app.camera.take_photo()
             # make dir if not exist (does not exist by default on android unconfirmed on ios)
-            mkdir(str(self.paths.data))
+            # mkdir(str(self.paths.data))
             file = str(self.app.paths.data) + "/paths.png"
             print("Saved picture to: " + file)
             photo.save(file)
