@@ -418,8 +418,3 @@ class Nutrition():
         print("Back button pressed!")
         # pass self as the app instance to the ChoiceMenu class
         ChoiceMenu(self.main_window, self.app)
-
-#-------------------------------------------------------------------------------------------------------#
-
-def main():
-    return HealthApp()

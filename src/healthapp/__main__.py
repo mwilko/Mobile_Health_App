@@ -1,4 +1,4 @@
-from healthapp.app import main
+from healthapp.app import HealthApp
 
 if __name__ == '__main__':
-    main().main_loop()
+    HealthApp().main_loop()
