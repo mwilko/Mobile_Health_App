@@ -160,7 +160,9 @@ requires = [
 # Mobile deployments
 [tool.briefcase.app.healthapp.iOS]
 requires = [
-    "toga-iOS~=0.4.2",
+    # "toga-iOS~=0.4.2", 0.4.2 contains a bug that prevents the app from using camera.
+    "git+https://github.com/JaxkDev/toga.git@patch-1#subdirectory=core",
+    "git+https://github.com/JaxkDev/toga.git@patch-1#subdirectory=iOS",
     "std-nslog~=1.0.0"
 ]
 info."NSCameraUsageDescription" = "You can use the camera to take a photo of yourself for gait/pose analysis."
