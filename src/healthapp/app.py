@@ -534,10 +534,6 @@ class Nutrition():
         nutrition = widget.text
         print(f"Nutrition: {nutrition}")
 
-    def submit_handler(self, widget):
-        #add logic
-        print("Submit button pressed!")
-
     def back_handler(self, widget):
         print("Back button pressed!")
         # pass self as the app instance to the ChoiceMenu class
