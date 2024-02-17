@@ -23,12 +23,18 @@ test_sources = [
 
 requires = [
     "numpy",
-    "pandas"
+    "pandas",
+    "tensorflow",
+
+    "tensorflow_hub",
+    "matplotlib",
+    "opencv-python",
+    "scikit-learn",
+    "tqdm"
 ]
 test_requires = [
     "pytest",
 ]
-
 [tool.briefcase.app.healthapp.macOS]
 universal_build = false
 requires = [

@@ -14,7 +14,25 @@ import numpy as np
 import pandas as pd
 
 # import the Image Processing library
-# import torchvision as tv # unsure if this lib works, not tested
+import tensorflow as tf #imported with Chaquopy, only avaliable with python3.8 config
+
+import csv
+import cv2
+import itertools
+import os
+import sys
+import tempfile
+import tqdm
+
+from matplotlib import pyplot as plt
+from matplotlib.collections import LineCollection
+
+import tensorflow_hub as hub
+from tensorflow import keras
+
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+
 
 #-------------------------------------------------------------------------------------------------------#
 
@@ -181,6 +199,13 @@ class AnalyseGait():
     async def analyse_gait_handler(self, widget):
         print("Analyse Gait button pressed!")
 
+        # Check the versions of the libraries (error testing)
+        print("TensorFlow version:", tf.__version__)
+        print("OpenCV version:", cv2.__version__)
+        print("TQDM version:", tqdm.__version__)
+        print("Keras version:", keras.__version__)
+        print("TensorFlow Hub version:", hub.__version__)
+        
         # Here to make sure numpy gets added (think of it as a little test)
         n = np.array([1,2,3])
         print(n)
