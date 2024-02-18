@@ -203,7 +203,7 @@ class AnalyseGait():
         print("TensorFlow version:", tf.__version__)
         print("OpenCV version:", cv2.__version__)
         print("TQDM version:", tqdm.__version__)
-        print("Keras version:", keras.__version__)
+        print("Keras package:", keras.__package__)
         print("TensorFlow Hub version:", hub.__version__)
         
         # Here to make sure numpy gets added (think of it as a little test)
