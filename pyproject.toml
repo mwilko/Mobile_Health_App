@@ -24,13 +24,8 @@ test_sources = [
 requires = [
     "numpy",
     "pandas",
-    "tensorflow",
 
-    "tensorflow_hub",
-    "matplotlib",
-    "opencv-python",
-    "scikit-learn",
-    "tqdm"
+    "matplotlib==3.6.0",
 ]
 test_requires = [
     "pytest",
@@ -39,7 +34,13 @@ test_requires = [
 universal_build = false
 requires = [
     "toga-cocoa~=0.4.2",
-    "std-nslog~=1.0.0"
+    "std-nslog~=1.0.0",
+
+    "tensorflow",
+    "tensorflow_hub",
+    "opencv-python",
+    "scikit-learn",
+    "tqdm"
 ]
 entitlement."com.apple.security.device.camera" = true
 info."NSCameraUsageDescription" = "You can use the camera to take a photo of yourself for gait/pose analysis."
@@ -51,6 +52,12 @@ icon = "resources/macos/healthapp"
 [tool.briefcase.app.healthapp.windows]
 requires = [
     "toga-winforms~=0.4.2",
+
+    "tensorflow",
+    "tensorflow_hub",
+    "opencv-python",
+    "scikit-learn",
+    "tqdm"
 ]
 sources = [
     "resources/windows",
@@ -61,8 +68,8 @@ icon = "resources/windows/healthapp"
 [tool.briefcase.app.healthapp.iOS]
 requires = [
     # "toga-iOS~=0.4.2", 0.4.2 contains a bug that prevents the app from using camera.
-    "git+https://github.com/JaxkDev/toga.git@patch-1#subdirectory=core",
-    "git+https://github.com/JaxkDev/toga.git@patch-1#subdirectory=iOS",
+    "git+https://github.com/beeware/toga.git#subdirectory=core",
+    "git+https://github.com/beeware/toga.git#subdirectory=iOS",
     "std-nslog~=1.0.0"
 ]
 splash = "resources/ios/healthapp-splash"
@@ -74,7 +81,13 @@ sources = [
 
 [tool.briefcase.app.healthapp.android]
 requires = [
-    "toga-android~=0.4.2"
+    "toga-android~=0.4.2",
+
+    "tensorflow",
+    "tensorflow_hub",
+    "opencv-python",
+    "scikit-learn",
+    "tqdm"
 ]
 # splash = "resources/android/healthapp-splash" TODO, different splash screens for android
 icon = "resources/android/healthapp"
