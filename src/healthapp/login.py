@@ -59,21 +59,22 @@ class _SignupPage:
         header_box.add(title_label)
 
         # entry inputs
-        fname_entry = toga.TextInput("first_name", placeholder="First Name", style=Pack(padding=(10, 5)))
-        lname_entry = toga.TextInput("last_name", placeholder="Last Name", style=Pack(padding=(10, 15)))
+        fname_entry = toga.TextInput("first_name", placeholder="First Name", style=Pack(padding=(0, 15, 0)))
+        lname_entry = toga.TextInput("last_name", placeholder="Last Name", style=Pack(padding=(10, 15, 0)))
 
-        username_entry = toga.TextInput("username", placeholder="Username", style=Pack(padding=(10, 5)))
-        password_entry = toga.PasswordInput("password", placeholder="Password", style=Pack(padding=(10, 5)))
-        password_entry = toga.PasswordInput("cpassword", placeholder="Confirm Password", style=Pack(padding=(10, 5)))
+        username_entry = toga.TextInput("username", placeholder="Username", style=Pack(padding=(20, 15, 0)))
+        password_entry = toga.PasswordInput("password", placeholder="Password", style=Pack(padding=(10, 15, 0)))
+        cpassword_entry = toga.PasswordInput("cpassword", placeholder="Confirm Password", style=Pack(padding=(10, 15, 0)))
 
         # register button.
-        register_button = toga.Button('Register', on_press=self.registerButtonHandler, style=Pack(padding=20))
+        register_button = toga.Button('Register', on_press=self.registerButtonHandler, style=Pack(padding=(25, 15, 0)))
 
         # add components to the main box.
         main_box.add(fname_entry)
         main_box.add(lname_entry)
         main_box.add(username_entry)
         main_box.add(password_entry)
+        main_box.add(cpassword_entry)
         main_box.add(register_button)
 
         # add all boxes to container.
