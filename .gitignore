@@ -62,6 +62,4 @@ var/
 logs/
 /.vs
 /beeware-venv
-/venv
-/venv-3.10
-/venv-3.11
+/*venv*
