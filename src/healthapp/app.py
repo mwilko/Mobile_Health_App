@@ -4,35 +4,11 @@ Health Application to detect chronic conditions with machine learning for decisi
 #-------------------------------------------------------------------------------------------------------#
 
 # base imported modules
-from os import mkdir, path
 import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN, CENTER
 
-# import the Machine Learning model
-import numpy as np
-import pandas as pd
-
-# import the Image Processing library
-import tensorflow as tf #imported with Chaquopy, only avaliable with python3.8 config
-
-import csv
-import cv2
-import itertools
-import os
-import sys
-import tempfile
-import tqdm
-
-from matplotlib import pyplot as plt
-from matplotlib.collections import LineCollection
-
-import tensorflow_hub as hub
-from tensorflow import keras
-
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-
+from .login import getAuthPage
 
 #-------------------------------------------------------------------------------------------------------#
 
@@ -41,46 +17,29 @@ class HealthApp(toga.App):
 
     def startup(self, main_window=None):
         # Some initial data saving.
-        if not path.exists(str(self.paths.data)):
-            mkdir(str(self.paths.data))
+        self.paths.data.mkdir(parents=True, exist_ok=True)
 
         # Create the main window
         if main_window is None:
             self.main_window = toga.MainWindow(title=self.formal_name)
         else:
             self.main_window = main_window
-        
-        # Create the main container
-        main_container = toga.Box(style=Pack(direction=COLUMN))
 
-        # Main box for the initial content
-        header_box = toga.Box(style=Pack(direction = COLUMN, padding=20))
-        main_box = toga.Box(style=Pack(direction = COLUMN, padding=20))
-
-        # logo image
-        # logo_image_path = ""
-
-        # title label
-        title_label = toga.Label("Health Application", style=Pack(font_size=20, padding=(0, 10)))
-
-        # start button
-        start_button = toga.Button('Start', on_press=self.start_button_handler, style=Pack(padding=10))
-
-        # add components to the main box
-        header_box.add(title_label)
-        main_box.add(start_button)
-
-        # add main_box to the main container
-        for box in [header_box, main_box]:
-            main_container.add(box)
+        # Login/Signup
+        page = getAuthPage(self).getContent()
 
         # set the main container as the content of the main window
-        self.main_window.content = main_container
+        self.main_window.content = page
 
         # Show the main window
         self.main_window.show()
+    
+    def login_handler(self, user):
+        # TODO, Main menu here.
+        self.user = user # Holds all user info (name, username)
+        self.start_button_handler()
 
-    def start_button_handler(self, widget):
+    def start_button_handler(self):
         # add logic for start button
         print("Start button pressed!")
         # pass self as the app instance to the ChoiceMenu class
@@ -111,18 +70,18 @@ class ChoiceMenu:
         machine_learning_box.add(ml_label)
 
         # button for choices
-        analyse_gait_button = toga.Button('Analyse Gait', on_press=self.gait_analysis_handler, style=Pack(padding=2))
+
+        analyse_gait_button = toga.Button('Analyse Gait', on_press=self.gait_analysis_handler, style=Pack(padding=2), enabled=(toga.platform.current_platform.lower() != "ios"))
         personal_details_button = toga.Button('Personal Details', on_press=self.personal_details_handler, style=Pack(padding=2))
         sleep_button = toga.Button('Sleep', on_press=self.sleep_handler, style=Pack(padding=2))
         lifestyle_button = toga.Button('Lifestyle', on_press=self.lifestyle_handler, style=Pack(padding=2))
         cognition_button = toga.Button('Cognition', on_press=self.cognition_handler, style=Pack(padding=2))
         heart_rate_button = toga.Button('Heart Rate', on_press=self.heart_rate_handler, style=Pack(padding=2))
         nutrition_button = toga.Button('Nutrition', on_press=self.nutrition_handler, style=Pack(padding=2))
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=2)) #return to main menu with back button
-
+        
         for button in [analyse_gait_button, personal_details_button, sleep_button,
                         lifestyle_button, cognition_button, heart_rate_button, 
-                        nutrition_button, back_button]:
+                        nutrition_button]:
             main_box.add(button)
 
         # add boxes to the main container
@@ -162,10 +121,6 @@ class ChoiceMenu:
         print("Nutrition button pressed!")
         Nutrition(self.main_window, self.app)
 
-    def back_handler(self, widget):
-        print("Back button pressed!")
-        # call the startup method of the app instance
-        self.app.startup(self.main_window)
 #-------------------------------------------------------------------------------------------------------#
 
 class AnalyseGait():
@@ -200,11 +155,11 @@ class AnalyseGait():
         print("Analyse Gait button pressed!")
 
         # Check the versions of the libraries (error testing)
-        print("TensorFlow version:", tf.__version__)
-        print("OpenCV version:", cv2.__version__)
-        print("TQDM version:", tqdm.__version__)
-        print("Keras package:", keras.__package__)
-        print("TensorFlow Hub version:", hub.__version__)
+        #print("TensorFlow version:", tf.__version__)
+        #print("OpenCV version:", cv2.__version__)
+        #print("TQDM version:", tqdm.__version__)
+        #print("Keras package:", keras.__package__)
+        #print("TensorFlow Hub version:", hub.__version__)
         
         # Here to make sure numpy gets added (think of it as a little test)
         n = np.array([1,2,3])

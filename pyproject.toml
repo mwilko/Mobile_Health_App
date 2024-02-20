@@ -13,6 +13,7 @@ formal_name = "Health App"
 description = "Health Application to detect chronic conditions with machine learning for decision making and pose detection"
 long_description = """More details about the app should go here.
 """
+icon = "src/healthapp/resources/healthapp"
 splash_background_color = "#07185A"
 sources = [
     "src/healthapp",
@@ -45,10 +46,6 @@ requires = [
 ]
 entitlement."com.apple.security.device.camera" = true
 info."NSCameraUsageDescription" = "You can use the camera to take a photo of yourself for gait/pose analysis."
-sources = [
-    "resources/macos",
-]
-icon = "resources/macos/healthapp"
 
 [tool.briefcase.app.healthapp.windows]
 requires = [
@@ -60,10 +57,6 @@ requires = [
     "scikit-learn",
     "tqdm"
 ]
-sources = [
-    "resources/windows",
-]
-icon = "resources/windows/healthapp"
 
 # Mobile deployments
 [tool.briefcase.app.healthapp.iOS]
@@ -74,11 +67,7 @@ requires = [
     "std-nslog~=1.0.0"
 ]
 splash = "resources/ios/healthapp-splash"
-icon = "resources/ios/healthapp"
 info."NSCameraUsageDescription" = "You can use the camera to take a photo of yourself for gait/pose analysis."
-sources = [
-    "resources/ios",
-]
 
 [tool.briefcase.app.healthapp.android]
 requires = [
@@ -91,11 +80,7 @@ requires = [
     "tqdm"
 ]
 # splash = "resources/android/healthapp-splash" TODO, different splash screens for android
-icon = "resources/android/healthapp"
 permission.camera = true
-sources = [
-    "resources/android",
-]
 
 # Unsupported deployments
 [tool.briefcase.app.healthapp.web]
