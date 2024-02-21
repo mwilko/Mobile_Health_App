@@ -2,7 +2,8 @@ import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN
 from toga.validators import MinLength
-from datetime import date, datetime
+
+from healthapp.user import User
 
 LOGIN_FILE = "secure_auth"    # The file (&sub directory) to store user information
 
@@ -65,8 +66,8 @@ class _LoginPage:
         return main_container
     
     def loginButtonHandler(self, widget) -> None:
-        print("login button pressed")
-        self.app.login_handler(["real name", "username"])
+        # TODO: Verify password/username and load user.
+        self.app.login_handler(User("First Name", "Last Name", "username", 1))
 
 
 class _SignupPage:
@@ -120,7 +121,7 @@ class _SignupPage:
         
         # TODO Save.
 
-        self.app.login_handler(["real name", "username"])
+        self.app.login_handler(User(self.fname_entry.value, self.lname_entry.value, self.username_entry.value, 1 if self.sex_entry.value == "Male" else 0))
 
     def _checkConfirm(self, password: str):
         if password != self.password_entry.value:

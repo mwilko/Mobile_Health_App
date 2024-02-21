@@ -8,7 +8,8 @@ import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN, CENTER
 
-from .login import getAuthPage
+from healthapp.user import User
+from healthapp.login import getAuthPage
 
 #-------------------------------------------------------------------------------------------------------#
 
@@ -35,14 +36,11 @@ class HealthApp(toga.App):
         # Show the main window
         self.main_window.show()
     
-    def login_handler(self, user):
+    def login_handler(self, user: User):
         # TODO, Main menu here.
-        self.user = user # Holds all user info [first name, last name, username]
-        self.start_button_handler()
-
-    def start_button_handler(self):
-        # add logic for start button
-        print("Start button pressed!")
+        self.user = user # Holds all user info. (see User class for details)
+        print("User logged in: " + str(user))
+        
         # pass self as the app instance to the ChoiceMenu class
         ChoiceMenu(self.main_window, self)
 
