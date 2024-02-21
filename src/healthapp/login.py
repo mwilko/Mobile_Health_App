@@ -2,26 +2,29 @@ import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN
 from toga.validators import MinLength
+from hashlib import sha512
 
 from healthapp.user import User
 
-LOGIN_FILE = "secure_auth"    # The file (&sub directory) to store user information
+LOGIN_FILE = "secure_auth"     # The file (&sub directory) to store login information (username/password)
+USER_DATA_FILE = "secure_data" # The file (&sub directory) to store the user data
 
 USERNAME_REQUIREMENTS = {
-    "min_length": 6,          # Min length of username (<= max)
-    "max_length": 99,         # Max length of username (>= min)
-    "spaces_allowed": False   # False/True
+    "min_length": 6,           # Min length of username (<= max)
+    "max_length": 99,          # Max length of username (>= min)
+    "spaces_allowed": False    # False/True
 }
 
 PASSWORD_REQUIREMENTS = {
-    "min_length": 8,          # Min length of password (<= max)
-    "max_length": 99,         # Max length of password (>= min)
-    "spaces_allowed": False,  # False/True
-    "numbers_required": 0,    # Numbers required (0 for none required)
-    "special_required": 0     # Special characters (any non a-Z 0-9 characters) required (0 for none required)
+    "min_length": 8,           # Min length of password (<= max)
+    "max_length": 99,          # Max length of password (>= min)
+    "spaces_allowed": False,   # False/True
+    "numbers_required": 0,     # Numbers required (0 for none required)
+    "special_required": 0      # Special characters (any non a-Z 0-9 characters) required (0 for none required)
 }
 
 def getAuthPage(app: toga.App):
+    print(app.paths.data.joinpath(LOGIN_FILE).resolve())
     # If the user login file exists, we need to login not signup.
     if app.paths.data.joinpath(LOGIN_FILE).resolve().exists():
         return _LoginPage(app)
@@ -48,15 +51,15 @@ class _LoginPage:
         header_box.add(title_label)
 
         # entry inputs
-        username_entry = toga.TextInput("username", placeholder="Username", style=Pack(padding=(10, 5)))
-        password_entry = toga.PasswordInput("password", placeholder="Password", style=Pack(padding=(0, 5)))
+        self.username_entry = toga.TextInput("username", placeholder="Username", style=Pack(padding=(10, 5)), validators=[MinLength(USERNAME_REQUIREMENTS["min_length"], allow_empty=False)])
+        self.password_entry = toga.PasswordInput("password", placeholder="Password", style=Pack(padding=(0, 5)), validators=[MinLength(PASSWORD_REQUIREMENTS["min_length"], allow_empty=False)])
 
         # login button.
         login_button = toga.Button('Login', on_press=self.loginButtonHandler, style=Pack(padding=20))
 
         # add components to the main box.
-        main_box.add(username_entry)
-        main_box.add(password_entry)
+        main_box.add(self.username_entry)
+        main_box.add(self.password_entry)
         main_box.add(login_button)
 
         # add all boxes to container.
@@ -65,8 +68,22 @@ class _LoginPage:
 
         return main_container
     
-    def loginButtonHandler(self, widget) -> None:
-        # TODO: Verify password/username and load user.
+    def loginButtonHandler(self, _) -> None:
+        if not self.username_entry.is_valid or not self.password_entry.is_valid:
+            self.app.main_window.error_dialog("Error!", "Unable to login,\nPlease check details and try again.")
+            return
+
+        data = self.app.paths.data.joinpath(LOGIN_FILE).resolve().read_bytes()
+        data = data.decode("utf-8").splitlines()
+
+        username = sha512(self.username_entry.value.encode()).hexdigest()
+        password = sha512(self.password_entry.value.encode()).hexdigest()
+
+        if username != data[0] or password != data[1]:
+            self.app.main_window.error_dialog("Error!", "Unable to login, please check details and try again.")
+            return
+
+        # TODO: Load user information from file.
         self.app.login_handler(User("First Name", "Last Name", "username", 1))
 
 
@@ -118,8 +135,13 @@ class _SignupPage:
         if not self.username_entry.is_valid or not self.password_entry.is_valid or not self.cpassword_entry.is_valid:
             self.app.main_window.error_dialog("Error!", "Unable to register, please check information.")
             return
-        
-        # TODO Save.
+
+        # TODO Save user details such as first name etc.
+
+        # Save login information (hash secured)
+        username = sha512(self.username_entry.value.encode()).hexdigest()
+        password = sha512(self.password_entry.value.encode()).hexdigest()
+        self.app.paths.data.joinpath(LOGIN_FILE).resolve().write_bytes((username + "\n" + password).encode("utf-8"))
 
         self.app.login_handler(User(self.fname_entry.value, self.lname_entry.value, self.username_entry.value, 1 if self.sex_entry.value == "Male" else 0))
 
