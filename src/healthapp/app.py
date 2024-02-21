@@ -16,7 +16,8 @@ from .login import getAuthPage
 class HealthApp(toga.App):
 
     def startup(self, main_window=None):
-        # Some initial data saving.
+        # Create the apps data folder
+        # self.paths.data is the directory where we can read/write to and have it persist after reboot/update etc etc.
         self.paths.data.mkdir(parents=True, exist_ok=True)
 
         # Create the main window
@@ -36,7 +37,7 @@ class HealthApp(toga.App):
     
     def login_handler(self, user):
         # TODO, Main menu here.
-        self.user = user # Holds all user info (name, username)
+        self.user = user # Holds all user info [first name, last name, username]
         self.start_button_handler()
 
     def start_button_handler(self):
@@ -162,8 +163,8 @@ class AnalyseGait():
         #print("TensorFlow Hub version:", hub.__version__)
         
         # Here to make sure numpy gets added (think of it as a little test)
-        n = np.array([1,2,3])
-        print(n)
+        #n = np.array([1,2,3])
+        #print(n)
 
         # Note this doesnt return on iOS/macOS yet, fully working on android.
         if await self.app.camera.request_permission():
