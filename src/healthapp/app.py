@@ -48,7 +48,7 @@ class HealthApp(toga.App):
 
 # ChoiceMenu class for the choice menu
 class ChoiceMenu:
-    def __init__(self, main_window, app):
+    def __init__(self, main_window: toga.MainWindow, app: HealthApp):
         # store app and main_window in a variable
         self.app = app 
         self.main_window = main_window  # store main_window
@@ -64,8 +64,10 @@ class ChoiceMenu:
         main_container = toga.Box(style=Pack(direction=COLUMN))
 
         # Label for the choice menu
+        name_label = toga.Label(f"Welcome, {self.app.user.first} {self.app.user.last}", style=Pack(font_size=12, padding=(5, 10)))
         ml_label = toga.Label("Machine Learning Algorithm has no data", style=Pack(font_size=15, padding=(0, 10)))
 
+        machine_learning_box.add(name_label)
         machine_learning_box.add(ml_label)
 
         # button for choices
