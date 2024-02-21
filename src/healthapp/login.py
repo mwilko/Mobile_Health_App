@@ -2,6 +2,7 @@ import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN
 from toga.validators import MinLength
+from datetime import date, datetime
 
 LOGIN_FILE = "secure_auth"    # The file (&sub directory) to store user information
 
@@ -25,7 +26,7 @@ def getAuthPage(app: toga.App):
         return _LoginPage(app)
     else:
         return _SignupPage(app)
-    
+
 
 ## -- Private classes / functions -- ##
 
@@ -42,7 +43,7 @@ class _LoginPage:
         main_box = toga.Box(style=Pack(direction = COLUMN, padding=20))
 
         # title label
-        title_label = toga.Label("Health Application", style=Pack(font_size=20, padding=(20)))
+        title_label = toga.Label("Health App", style=Pack(font_size=20, padding=(20)))
         header_box.add(title_label)
 
         # entry inputs
@@ -80,12 +81,13 @@ class _SignupPage:
         main_box = toga.Box(style=Pack(direction = COLUMN, padding=20))
 
         # title label
-        title_label = toga.Label("Health Application", style=Pack(font_size=20, padding=(20)))
+        title_label = toga.Label("Health App", style=Pack(font_size=20, padding=(20)))
         header_box.add(title_label)
 
         # entry inputs
         self.fname_entry = toga.TextInput("first_name", placeholder="First Name", style=Pack(padding=(0, 15, 0)), validators=[MinLength(2, allow_empty=False)])
         self.lname_entry = toga.TextInput("last_name", placeholder="Last Name", style=Pack(padding=(10, 15, 0)), validators=[MinLength(2, allow_empty=False)])
+        self.sex_entry = toga.Selection("sex", items=["Male", "Female"], style=Pack(padding=(10, 15, 0)))
 
         self.username_entry = toga.TextInput("username", placeholder="Username", style=Pack(padding=(20, 15, 0)), validators=[self._validUsername])
         self.password_entry = toga.PasswordInput("password", placeholder="Password", style=Pack(padding=(10, 15, 0)), validators=[self._validPassword])
@@ -97,6 +99,7 @@ class _SignupPage:
         # add components to the main box.
         main_box.add(self.fname_entry)
         main_box.add(self.lname_entry)
+        main_box.add(self.sex_entry)
         main_box.add(self.username_entry)
         main_box.add(self.password_entry)
         main_box.add(self.cpassword_entry)
