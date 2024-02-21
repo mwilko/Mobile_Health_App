@@ -60,15 +60,7 @@ requires = [
 
 # Mobile deployments
 [tool.briefcase.app.healthapp.iOS]
-requires = [
-    # "toga-iOS~=0.4.2", 0.4.2 contains a bug that prevents the app from using camera.
-    "git+https://github.com/beeware/toga.git#subdirectory=core",
-    "git+https://github.com/beeware/toga.git#subdirectory=iOS",
-    "std-nslog~=1.0.0",
-    # "matplotlib==3.6.0" Python 3.10+ only
-]
-splash = "resources/ios/healthapp-splash"
-info."NSCameraUsageDescription" = "You can use the camera to take a photo of yourself for gait/pose analysis."
+supported=false
 
 [tool.briefcase.app.healthapp.android]
 requires = [
