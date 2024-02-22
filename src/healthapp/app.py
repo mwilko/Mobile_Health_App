@@ -26,9 +26,9 @@ class HealthApp(toga.App):
         else:
             self.main_window = main_window
 
-        # Login/Signup
-        from healthapp.login import getAuthPage
-        self.update_content(getAuthPage(self).getContent())
+        # Login/Register
+        from healthapp.login import showAuthPage
+        showAuthPage(self)
     
     def login_handler(self, user: User):
         self.user = user # Holds all user info. (see User class for details)

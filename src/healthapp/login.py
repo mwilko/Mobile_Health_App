@@ -24,13 +24,13 @@ PASSWORD_REQUIREMENTS = {
     "special_required": 0      # Special characters (any non a-Z 0-9 characters) required (0 for none required)
 }
 
-def getAuthPage(app: HealthApp):
+def showAuthPage(app: HealthApp):
     print(app.paths.data.joinpath(LOGIN_FILE).resolve())
     # If the user login file exists, we need to login not signup.
     if app.paths.data.joinpath(LOGIN_FILE).resolve().exists():
-        return _LoginPage(app)
+        _LoginPage(app)
     else:
-        return _SignupPage(app)
+        _RegisterPage(app)
 
 
 ## -- Private classes / functions -- ##
@@ -39,6 +39,7 @@ def getAuthPage(app: HealthApp):
 class _LoginPage:
     def __init__(self, app: HealthApp):
         self.app = app
+        self.app.update_content(self.getContent())
 
     def getContent(self) -> toga.Box:
 
@@ -98,12 +99,12 @@ class _LoginPage:
         self.app.login_handler(User("First Name", "Last Name", "username", 1))
 
 
-class _SignupPage:
+class _RegisterPage:
     def __init__(self, app: HealthApp):
         self.app = app
-    
-    def getContent(self) -> toga.Box:
+        self.app.update_content(self.getContent())
 
+    def getContent(self) -> toga.Box:
         main_container = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
 
         header_box = toga.Box(style=Pack(direction=COLUMN, padding=(20, 15)))
