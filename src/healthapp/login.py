@@ -41,32 +41,42 @@ class _LoginPage:
 
     def getContent(self) -> toga.Box:
 
-        main_container = toga.Box(style=Pack(direction=COLUMN))
+        content = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
 
-        header_box = toga.Box(style=Pack(direction = COLUMN, padding=20))
-        main_box = toga.Box(style=Pack(direction = COLUMN, padding=20))
+        header_box = toga.Box(style=Pack(direction=COLUMN, padding=(20, 15)))
+        
+        main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
+        main_box = toga.Box(style=Pack(direction=COLUMN, padding=(2, 2), background_color="#fbf5cc"))
 
         # title label
-        title_label = toga.Label("Health App", style=Pack(font_size=20, padding=(20)))
+        title_label = toga.Label("Health App", style=Pack(font_size=28, font_weight="bold", padding=(10, 5), color="black"))
         header_box.add(title_label)
 
         # entry inputs
-        self.username_entry = toga.TextInput("username", placeholder="Username", style=Pack(padding=(10, 5)), validators=[MinLength(USERNAME_REQUIREMENTS["min_length"], allow_empty=False)])
-        self.password_entry = toga.PasswordInput("password", placeholder="Password", style=Pack(padding=(0, 5)), validators=[MinLength(PASSWORD_REQUIREMENTS["min_length"], allow_empty=False)])
+        username_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 13), background_color="black"))
+        self.username_entry = toga.TextInput("username", placeholder="Username", style=Pack(padding=(2, 2, 2), background_color="#e2985f"), validators=[MinLength(USERNAME_REQUIREMENTS["min_length"], allow_empty=False)])
+        username_box.add(self.username_entry)
+        
+        password_box = toga.Box(style=Pack(direction=COLUMN, padding=(13, 13, 0), background_color="black"))
+        self.password_entry = toga.PasswordInput("password", placeholder="Password", style=Pack(padding=(2, 2, 2), background_color="#e2985f"), validators=[MinLength(PASSWORD_REQUIREMENTS["min_length"], allow_empty=False)])
+        password_box.add(self.password_entry)
 
         # login button.
-        login_button = toga.Button('Login', on_press=self.loginButtonHandler, style=Pack(padding=20))
+        login_button = toga.Button('Login', on_press=self.loginButtonHandler, style=Pack(padding=(5, 20, 20), background_color="#e0965d"))
 
         # add components to the main box.
-        main_box.add(self.username_entry)
-        main_box.add(self.password_entry)
-        main_box.add(login_button)
+        main_box.add(toga.Label("")) # Creates a space in background colour. ("Spacer")
+        main_box.add(username_box)
+        main_box.add(password_box)
+        main_box.add(toga.Label("")) # Creates a space in background colour. ("Spacer")
+        main_black_box.add(main_box)
 
         # add all boxes to container.
-        main_container.add(header_box)
-        main_container.add(main_box)
+        content.add(header_box)
+        content.add(main_black_box)
+        content.add(login_button)
 
-        return main_container
+        return content
     
     def loginButtonHandler(self, _) -> None:
         if not self.username_entry.is_valid or not self.password_entry.is_valid:
@@ -97,7 +107,7 @@ class _SignupPage:
 
         header_box = toga.Box(style=Pack(direction=COLUMN, padding=(20, 15)))
         main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
-        main_box = toga.Box(style=Pack(direction=COLUMN, padding=(2, 2), background_color="#edd2a1"))
+        main_box = toga.Box(style=Pack(direction=COLUMN, padding=(2, 2), background_color="#fbf5cc"))
 
         # title label
         title_label = toga.Label("Health App", style=Pack(font_size=28, font_weight="bold", padding=(10, 5), color="black"))
