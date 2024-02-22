@@ -28,22 +28,21 @@ class HealthApp(toga.App):
 
         # Login/Signup
         from healthapp.login import getAuthPage
-        page = getAuthPage(self).getContent()
-
-        # set the main container as the content of the main window
-        self.main_window.content = page
-
-        # Show the main window
-        self.main_window.show()
+        self.update_content(getAuthPage(self).getContent())
     
     def login_handler(self, user: User):
-        # TODO, Main menu here.
         self.user = user # Holds all user info. (see User class for details)
         print("User logged in: " + str(user))
-        
+        self.show_main()
+
+    def show_main(self):
         # pass self as the app instance to the ChoiceMenu class
         from healthapp.choice_menu import ChoiceMenu
-        ChoiceMenu(self.main_window, self)
+        ChoiceMenu(self)
+
+    def update_content(self, content) -> None:
+        self.main_window.content = content
+        self.main_window.show()
 
 #-------------------------------------------------------------------------------------------------------#
 

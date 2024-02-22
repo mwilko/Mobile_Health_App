@@ -6,10 +6,9 @@ from healthapp.app import AnalyseGait, Cognition, HealthApp, HeartRate, Lifestyl
 
 # ChoiceMenu class for the choice menu
 class ChoiceMenu:
-    def __init__(self, main_window: toga.MainWindow, app: HealthApp):
-        # store app and main_window in a variable
-        self.app = app 
-        self.main_window = main_window  # store main_window
+    def __init__(self, app: HealthApp):
+        # store app in a variable
+        self.app = app
 
         print("ChoiceMenu class running...")
 
@@ -50,7 +49,7 @@ class ChoiceMenu:
         main_container.add(main_box)
 
         # set the main container as the content of the main window
-        self.main_window.content = main_container
+        self.app.update_content(main_container)
     
     # buttons to select the choice, takes the user to the respective page
     def gait_analysis_handler(self, widget):
