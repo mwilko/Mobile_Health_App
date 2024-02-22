@@ -8,7 +8,8 @@ import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN, CENTER
 
-from .login import getAuthPage
+from healthapp.user import User
+from healthapp.login import getAuthPage
 
 #-------------------------------------------------------------------------------------------------------#
 
@@ -16,7 +17,8 @@ from .login import getAuthPage
 class HealthApp(toga.App):
 
     def startup(self, main_window=None):
-        # Some initial data saving.
+        # Create the apps data folder
+        # self.paths.data is the directory where we can read/write to and have it persist after reboot/update etc etc.
         self.paths.data.mkdir(parents=True, exist_ok=True)
 
         # Create the main window
@@ -34,14 +36,11 @@ class HealthApp(toga.App):
         # Show the main window
         self.main_window.show()
     
-    def login_handler(self, user):
+    def login_handler(self, user: User):
         # TODO, Main menu here.
-        self.user = user # Holds all user info (name, username)
-        self.start_button_handler()
-
-    def start_button_handler(self):
-        # add logic for start button
-        print("Start button pressed!")
+        self.user = user # Holds all user info. (see User class for details)
+        print("User logged in: " + str(user))
+        
         # pass self as the app instance to the ChoiceMenu class
         ChoiceMenu(self.main_window, self)
 
@@ -49,7 +48,7 @@ class HealthApp(toga.App):
 
 # ChoiceMenu class for the choice menu
 class ChoiceMenu:
-    def __init__(self, main_window, app):
+    def __init__(self, main_window: toga.MainWindow, app: HealthApp):
         # store app and main_window in a variable
         self.app = app 
         self.main_window = main_window  # store main_window
@@ -65,8 +64,10 @@ class ChoiceMenu:
         main_container = toga.Box(style=Pack(direction=COLUMN))
 
         # Label for the choice menu
+        name_label = toga.Label(f"Welcome, {self.app.user.first} {self.app.user.last}", style=Pack(font_size=12, padding=(5, 10)))
         ml_label = toga.Label("Machine Learning Algorithm has no data", style=Pack(font_size=15, padding=(0, 10)))
 
+        machine_learning_box.add(name_label)
         machine_learning_box.add(ml_label)
 
         # button for choices
@@ -162,8 +163,8 @@ class AnalyseGait():
         #print("TensorFlow Hub version:", hub.__version__)
         
         # Here to make sure numpy gets added (think of it as a little test)
-        n = np.array([1,2,3])
-        print(n)
+        #n = np.array([1,2,3])
+        #print(n)
 
         # Note this doesnt return on iOS/macOS yet, fully working on android.
         if await self.app.camera.request_permission():
