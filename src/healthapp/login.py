@@ -5,6 +5,7 @@ from toga.validators import MinLength
 from hashlib import sha512
 
 from healthapp.user import User
+from healthapp.app import HealthApp
 
 LOGIN_FILE = "secure_auth"     # The file (&sub directory) to store login information (username/password)
 USER_DATA_FILE = "secure_data" # The file (&sub directory) to store the user data
@@ -23,7 +24,7 @@ PASSWORD_REQUIREMENTS = {
     "special_required": 0      # Special characters (any non a-Z 0-9 characters) required (0 for none required)
 }
 
-def getAuthPage(app: toga.App):
+def getAuthPage(app: HealthApp):
     print(app.paths.data.joinpath(LOGIN_FILE).resolve())
     # If the user login file exists, we need to login not signup.
     if app.paths.data.joinpath(LOGIN_FILE).resolve().exists():
@@ -36,7 +37,7 @@ def getAuthPage(app: toga.App):
 
 
 class _LoginPage:
-    def __init__(self, app: toga.App):
+    def __init__(self, app: HealthApp):
         self.app = app
 
     def getContent(self) -> toga.Box:
@@ -98,7 +99,7 @@ class _LoginPage:
 
 
 class _SignupPage:
-    def __init__(self, app: toga.App):
+    def __init__(self, app: HealthApp):
         self.app = app
     
     def getContent(self) -> toga.Box:

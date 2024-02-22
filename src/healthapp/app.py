@@ -9,8 +9,6 @@ from toga.style import Pack
 from toga.style.pack import COLUMN, CENTER
 
 from healthapp.user import User
-from healthapp.login import getAuthPage
-from healthapp.choice_menu import ChoiceMenu
 
 #-------------------------------------------------------------------------------------------------------#
 
@@ -29,6 +27,7 @@ class HealthApp(toga.App):
             self.main_window = main_window
 
         # Login/Signup
+        from healthapp.login import getAuthPage
         page = getAuthPage(self).getContent()
 
         # set the main container as the content of the main window
@@ -43,6 +42,7 @@ class HealthApp(toga.App):
         print("User logged in: " + str(user))
         
         # pass self as the app instance to the ChoiceMenu class
+        from healthapp.choice_menu import ChoiceMenu
         ChoiceMenu(self.main_window, self)
 
 #-------------------------------------------------------------------------------------------------------#
@@ -104,6 +104,7 @@ class AnalyseGait():
     def back_handler(self, widget):
         print("Back button pressed!")
         # pass self as the app instance to the ChoiceMenu class
+        from healthapp.choice_menu import ChoiceMenu
         ChoiceMenu(self.main_window, self.app)
 
 
@@ -172,6 +173,7 @@ class PersonalDetails():
     def back_handler(self, widget):
         print("Back button pressed!")
         # pass self as the app instance to the ChoiceMenu class
+        from healthapp.choice_menu import ChoiceMenu
         ChoiceMenu(self.main_window, self.app)
 
 #-------------------------------------------------------------------------------------------------------#
@@ -226,6 +228,7 @@ class Sleep():
     def back_handler(self, widget):
         print("Back button pressed!")
         # pass self as the app instance to the ChoiceMenu class
+        from healthapp.choice_menu import ChoiceMenu
         ChoiceMenu(self.main_window, self.app)  
 
 #-------------------------------------------------------------------------------------------------------#
@@ -282,6 +285,7 @@ class Lifestyle():
     def back_handler(self, widget):
         print("Back button pressed!")
         # pass self as the app instance to the ChoiceMenu class
+        from healthapp.choice_menu import ChoiceMenu
         ChoiceMenu(self.main_window, self.app)
 
 #-------------------------------------------------------------------------------------------------------#
@@ -330,6 +334,7 @@ class Cognition():
     def back_handler(self, widget):
         print("Back button pressed!")
         # pass self as the app instance to the ChoiceMenu class
+        from healthapp.choice_menu import ChoiceMenu
         ChoiceMenu(self.main_window, self.app)
 
 #-------------------------------------------------------------------------------------------------------#
@@ -389,6 +394,7 @@ class HeartRate():
     def back_handler(self, widget):
         print("Back button pressed!")
         # pass self as the app instance to the ChoiceMenu class
+        from healthapp.choice_menu import ChoiceMenu
         ChoiceMenu(self.main_window, self.app)
 
 #-------------------------------------------------------------------------------------------------------#
@@ -441,4 +447,5 @@ class Nutrition():
     def back_handler(self, widget):
         print("Back button pressed!")
         # pass self as the app instance to the ChoiceMenu class
+        from healthapp.choice_menu import ChoiceMenu
         ChoiceMenu(self.main_window, self.app)

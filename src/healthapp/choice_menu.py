@@ -2,16 +2,16 @@ import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN, CENTER
 
-import healthapp.app as HealthApp
+from healthapp.app import AnalyseGait, Cognition, HealthApp, HeartRate, Lifestyle, Nutrition, PersonalDetails, Sleep
 
 # ChoiceMenu class for the choice menu
 class ChoiceMenu:
-    print("ChoiceMenu class running...")
-
     def __init__(self, main_window: toga.MainWindow, app: HealthApp):
         # store app and main_window in a variable
         self.app = app 
         self.main_window = main_window  # store main_window
+
+        print("ChoiceMenu class running...")
 
         # Create the ml box as per prototype
         # ml results would be displayed inside of the box
@@ -56,28 +56,28 @@ class ChoiceMenu:
     def gait_analysis_handler(self, widget):
         #add logic
         print("Gait Analysis button pressed!")
-        HealthApp.AnalyseGait(self.main_window, self.app)
+        AnalyseGait(self.main_window, self.app)
 
     def personal_details_handler(self, widget):
         print("Personal Details button pressed!")
-        HealthApp.PersonalDetails(self.main_window, self.app) 
+        PersonalDetails(self.main_window, self.app) 
 
     def sleep_handler(self, widget):
         print("Sleep button pressed!")
-        HealthApp.Sleep(self.main_window, self.app)
+        Sleep(self.main_window, self.app)
 
     def lifestyle_handler(self, widget):
         print("Lifestyle button pressed!")
-        HealthApp.Lifestyle(self.main_window, self.app)
+        Lifestyle(self.main_window, self.app)
 
     def cognition_handler(self, widget):
         print("Cognition button pressed!")
-        HealthApp.Cognition(self.main_window, self.app)
+        Cognition(self.main_window, self.app)
 
     def heart_rate_handler(self, widget):
         print("Heart Rate button pressed!")
-        HealthApp.HeartRate(self.main_window, self.app)
+        HeartRate(self.main_window, self.app)
 
     def nutrition_handler(self, widget):
         print("Nutrition button pressed!")
-        HealthApp.Nutrition(self.main_window, self.app)
+        Nutrition(self.main_window, self.app)
