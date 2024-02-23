@@ -8,6 +8,8 @@ from healthapp.user import User
 from healthapp.app import HealthApp
 from healthapp.config import *
 
+from healthapp.style import create_border
+
 def showAuthPage(app: HealthApp):
     # If the user login file exists, we need to login not signup.
     if app.paths.data.joinpath(LOGIN_FILE).resolve().exists() and app.paths.data.joinpath(USER_DATA_FILE).resolve().exists():
@@ -18,13 +20,12 @@ def showAuthPage(app: HealthApp):
 
 ## -- Private classes / functions -- ##
 
-
 class _LoginPage:
     def __init__(self, app: HealthApp):
         self.app = app
-        self.app.update_content(self.getContent())
+        self.app.update_content(self.get_content())
 
-    def getContent(self) -> toga.Box:
+    def get_content(self) -> toga.Box:
 
         content = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
 
@@ -39,30 +40,30 @@ class _LoginPage:
 
         # entry inputs
         self.username_entry = toga.TextInput("username", placeholder="Username", style=Pack(padding=(2, 2, 2), background_color="#e2985f"), validators=[MinLength(USERNAME_REQUIREMENTS["min_length"], allow_empty=False)])
-        username_box = createBorder(self.username_entry, padding=(0, 13))
+        username_box = create_border(self.username_entry, padding=(0, 13))
         
         self.password_entry = toga.PasswordInput("password", placeholder="Password", style=Pack(padding=(2, 2, 2), background_color="#e2985f"), validators=[MinLength(PASSWORD_REQUIREMENTS["min_length"], allow_empty=False)])
-        password_box = createBorder(self.password_entry)
+        password_box = create_border(self.password_entry)
 
         # login button.
-        login_button = toga.Button('Login', on_press=self.loginButtonHandler, style=Pack(padding=(2, 2, 2), background_color="#fbf5cc"))
-        login_box = createBorder(login_button, inner_color="#fbf5cc", padding=(5, 20, 20))
+        login_button = toga.Button('Login', on_press=self.login_button_handler, style=Pack(padding=(2, 2, 2), background_color="#fbf5cc"))
+        login_box = create_border(login_button, inner_color="#fbf5cc", padding=(5, 20, 20))
 
         # add components to the main box.
-        main_box.add(toga.Label("")) # Creates a space in background colour. ("Spacer")
+        main_box.add(toga.Label(""))  # Creates a space in background color. ("Spacer")
         main_box.add(username_box)
         main_box.add(password_box)
-        main_box.add(toga.Label("")) # Creates a space in background colour. ("Spacer")
+        main_box.add(toga.Label(""))  # Creates a space in background color. ("Spacer")
         main_black_box.add(main_box)
 
-        # add all boxes to container.
+        # add all boxes to the container.
         content.add(header_box)
         content.add(main_black_box)
         content.add(login_box)
 
         return content
     
-    def loginButtonHandler(self, _) -> None:
+    def login_button_handler(self, _) -> None:
         if not self.username_entry.is_valid or not self.password_entry.is_valid:
             self.app.main_window.error_dialog("Error!", "Unable to login,\nPlease check details and try again.")
             return
@@ -85,9 +86,9 @@ class _LoginPage:
 class _RegisterPage:
     def __init__(self, app: HealthApp):
         self.app = app
-        self.app.update_content(self.getContent())
+        self.app.update_content(self.get_content())
 
-    def getContent(self) -> toga.Box:
+    def get_content(self) -> toga.Box:
         main_container = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
 
         header_box = toga.Box(style=Pack(direction=COLUMN, padding=(20, 15)))
@@ -98,49 +99,48 @@ class _RegisterPage:
         title_label = toga.Label("Health App", style=Pack(font_size=28, font_weight="bold", padding=(10, 5), color="black"))
         header_box.add(title_label)
 
-        # entry inputs, in a black box to make illusion of border. (https://github.com/beeware/toga/issues/849)
+        # entry inputs, in a black box to make an illusion of border. (https://github.com/beeware/toga/issues/849)
         self.fname_entry = toga.TextInput("first_name", placeholder="First Name", style=Pack(padding=(2, 2, 2), background_color="#e2985f"), validators=[MinLength(2, allow_empty=False)])
-        fname_box = createBorder(self.fname_entry)
+        fname_box = create_border(self.fname_entry)
 
         self.lname_entry = toga.TextInput("last_name", placeholder="Last Name", style=Pack(padding=(2, 2, 2), background_color="#e2985f"), validators=[MinLength(2, allow_empty=False)])
-        lname_box = createBorder(self.lname_entry)
+        lname_box = create_border(self.lname_entry)
 
         self.sex_entry = toga.Selection("sex", items=["Male", "Female"])
-        sex_box = createBorder(self.sex_entry)
+        sex_box = create_border(self.sex_entry)
 
-        self.username_entry = toga.TextInput("username", placeholder="Username", style=Pack(padding=(2, 2, 2), background_color="#e2985f"), validators=[self._validUsername])
-        username_box = createBorder(self.username_entry, padding=(30, 13, 0))
+        self.username_entry = toga.TextInput("username", placeholder="Username", style=Pack(padding=(2, 2, 2), background_color="#e2985f"), validators=[self._valid_username])
+        username_box = create_border(self.username_entry, padding=(30, 13, 0))
 
-        self.password_entry = toga.PasswordInput("password", placeholder="Password", style=Pack(padding=(2, 2, 2), background_color="#e2985f"), validators=[self._validPassword])
-        password_box = createBorder(self.password_entry)
+        self.password_entry = toga.PasswordInput("password", placeholder="Password", style=Pack(padding=(2, 2, 2), background_color="#e2985f"), validators=[self._valid_password])
+        password_box = create_border(self.password_entry)
 
-        self.cpassword_entry = toga.PasswordInput("cpassword", placeholder="Confirm Password", style=Pack(padding=(2, 2, 2), background_color="#e2985f"), validators=[self._validPassword, self._checkConfirm])
-        cpassword_box = createBorder(self.cpassword_entry)
+        self.cpassword_entry = toga.PasswordInput("cpassword", placeholder="Confirm Password", style=Pack(padding=(2, 2, 2), background_color="#e2985f"), validators=[self._valid_password, self._check_confirm])
+        cpassword_box = create_border(self.cpassword_entry)
 
         # register button.
-        register_button = toga.Button('Register', on_press=self.registerButtonHandler, style=Pack(padding=(2, 2, 2), background_color="#fbf5cc"))
-        register_box = createBorder(register_button, inner_color="#fbf5cc", padding=(50, 20, 20))
-
+        register_button = toga.Button('Register', on_press=self.register_button_handler, style=Pack(padding=(2, 2, 2), background_color="#fbf5cc"))
+        register_box = create_border(register_button, inner_color="#fbf5cc", padding=(50, 20, 20))
         # add components to the main box.
-        main_box.add(toga.Label("")) # Creates a space in background colour. ("Spacer")
+        main_box.add(toga.Label(""))  # Creates a space in background color. ("Spacer")
         main_box.add(fname_box)
         main_box.add(lname_box)
         main_box.add(sex_box)
         main_box.add(username_box)
         main_box.add(password_box)
         main_box.add(cpassword_box)
-        main_box.add(toga.Label("")) # Spacer
-        main_black_box.add(main_box) # Outer black border.
+        main_box.add(toga.Label(""))  # Spacer
+        main_black_box.add(main_box)  # Outer black border.
 
-        # add all boxes to container.
+        # add all boxes to the container.
         main_container.add(header_box)
         main_container.add(main_black_box)
         main_container.add(register_box)
 
         return main_container
 
-    def registerButtonHandler(self, widget) -> None:
-        # Its possible for password matching to lose sync.
+    def register_button_handler(self, widget) -> None:
+        # It's possible for password matching to lose sync.
         self.cpassword_entry._validate()
         if not self.username_entry.is_valid or not self.password_entry.is_valid or not self.cpassword_entry.is_valid:
             self.app.main_window.error_dialog("Error!", "Unable to register,\nPlease check information.")
@@ -157,13 +157,13 @@ class _RegisterPage:
 
         self.app.login_handler(user)
 
-    def _checkConfirm(self, password: str):
+    def _check_confirm(self, password: str):
         if password != self.password_entry.value:
             return "Passwords do not match"
 
         return None
 
-    def _validUsername(self, username: str):
+    def _valid_username(self, username: str):
         spaces = sum(c.isspace() for c in username)
 
         if not USERNAME_REQUIREMENTS["spaces_allowed"] and spaces > 0:
@@ -180,7 +180,7 @@ class _RegisterPage:
 
         return None
 
-    def _validPassword(self, password: str):
+    def _valid_password(self, password: str):
         numbers = sum(c.isdigit() for c in password)
         letters = sum(c.isalpha() for c in password)
         spaces  = sum(c.isspace() for c in password)
@@ -206,11 +206,3 @@ class _RegisterPage:
             return "Password does not contain enough special characters, minimum amount is " + str(PASSWORD_REQUIREMENTS["special_required"])
 
         return None
-
-
-def createBorder(object, border_color="black", inner_color="#e2985f", padding=(13, 13, 0)) -> toga.Box:
-    out_box = toga.Box(style=Pack(direction=COLUMN, padding=padding, background_color=border_color))
-    in_box = toga.Box(style=Pack(direction=COLUMN, background_color=inner_color, padding=(2, 2, 2)))
-    in_box.add(object)
-    out_box.add(in_box)
-    return out_box

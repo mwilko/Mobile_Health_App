@@ -2,6 +2,8 @@ import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN
 
+from healthapp.style import create_border
+
 # ChoiceMenu class for the choice menu
 class ChoiceMenu:
     def __init__(self, main_window, app):
@@ -30,33 +32,26 @@ class ChoiceMenu:
         machine_learning_box.add(ml_label)
 
         # button for choices
-        gait_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 13, 13), background_color="black"))
-        analyse_gait_button = toga.Button('Analyse Gait', on_press=self.gait_analysis_handler, style=Pack(padding=(2, 2, 2)))
-        gait_box.add(analyse_gait_button)
+        analyse_gait_button = toga.Button('Analyse Gait', on_press=self.gait_analysis_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        gait_box = create_border(analyse_gait_button)
 
-        pd_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 13, 13), background_color="black"))
-        personal_details_button = toga.Button('Personal Details', on_press=self.personal_details_handler, style=Pack(padding=(2, 2, 2)))
-        pd_box.add(personal_details_button)
-    
-        sleep_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 13, 13), background_color="black"))
-        sleep_button = toga.Button('Sleep', on_press=self.sleep_handler, style=Pack(padding=(2, 2, 2)))
-        sleep_box.add(sleep_button)
+        personal_details_button = toga.Button('Personal Details', on_press=self.personal_details_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        pd_box = create_border(personal_details_button)
 
-        lifestyle_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 13, 13), background_color="black"))
-        lifestyle_button = toga.Button('Lifestyle', on_press=self.lifestyle_handler, style=Pack(padding=(2, 2, 2)))
-        lifestyle_box.add(lifestyle_button)
+        sleep_button = toga.Button('Sleep', on_press=self.sleep_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        sleep_box = create_border(sleep_button)
 
-        cognition_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 13, 13), background_color="black"))
-        cognition_button = toga.Button('Cognition', on_press=self.cognition_handler, style=Pack(padding=(2, 2, 2)))
-        cognition_box.add(cognition_button)
+        lifestyle_button = toga.Button('Lifestyle', on_press=self.lifestyle_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        lifestyle_box = create_border(lifestyle_button)
 
-        heart_rate_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 13, 13), background_color="black"))
-        heart_rate_button = toga.Button('Heart Rate', on_press=self.heart_rate_handler, style=Pack(padding=(2, 2, 2)))
-        heart_rate_box.add(heart_rate_button)
+        cognition_button = toga.Button('Cognition', on_press=self.cognition_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        cognition_box = create_border(cognition_button)
 
-        nutrition_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 13, 13), background_color="black"))
-        nutrition_button = toga.Button('Nutrition', on_press=self.nutrition_handler, style=Pack(padding=(2, 2, 2)))
-        nutrition_box.add(nutrition_button)
+        heart_rate_button = toga.Button('Heart Rate', on_press=self.heart_rate_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        heart_rate_box = create_border(heart_rate_button)
+
+        nutrition_button = toga.Button('Nutrition', on_press=self.nutrition_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        nutrition_box = create_border(nutrition_button)
 
         main_box.add(toga.Label("")) # Creates a space in background colour. ("Spacer")
         for box in [gait_box, pd_box, sleep_box, lifestyle_box,
@@ -68,6 +63,7 @@ class ChoiceMenu:
         # add boxes to the main container
         main_container.add(machine_learning_box)
         main_container.add(main_box)
+
 
         # set the main container as the content of the main window
         self.app.update_content(main_container)
@@ -110,7 +106,7 @@ class AnalyseGait():
         self.main_window = main_window
 
         # Create the main container
-        main_container = toga.Box(style=Pack(direction=COLUMN))
+        main_container = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
 
         # Main box for the initial content
         main_box = toga.Box(style=Pack(padding=20))
@@ -119,11 +115,14 @@ class AnalyseGait():
         choice_box = toga.Box(style=Pack(padding=20))
     
         # button for gait analysis
-        analyse_gait_button = toga.Button('Analyse Gait', on_press=self.analyse_gait_handler, style=Pack(padding=10))
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=10))
+        analyse_gait_button = toga.Button('Analyse Gait', on_press=self.analyse_gait_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        analyse_gait_box = create_border(analyse_gait_button)
 
-        main_box.add(analyse_gait_button)
-        main_box.add(back_button)
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        back_box = create_border(back_button)
+
+        main_box.add(analyse_gait_box)
+        main_box.add(back_box)
 
         # add choice_box to the main container
         main_container.add(main_box)
@@ -172,7 +171,7 @@ class PersonalDetails():
         self.app = app
 
         # Create the main container
-        main_container = toga.Box(style=Pack(direction=COLUMN))
+        main_container = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
 
         # Main box for the initial content
         main_box = toga.Box(style=Pack(direction = COLUMN, padding=20))
@@ -187,8 +186,12 @@ class PersonalDetails():
         self.age_input = toga.TextInput(placeholder='Enter your age')
         self.height_input = toga.TextInput(placeholder='cm')
         self.weight_input = toga.TextInput(placeholder='kg')
-        submit_button = toga.Button('Submit', on_press=self.submit_handler, style=Pack(padding=10))
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=10))
+
+        submit_button = toga.Button('Submit', on_press=self.submit_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        submit_box = create_border(submit_button)
+
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        back_box = create_border(back_button)
 
         # add labels and respective buttons to the main box
         for TextInput in [self.age_input, self.height_input, self.weight_input]:
@@ -204,8 +207,8 @@ class PersonalDetails():
                 main_box.add(TextInput)
 
         # add buttons to the main box
-        for button in [submit_button, back_button]:
-            if button != back_button:
+        for button in [submit_box, back_box]:
+            if button != back_box:
                 main_box.add(button)
             else:
                 footer_box.add(button)
@@ -240,7 +243,7 @@ class Sleep():
         self.app = app
 
         # Create the main container
-        main_container = toga.Box(style=Pack(direction=COLUMN))
+        main_container = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
 
         # Main box for the initial content
         main_box = toga.Box(style=Pack(direction = COLUMN, padding=20))
@@ -249,8 +252,12 @@ class Sleep():
         # objects for behavioural analysis
         s_label = toga.Label("How many hours of sleep do you get per night?", style=Pack(font_size=15, padding=(0, 10)))
         self.s_text_input = toga.TextInput(placeholder='hours')
-        submit_button = toga.Button('Submit', on_press=self.sleep_handler, style=Pack(padding=10))
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=10))
+
+        submit_button = toga.Button('Submit', on_press=self.sleep_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        submit_box = create_border(submit_button)
+
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        back_box = create_border(back_button)
 
         # for loop added incase of future expansion
         for label in [s_label]:
@@ -261,8 +268,8 @@ class Sleep():
                 print("Error: Object not found")
 
         # add buttons to the main box
-        for button in [submit_button, back_button]:
-            if button != back_button:
+        for button in [submit_box, back_box]:
+            if button != back_box:
                 main_box.add(button)
             else:
                 footer_box.add(button)
@@ -299,7 +306,7 @@ class Lifestyle():
         self.exercise_selection = None
 
         # Create the main container
-        main_container = toga.Box(style=Pack(direction=COLUMN))
+        main_container = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
 
         # Main box for the initial content
         header_box = toga.Box(style=Pack(padding=20))
@@ -308,17 +315,26 @@ class Lifestyle():
 
         # label + button for behavioural analysis
         exercise_label = toga.Label("How much exercise do you get per week?", style=Pack(font_size=15, padding=(0, 5)))
-        e60_button = toga.Button('Less than 60 mins', on_press=self.lifestyle_handler, style=Pack(padding=2))
-        e60_119_button = toga.Button('60 - 119 mins', on_press=self.lifestyle_handler, style=Pack(padding=2))
-        e120_180_button = toga.Button('120 - 180 mins', on_press=self.lifestyle_handler, style=Pack(padding=2))
-        e180_plus_button = toga.Button('More than 180 mins', on_press=self.lifestyle_handler, style=Pack(padding=2))
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=2))
+        e60_button = toga.Button('Less than 60 mins', on_press=self.lifestyle_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        e60_box = create_border(e60_button)
+
+        e60_119_button = toga.Button('60 - 119 mins', on_press=self.lifestyle_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        e60_119_box = create_border(e60_119_button)
+
+        e120_180_button = toga.Button('120 - 180 mins', on_press=self.lifestyle_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        e120_180_box = create_border(e120_180_button)
+
+        e180_plus_button = toga.Button('More than 180 mins', on_press=self.lifestyle_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        e180_plus_box = create_border(e180_plus_button)
+
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        back_box = create_border(back_button)
         
         header_box.add(exercise_label)
 
-        for button in [e60_button, e60_119_button, e120_180_button,
-                        e180_plus_button, back_button]:
-            if button != back_button:
+        for button in [e60_119_box, e60_box, e120_180_box,
+                        e180_plus_box, back_box]:
+            if button != back_box:
                 main_box.add(button)
             else:
                 footer_box.add(button)
@@ -355,7 +371,7 @@ class Cognition():
         self.app = app
 
         # Create the main container
-        main_container = toga.Box(style=Pack(direction=COLUMN))
+        main_container = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
 
         # Main box for the initial content
         header_box = toga.Box(style=Pack(padding=20)) # for label
@@ -365,11 +381,14 @@ class Cognition():
 
         # button for behavioural analysis
         c_label = toga.Label("Select the next image in the sequence: ", style=Pack(font_size=15, padding=(0, 10)))
-        submit_button = toga.Button('Submit', on_press=self.c_class_handler, style=Pack(padding=10))
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=10))
+        submit_button = toga.Button('Submit', on_press=self.c_class_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        submit_box = create_border(submit_button)
 
-        for button in [submit_button, back_button]:
-            if button != back_button or button != submit_button:
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        back_box = create_border(back_button)
+
+        for button in [submit_box, back_box]:
+            if button != back_box or button != submit_box:
                 choice_box.add(button) # add the choice image button to the choice_box
                                        # assuming thats how the cognitive analysis will be done
                 
@@ -401,7 +420,7 @@ class HeartRate():
         self.app = app
 
         # Create the main container
-        main_container = toga.Box(style=Pack(direction=COLUMN))
+        main_container = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
 
         # Main box + choice box for the initial content
         header_box = toga.Box(style=Pack(padding=20))
@@ -412,8 +431,12 @@ class HeartRate():
         hr_label1 = toga.Label("Feel your pulse until the timer reaches 0", style=Pack(font_size=15, padding=(0, 2)))
         hr_label2 = toga.Label("Record the beats per minute", style=Pack(font_size=15, padding=(0, 2)))
         self.hr_text_input = toga.TextInput(placeholder='BPM')
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=10))
-        submit_button = toga.Button('Submit', on_press=self.hr_handler, style=Pack(padding=10))
+
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        back_box = create_border(back_button)
+
+        submit_button = toga.Button('Submit', on_press=self.hr_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        sumbit_box = create_border(submit_button)
 
         # formatting the layout
         for label in [hr_label1, hr_label2]:
@@ -427,8 +450,8 @@ class HeartRate():
         # NEED TO ADD TIMER FUNCTIONALITY
         # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 
-        for button in [back_button, submit_button]:
-            if button != back_button:
+        for button in [back_box, sumbit_box]:
+            if button != back_box:
                 main_box.add(button)
             else:
                 footer_box.add(button)
@@ -461,7 +484,7 @@ class Nutrition():
         self.app = app
 
         # Create the main container
-        main_container = toga.Box(style=Pack(direction=COLUMN))
+        main_container = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
 
         # Main box for the initial content
         header_box = toga.Box(style=Pack(padding=20))
@@ -470,18 +493,27 @@ class Nutrition():
 
         # button for behavioural analysis
         n_label = toga.Label("Select the number of calories you consume per day: ", style=Pack(font_size=15, padding=(0, 10)))
-        nless_1000_button = toga.Button('Less than 1000 calories', on_press=self.n_handler, style=Pack(padding=2))
-        n1000_1499_button = toga.Button('1000 - 1500 calories', on_press=self.n_handler, style=Pack(padding=2))
-        n1500_2000_button = toga.Button('1500 - 2000 calories', on_press=self.n_handler, style=Pack(padding=2))
-        n2000_plus_button = toga.Button('More than 2000 calories', on_press=self.n_handler, style=Pack(padding=2))
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=10))
+        nless_1000_button = toga.Button('Less than 1000 calories', on_press=self.n_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        nless_1000_box = create_border(nless_1000_button)
+
+        n1000_1499_button = toga.Button('1000 - 1500 calories', on_press=self.n_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        n1000_1499_box = create_border(n1000_1499_button)
+
+        n1500_2000_button = toga.Button('1500 - 2000 calories', on_press=self.n_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        n1500_2000_box = create_border(n1500_2000_button)
+
+        n2000_plus_button = toga.Button('More than 2000 calories', on_press=self.n_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        n2000_plus_box = create_border(n2000_plus_button)
+
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
+        back_box = create_border(back_button)
 
         #formatting the layout
         header_box.add(n_label)
 
-        for button in [nless_1000_button, n1000_1499_button, n1500_2000_button,
-                        n2000_plus_button, back_button]:
-            if button != back_button:
+        for button in [nless_1000_box, n1000_1499_box, n1500_2000_box,
+                        n2000_plus_box, back_box]:
+            if button != back_box:
                 main_box.add(button)
             else:
                 footer_box.add(button)
