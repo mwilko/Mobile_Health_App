@@ -31,7 +31,7 @@ class ChoiceMenu:
 
         # button for choices
         gait_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 13, 13), background_color="black"))
-        analyse_gait_button = toga.Button('Analyse Gait', on_press=self.gait_analysis_handler, style=Pack(padding=(2, 2, 2)), enabled=(toga.platform.current_platform.lower() != "ios"))
+        analyse_gait_button = toga.Button('Analyse Gait', on_press=self.gait_analysis_handler, style=Pack(padding=(2, 2, 2)))
         gait_box.add(analyse_gait_button)
 
         pd_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 13, 13), background_color="black"))
