@@ -141,7 +141,7 @@ class _RegisterPage:
         cpassword_box.add(self.cpassword_entry)
 
         # register button.
-        register_button = toga.Button('Register', on_press=self.registerButtonHandler, style=Pack(padding=(5, 20, 20), background_color="#e0965d"))
+        register_button = toga.Button('Register', on_press=self.registerButtonHandler, style=Pack(padding=(50, 20, 20), background_color="#fbf5cc"))
 
         # add components to the main box.
         main_box.add(toga.Label("")) # Creates a space in background colour. ("Spacer")
@@ -160,7 +160,7 @@ class _RegisterPage:
         main_container.add(register_button)
 
         return main_container
-    
+
     def registerButtonHandler(self, widget) -> None:
         # Its possible for password matching to lose sync.
         self.cpassword_entry._validate()
@@ -169,13 +169,14 @@ class _RegisterPage:
             return
 
         # TODO Save user details such as first name etc.
+        user = User(self.fname_entry, self.lname_entry, self.username_entry, 1 if self.sex_entry.value == "Male" else 0)
 
         # Save login information (hash secured)
         username = sha512(self.username_entry.value.encode()).hexdigest()
         password = sha512(self.password_entry.value.encode()).hexdigest()
         self.app.paths.data.joinpath(LOGIN_FILE).resolve().write_bytes((username + "\n" + password).encode("utf-8"))
 
-        self.app.login_handler(User(self.fname_entry.value, self.lname_entry.value, self.username_entry.value, 1 if self.sex_entry.value == "Male" else 0))
+        self.app.login_handler(user)
 
     def _checkConfirm(self, password: str):
         if password != self.password_entry.value:
