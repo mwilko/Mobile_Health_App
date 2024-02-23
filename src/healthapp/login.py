@@ -6,26 +6,9 @@ from hashlib import sha512
 
 from healthapp.user import User
 from healthapp.app import HealthApp
-
-LOGIN_FILE = "secure_auth"     # The file (&sub directory) to store login information (username/password)
-USER_DATA_FILE = "secure_data" # The file (&sub directory) to store the user data
-
-USERNAME_REQUIREMENTS = {
-    "min_length": 6,           # Min length of username (<= max)
-    "max_length": 99,          # Max length of username (>= min)
-    "spaces_allowed": False    # False/True
-}
-
-PASSWORD_REQUIREMENTS = {
-    "min_length": 8,           # Min length of password (<= max)
-    "max_length": 99,          # Max length of password (>= min)
-    "spaces_allowed": False,   # False/True
-    "numbers_required": 0,     # Numbers required (0 for none required)
-    "special_required": 0      # Special characters (any non a-Z 0-9 characters) required (0 for none required)
-}
+from healthapp.config import *
 
 def showAuthPage(app: HealthApp):
-    print(app.paths.data.joinpath(LOGIN_FILE).resolve())
     # If the user login file exists, we need to login not signup.
     if app.paths.data.joinpath(LOGIN_FILE).resolve().exists():
         _LoginPage(app)
@@ -83,8 +66,7 @@ class _LoginPage:
             self.app.main_window.error_dialog("Error!", "Unable to login,\nPlease check details and try again.")
             return
 
-        data = self.app.paths.data.joinpath(LOGIN_FILE).resolve().read_bytes()
-        data = data.decode("utf-8").splitlines()
+        data = self.app.paths.data.joinpath(LOGIN_FILE).resolve().read_bytes().decode("utf-8").splitlines()
 
         username = sha512(self.username_entry.value.encode()).hexdigest()
         password = sha512(self.password_entry.value.encode()).hexdigest()
@@ -93,8 +75,10 @@ class _LoginPage:
             self.app.main_window.error_dialog("Error!", "Unable to login, please check details and try again.")
             return
 
-        # TODO: Load user information from file.
-        self.app.login_handler(User("First Name", "Last Name", "username", 1))
+        # Load user information from file.
+        user = User(self.app)
+        user.load()
+        self.app.login_handler(user)
 
 
 class _RegisterPage:
@@ -160,8 +144,9 @@ class _RegisterPage:
             self.app.main_window.error_dialog("Error!", "Unable to register,\nPlease check information.")
             return
 
-        # TODO Save user details such as first name etc.
+        # Save user details such as first name etc.
         user = User(self.fname_entry.value, self.lname_entry.value, self.username_entry.value, 1 if self.sex_entry.value == "Male" else 0)
+        user.save(str(self.app.paths.data.joinpath(USER_DATA_FILE).resolve()))
 
         # Save login information (hash secured)
         username = sha512(self.username_entry.value.encode()).hexdigest()
