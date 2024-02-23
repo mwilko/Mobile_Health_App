@@ -10,7 +10,7 @@ from healthapp.config import *
 
 def showAuthPage(app: HealthApp):
     # If the user login file exists, we need to login not signup.
-    if app.paths.data.joinpath(LOGIN_FILE).resolve().exists():
+    if app.paths.data.joinpath(LOGIN_FILE).resolve().exists() and app.paths.data.joinpath(USER_DATA_FILE).resolve().exists():
         _LoginPage(app)
     else:
         _RegisterPage(app)
