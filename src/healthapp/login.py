@@ -45,7 +45,8 @@ class _LoginPage:
         password_box = createBorder(self.password_entry)
 
         # login button.
-        login_button = toga.Button('Login', on_press=self.loginButtonHandler, style=Pack(padding=(5, 20, 20), background_color="#fbf5cc"))
+        login_button = toga.Button('Login', on_press=self.loginButtonHandler, style=Pack(padding=(2, 2, 2), background_color="#fbf5cc"))
+        login_box = createBorder(login_button, inner_color="#fbf5cc", padding=(5, 20, 20))
 
         # add components to the main box.
         main_box.add(toga.Label("")) # Creates a space in background colour. ("Spacer")
@@ -57,7 +58,7 @@ class _LoginPage:
         # add all boxes to container.
         content.add(header_box)
         content.add(main_black_box)
-        content.add(login_button)
+        content.add(login_box)
 
         return content
     
@@ -117,7 +118,8 @@ class _RegisterPage:
         cpassword_box = createBorder(self.cpassword_entry)
 
         # register button.
-        register_button = toga.Button('Register', on_press=self.registerButtonHandler, style=Pack(padding=(50, 20, 20), background_color="#fbf5cc"))
+        register_button = toga.Button('Register', on_press=self.registerButtonHandler, style=Pack(padding=(2, 2, 2), background_color="#fbf5cc"))
+        register_box = createBorder(register_button, inner_color="#fbf5cc", padding=(50, 20, 20))
 
         # add components to the main box.
         main_box.add(toga.Label("")) # Creates a space in background colour. ("Spacer")
@@ -133,7 +135,7 @@ class _RegisterPage:
         # add all boxes to container.
         main_container.add(header_box)
         main_container.add(main_black_box)
-        main_container.add(register_button)
+        main_container.add(register_box)
 
         return main_container
 
@@ -145,7 +147,7 @@ class _RegisterPage:
             return
 
         # Save user details such as first name etc.
-        user = User(self.fname_entry.value, self.lname_entry.value, self.username_entry.value, 1 if self.sex_entry.value == "Male" else 0)
+        user = User(self.app, self.fname_entry.value, self.lname_entry.value, self.username_entry.value, 1 if self.sex_entry.value == "Male" else 0)
         user.save()
 
         # Save login information (hash secured)
