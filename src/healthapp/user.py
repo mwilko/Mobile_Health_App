@@ -1,3 +1,14 @@
+'''
+Constructed at login/register on app start, available in every page after (via self.app.user).
+User class to hold ALL of the user data including but not limited to:
+- first name
+- last name
+- username
+- sex
+- age
+- etc etc (more details from questions in app etc)
+'''
+
 import json
 import toga
 
