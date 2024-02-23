@@ -146,7 +146,7 @@ class _RegisterPage:
 
         # Save user details such as first name etc.
         user = User(self.fname_entry.value, self.lname_entry.value, self.username_entry.value, 1 if self.sex_entry.value == "Male" else 0)
-        user.save(str(self.app.paths.data.joinpath(USER_DATA_FILE).resolve()))
+        user.save()
 
         # Save login information (hash secured)
         username = sha512(self.username_entry.value.encode()).hexdigest()
