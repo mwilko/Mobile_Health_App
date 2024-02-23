@@ -1,3 +1,4 @@
+#-------------------------------------------------------------------------------------------------------#
 import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN
@@ -9,6 +10,7 @@ from healthapp.app import HealthApp
 from healthapp.config import *
 
 from healthapp.style import create_border
+#-------------------------------------------------------------------------------------------------------#
 
 def showAuthPage(app: HealthApp):
     # If the user login file exists, we need to login not signup.

@@ -1,24 +1,28 @@
+#-------------------------------------------------------------------------------------------------------#
 import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN
 
 from healthapp.style import create_border
+from healthapp.app import HealthApp
+#-------------------------------------------------------------------------------------------------------#
 
 class Lifestyle():
-    def __init__(self, main_window, app):  # accept a main_window argument
+    def __init__(self, main_window, app: HealthApp):  # accept a main_window argument
 
         self.main_window = main_window
         self.app = app
+        self.app.update_content(self.get_content())
 
+    def get_content(self) -> toga.Box:
+        content = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
         # Create an instance of variable to store the user's selection
         self.exercise_selection = None
 
-        # Create the main container
-        main_container = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
-
         # Main box for the initial content
         header_box = toga.Box(style=Pack(padding=20))
-        main_box = toga.Box(style=Pack(direction = COLUMN, padding=20))
+        main_box = toga.Box(style=Pack(direction = COLUMN, padding=(2, 2), background_color="#fbf5cc"))
+        main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
         footer_box = toga.Box(style=Pack(padding=20))
 
         # label + button for behavioural analysis
@@ -40,20 +44,21 @@ class Lifestyle():
         
         header_box.add(exercise_label)
 
+        main_box.add(toga.Label(""))
         for button in [e60_119_box, e60_box, e120_180_box,
                         e180_plus_box, back_box]:
             if button != back_box:
                 main_box.add(button)
+                main_box.add(toga.Label(""))
             else:
                 footer_box.add(button)
 
-        # add main_box to the main container
-        main_container.add(header_box)
-        main_container.add(main_box)
-        main_container.add(footer_box)
+        main_black_box.add(main_box)
 
-        # set the main container as the content of the main window
-        self.main_window.content = main_container
+        for box in [header_box, main_black_box, footer_box]:
+            content.add(box)
+
+        return content
 
     def lifestyle_handler(self, widget):
         #add logic

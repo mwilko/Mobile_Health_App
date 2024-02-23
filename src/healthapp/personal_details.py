@@ -1,30 +1,42 @@
+#-------------------------------------------------------------------------------------------------------#
 import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN
 
 from healthapp.style import create_border
+from healthapp.app import HealthApp
+#-------------------------------------------------------------------------------------------------------#
 
 class PersonalDetails():
-    def __init__(self, main_window, app):  # accept a main_window argument
+    def __init__(self, main_window, app: HealthApp):  # accept a main_window argument
         self.main_window = main_window 
         self.app = app
+        self.app.update_content(self.get_content())
 
-        # Create the main container
-        main_container = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
+    def get_content(self) -> toga.Box:
 
+        content = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
         # Main box for the initial content
-        main_box = toga.Box(style=Pack(direction = COLUMN, padding=20))
+        header_box = toga.Box(style=Pack(direction=COLUMN, padding=(20, 20, 0)))
+        main_box = toga.Box(style=Pack(direction=COLUMN, padding=(2, 2), background_color="#fbf5cc"))
+        main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
         footer_box = toga.Box(style=Pack(padding=20))
 
         # label for personal details
+        header_label = toga.Label("Age, Height and Weight: ", style=Pack(font_size=20, padding=(5, 10)))
         age_label = toga.Label("Age: ", style=Pack(font_size=15, padding=(0, 10)))
         height_label = toga.Label("Height: ", style=Pack(font_size=15, padding=(0, 10)))
         weight_label = toga.Label("Weight: ", style=Pack(font_size=15, padding=(0, 10)))
 
         # text input + button for physical analysis
         self.age_input = toga.TextInput(placeholder='Enter your age')
+        age_input_box = create_border(self.age_input)
+
         self.height_input = toga.TextInput(placeholder='cm')
+        height_input_box = create_border(self.height_input)
+
         self.weight_input = toga.TextInput(placeholder='kg')
+        weight_input_box = create_border(self.weight_input)
 
         submit_button = toga.Button('Submit', on_press=self.submit_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
         submit_box = create_border(submit_button)
@@ -32,13 +44,16 @@ class PersonalDetails():
         back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
         back_box = create_border(back_button)
 
+        header_box.add(header_label)
+
         # add labels and respective buttons to the main box
-        for TextInput in [self.age_input, self.height_input, self.weight_input]:
+        main_box.add(toga.Label("")) # Creates a space in background colour. ("Spacer")
+        for TextInput in [age_input_box, height_input_box, weight_input_box]:
             # match the TextInput with the respective label
-            if TextInput == self.age_input:
+            if TextInput == age_input_box:
                 main_box.add(age_label)
                 main_box.add(TextInput)
-            elif TextInput == self.height_input:
+            elif TextInput == height_input_box:
                 main_box.add(height_label)
                 main_box.add(TextInput)
             else:
@@ -49,15 +64,17 @@ class PersonalDetails():
         for button in [submit_box, back_box]:
             if button != back_box:
                 main_box.add(button)
+                main_box.add(toga.Label(""))
             else:
                 footer_box.add(button)
-        
-        # add main_box to the main container
-        main_container.add(main_box)
-        main_container.add(footer_box)
 
-        # set the main container as the content of the main window
-        self.main_window.content = main_container
+
+        main_black_box.add(main_box)
+        
+        for box in [header_box, main_black_box, footer_box]:
+            content.add(box)
+
+        return content
 
     def submit_handler(self, widget):
         #add logic

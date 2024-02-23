@@ -8,12 +8,12 @@ User class to hold ALL of the user data including but not limited to:
 - age
 - etc etc (more details from questions in app etc)
 '''
-
+#-------------------------------------------------------------------------------------------------------#
 import json
 import toga
 
 from healthapp.config import USER_DATA_FILE
-
+#-------------------------------------------------------------------------------------------------------#
 
 class User:
     def __init__(self, app: toga.App, first: str = "", last: str = "", username: str = "", sex: bool = False) -> None:

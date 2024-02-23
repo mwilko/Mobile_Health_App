@@ -1,9 +1,11 @@
+#-------------------------------------------------------------------------------------------------------#
 import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN
 
 from healthapp.app import HealthApp
 from healthapp.style import create_border
+#-------------------------------------------------------------------------------------------------------#
 
 # ChoiceMenu class for the choice menu
 class ChoiceMenu:
@@ -63,8 +65,8 @@ class ChoiceMenu:
 
         main_black_box.add(main_box) # Outer black border.
 
-        content.add(machine_learning_box)
-        content.add(main_black_box) # add the main box to the main container
+        for box in [machine_learning_box, main_black_box]:
+            content.add(box)
 
         return content
 

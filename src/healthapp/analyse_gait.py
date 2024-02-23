@@ -1,23 +1,26 @@
+#-------------------------------------------------------------------------------------------------------#
 import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN
 
 from healthapp.style import create_border
-
+from healthapp.app import HealthApp
+#-------------------------------------------------------------------------------------------------------#
 
 class AnalyseGait():
-    def __init__(self, main_window, app):
+    def __init__(self, main_window, app: HealthApp):
+        print("Analyse Gait page loaded!")
         self.app = app 
         self.main_window = main_window
+        self.app.update_content(self.get_content())
 
-        # Create the main container
-        main_container = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
+    def get_content(self) -> toga.Box:
+        content = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
 
-        # Main box for the initial content
-        main_box = toga.Box(style=Pack(padding=20))
-
-        # Choice box for additional content
-        choice_box = toga.Box(style=Pack(padding=20))
+        header_box = toga.Box(style=Pack(direction=COLUMN, padding=(20, 20, 0)))
+        main_box = toga.Box(style=Pack(direction=COLUMN, padding=(2, 2), background_color="#fbf5cc"))
+        main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
+        footer_box = toga.Box(style=Pack(padding=20))
     
         # button for gait analysis
         analyse_gait_button = toga.Button('Analyse Gait', on_press=self.analyse_gait_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
@@ -26,15 +29,16 @@ class AnalyseGait():
         back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
         back_box = create_border(back_button)
 
+        header_box.add(toga.Label("Analyse Gait", style=Pack(font_size=20, padding=(5, 10))))
         main_box.add(analyse_gait_box)
-        main_box.add(back_box)
+        main_box.add(toga.Label("")) # Creates a space in background colour. ("Spacer")      
+        main_black_box.add(main_box)
+        footer_box.add(back_box)
 
-        # add choice_box to the main container
-        main_container.add(main_box)
-        main_container.add(choice_box)
+        for box in [header_box, main_black_box, footer_box]:
+            content.add(box)
 
-        # set the main container as the content of the main window
-        self.main_window.content = main_container
+        return content
 
     async def analyse_gait_handler(self, widget):
         print("Analyse Gait button pressed!")

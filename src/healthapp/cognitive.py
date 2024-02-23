@@ -1,8 +1,10 @@
+#-------------------------------------------------------------------------------------------------------#
 import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN
 
 from healthapp.style import create_border
+#-------------------------------------------------------------------------------------------------------#
 
 class Cognition():
     # Images would be imported into this class for the cognitive analysis, planning to add to the choice box

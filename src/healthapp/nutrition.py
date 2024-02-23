@@ -1,24 +1,29 @@
+#-------------------------------------------------------------------------------------------------------#
 import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN
 
 from healthapp.style import create_border
+from healthapp.app import HealthApp
+#-------------------------------------------------------------------------------------------------------#
 
 class Nutrition():
-    def __init__(self, main_window, app):  # accept a main_window argument
+    def __init__(self, main_window, app: HealthApp):  # accept a main_window argument
         self.main_window = main_window
         self.app = app
+        self.app.update_content(self.get_content())
 
-        # Create the main container
-        main_container = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
+    def get_content(self) -> toga.Box:
 
+        content = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
         # Main box for the initial content
         header_box = toga.Box(style=Pack(padding=20))
-        main_box = toga.Box(style=Pack(direction = COLUMN, padding=20))
+        main_box = toga.Box(style=Pack(direction = COLUMN, padding=(2, 2), background_color="#fbf5cc"))
+        main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
         footer_box = toga.Box(style=Pack(padding=20))
 
         # button for behavioural analysis
-        n_label = toga.Label("Select the number of calories you consume per day: ", style=Pack(font_size=15, padding=(0, 10)))
+        n_label = toga.Label("How much calories do you consume per day: ", style=Pack(font_size=15, padding=(0, 10)))
         nless_1000_button = toga.Button('Less than 1000 calories', on_press=self.n_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
         nless_1000_box = create_border(nless_1000_button)
 
@@ -37,19 +42,22 @@ class Nutrition():
         #formatting the layout
         header_box.add(n_label)
 
+        main_box.add(toga.Label(""))
         for button in [nless_1000_box, n1000_1499_box, n1500_2000_box,
                         n2000_plus_box, back_box]:
             if button != back_box:
                 main_box.add(button)
+                main_box.add(toga.Label(""))
             else:
                 footer_box.add(button)
 
-        # add main_box to the main container
-        for box in [header_box, main_box, footer_box]:
-            main_container.add(box)
+        main_black_box.add(main_box)
 
-        # set the main container as the content of the main window
-        self.main_window.content = main_container
+        # add main_box to the main container
+        for box in [header_box, main_black_box, footer_box]:
+            content.add(box)
+
+        return content
 
     def n_handler(self, widget):
         #add logic
