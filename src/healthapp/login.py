@@ -48,7 +48,7 @@ class _LoginPage:
         password_box = create_border(self.password_entry, inner_color="#fbf5cc")
 
         # login button.
-        login_button = toga.Button('Login', on_press=self.login_button_handler, style=Pack(padding=(-3, -3), background_color="#fbf5cc"))
+        login_button = toga.Button('Login', on_press=self.login_button_handler, style=Pack(padding=(-3), background_color="#fbf5cc"))
         login_box = create_border(login_button, inner_color="#fbf5cc", padding=(5, 20, 20))
 
         # add components to the main box.
@@ -121,7 +121,7 @@ class _RegisterPage:
         cpassword_box = create_border(self.cpassword_entry, inner_color="#fbf5cc")
 
         # register button.
-        register_button = toga.Button('Register', on_press=self.register_button_handler, style=Pack(padding=(2), background_color="#fbf5cc"))
+        register_button = toga.Button('Register', on_press=self.register_button_handler, style=Pack(padding=(-3), background_color="#fbf5cc"))
         register_box = create_border(register_button, inner_color="#fbf5cc", padding=(50, 20, 20))
         # add components to the main box.
         main_box.add(toga.Label(""))  # Creates a space in background color. ("Spacer")
