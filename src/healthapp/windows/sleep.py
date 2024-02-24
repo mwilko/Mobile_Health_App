@@ -24,14 +24,16 @@ class Sleep():
         # objects for behavioural analysis
         header_label = toga.Label("Sleep Schedule: ", style=Pack(font_size=15, padding=(0, 10)))
 
-        s_label = toga.Label("How many hours of sleep do you get per night?", style=Pack(font_size=15, padding=(0, 10)))
-        self.s_text_input = toga.TextInput(placeholder='hours')
+        s_label = toga.Label("How many hours of sleep do you get?", style=Pack(font_size=15, padding=(0, 10)))
 
-        submit_button = toga.Button('Submit', on_press=self.sleep_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        submit_box = create_border(submit_button)
+        self.s_text_input = toga.TextInput(placeholder='hours', style=Pack(background_color="#fbf5cc"))
+        s_text_input_box = create_border(self.s_text_input, inner_color="#fbf5cc")
 
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        back_box = create_border(back_button)
+        submit_button = toga.Button('Submit', on_press=self.sleep_handler, style=Pack(background_color="#fbf5cc"))
+        submit_box = create_border(submit_button, inner_color="#fbf5cc")
+
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc"))
+        back_box = create_border(back_button, inner_color="#fbf5cc")
 
         header_box.add(header_label)
 
@@ -40,7 +42,7 @@ class Sleep():
             if label == s_label:
                 main_box.add(toga.Label(""))
                 main_box.add(label)
-                main_box.add(self.s_text_input)
+                main_box.add(s_text_input_box)
             else:    
                 print("Error: Object not found")
 

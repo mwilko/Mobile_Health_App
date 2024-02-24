@@ -25,14 +25,15 @@ class HeartRate():
         # button for behavioural analysis
         hr_label1 = toga.Label("Feel your pulse until the timer reaches 0", style=Pack(font_size=15, padding=(0, 2)))
         hr_label2 = toga.Label("Record the beats per minute", style=Pack(font_size=15, padding=(0, 2)))
-        self.hr_text_input = toga.TextInput(placeholder='BPM')
-        hr_text_input_box = create_border(self.hr_text_input)
 
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        back_box = create_border(back_button)
+        self.hr_text_input = toga.TextInput(placeholder='BPM', style=Pack(background_color="#fbf5cc"))
+        hr_text_input_box = create_border(self.hr_text_input, inner_color="#fbf5cc")
 
-        submit_button = toga.Button('Submit', on_press=self.hr_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        sumbit_box = create_border(submit_button)
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc"))
+        back_box = create_border(back_button, inner_color="#fbf5cc")
+
+        submit_button = toga.Button('Submit', on_press=self.hr_handler, style=Pack(background_color="#fbf5cc"))
+        sumbit_box = create_border(submit_button, inner_color="#fbf5cc")
 
         main_box.add(toga.Label(""))
         # formatting the layout

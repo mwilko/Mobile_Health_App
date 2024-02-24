@@ -22,11 +22,11 @@ class AnalyseGait():
         footer_box = toga.Box(style=Pack(padding=20))
     
         # button for gait analysis
-        analyse_gait_button = toga.Button('Analyse Gait', on_press=self.analyse_gait_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        analyse_gait_box = create_border(analyse_gait_button)
+        analyse_gait_button = toga.Button('Analyse Gait', on_press=self.analyse_gait_handler, style=Pack(background_color="#fbf5cc"))
+        analyse_gait_box = create_border(analyse_gait_button, inner_color="#fbf5cc")
 
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        back_box = create_border(back_button)
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc"))
+        back_box = create_border(back_button, inner_color="#fbf5cc")
 
         header_box.add(toga.Label("Analyse Gait", style=Pack(font_size=20, padding=(5, 10))))
         main_box.add(analyse_gait_box)
@@ -61,9 +61,9 @@ class AnalyseGait():
                 return
             file = str(self.app.paths.data) + "/picture.png"
             photo.save(file)
-            self.main_window.info_dialog("Success!", "Photo has been saved to: " + file)
+            self.app.main_window.info_dialog("Success!", "Photo has been saved to: " + file)
         else:
-            self.main_window.info_dialog("Oh no!", "You have not granted permission to take photos")
+            self.app.main_window.info_dialog("Oh no!", "You have not granted permission to take photos")
 
     def back_handler(self, widget):
         print("Back button pressed!")

@@ -25,20 +25,20 @@ class Lifestyle():
 
         # label + button for behavioural analysis
         exercise_label = toga.Label("How much exercise do you get per week?", style=Pack(font_size=15, padding=(0, 5)))
-        e60_button = toga.Button('Less than 60 mins', on_press=self.lifestyle_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        e60_box = create_border(e60_button)
+        e60_button = toga.Button('Less than 60 mins', on_press=self.lifestyle_handler, style=Pack(background_color="#fbf5cc"))
+        e60_box = create_border(e60_button, inner_color="#fbf5cc")
 
-        e60_119_button = toga.Button('60 - 119 mins', on_press=self.lifestyle_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        e60_119_box = create_border(e60_119_button)
+        e60_119_button = toga.Button('60 - 119 mins', on_press=self.lifestyle_handler, style=Pack(background_color="#fbf5cc"))
+        e60_119_box = create_border(e60_119_button, inner_color="#fbf5cc")
 
-        e120_180_button = toga.Button('120 - 180 mins', on_press=self.lifestyle_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        e120_180_box = create_border(e120_180_button)
+        e120_180_button = toga.Button('120 - 180 mins', on_press=self.lifestyle_handler, style=Pack(background_color="#fbf5cc"))
+        e120_180_box = create_border(e120_180_button, inner_color="#fbf5cc")
 
-        e180_plus_button = toga.Button('More than 180 mins', on_press=self.lifestyle_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        e180_plus_box = create_border(e180_plus_button)
+        e180_plus_button = toga.Button('More than 180 mins', on_press=self.lifestyle_handler, style=Pack(background_color="#fbf5cc"))
+        e180_plus_box = create_border(e180_plus_button, inner_color="#fbf5cc")
 
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        back_box = create_border(back_button)
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc"))
+        back_box = create_border(back_button, inner_color="#fbf5cc")
         
         header_box.add(exercise_label)
 

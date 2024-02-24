@@ -35,26 +35,26 @@ class ChoiceMenu:
         machine_learning_box.add(ml_label)
 
         # button for choices
-        analyse_gait_button = toga.Button('Analyse Gait', on_press=self.gait_analysis_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        gait_box = create_border(analyse_gait_button)
+        analyse_gait_button = toga.Button('Analyse Gait', on_press=self.gait_analysis_handler, style=Pack(background_color="#fbf5cc"))
+        gait_box = create_border(analyse_gait_button, inner_color="#fbf5cc")
 
-        personal_details_button = toga.Button('Personal Details', on_press=self.personal_details_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        pd_box = create_border(personal_details_button)
+        personal_details_button = toga.Button('Personal Details', on_press=self.personal_details_handler, style=Pack(background_color="#fbf5cc"))
+        pd_box = create_border(personal_details_button, inner_color="#fbf5cc")
 
-        sleep_button = toga.Button('Sleep', on_press=self.sleep_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        sleep_box = create_border(sleep_button)
+        sleep_button = toga.Button('Sleep', on_press=self.sleep_handler, style=Pack(background_color="#fbf5cc"))
+        sleep_box = create_border(sleep_button, inner_color="#fbf5cc")
 
-        lifestyle_button = toga.Button('Lifestyle', on_press=self.lifestyle_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        lifestyle_box = create_border(lifestyle_button)
+        lifestyle_button = toga.Button('Lifestyle', on_press=self.lifestyle_handler, style=Pack(background_color="#fbf5cc"))
+        lifestyle_box = create_border(lifestyle_button, inner_color="#fbf5cc")
 
-        cognition_button = toga.Button('Cognition', on_press=self.cognition_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        cognition_box = create_border(cognition_button)
+        cognition_button = toga.Button('Cognition', on_press=self.cognition_handler, style=Pack(background_color="#fbf5cc"))
+        cognition_box = create_border(cognition_button, inner_color="#fbf5cc")
 
-        heart_rate_button = toga.Button('Heart Rate', on_press=self.heart_rate_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        heart_rate_box = create_border(heart_rate_button)
+        heart_rate_button = toga.Button('Heart Rate', on_press=self.heart_rate_handler, style=Pack(background_color="#fbf5cc"))
+        heart_rate_box = create_border(heart_rate_button, inner_color="#fbf5cc")
 
-        nutrition_button = toga.Button('Nutrition', on_press=self.nutrition_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        nutrition_box = create_border(nutrition_button)
+        nutrition_button = toga.Button('Nutrition', on_press=self.nutrition_handler, style=Pack(background_color="#fbf5cc"))
+        nutrition_box = create_border(nutrition_button, inner_color="#fbf5cc")
 
         main_box.add(toga.Label("")) # Creates a space in background colour. ("Spacer")
         for box in [gait_box, pd_box, sleep_box, lifestyle_box,

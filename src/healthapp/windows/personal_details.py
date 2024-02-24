@@ -27,20 +27,20 @@ class PersonalDetails():
         weight_label = toga.Label("Weight: ", style=Pack(font_size=15, padding=(0, 10)))
 
         # text input + button for physical analysis
-        self.age_input = toga.TextInput(placeholder='Enter your age')
-        age_input_box = create_border(self.age_input)
+        self.age_input = toga.TextInput(placeholder='Enter your age', style=Pack(background_color="#fbf5cc"))
+        age_input_box = create_border(self.age_input, inner_color="#fbf5cc")
 
-        self.height_input = toga.TextInput(placeholder='cm')
-        height_input_box = create_border(self.height_input)
+        self.height_input = toga.TextInput(placeholder='cm', style=Pack(background_color="#fbf5cc"))
+        height_input_box = create_border(self.height_input, inner_color="#fbf5cc")
 
-        self.weight_input = toga.TextInput(placeholder='kg')
-        weight_input_box = create_border(self.weight_input)
+        self.weight_input = toga.TextInput(placeholder='kg', style=Pack(background_color="#fbf5cc"))
+        weight_input_box = create_border(self.weight_input, inner_color="#fbf5cc")
 
-        submit_button = toga.Button('Submit', on_press=self.submit_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        submit_box = create_border(submit_button)
+        submit_button = toga.Button('Submit', on_press=self.submit_handler, style=Pack(background_color="#fbf5cc"))
+        submit_box = create_border(submit_button, inner_color="#fbf5cc")
 
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        back_box = create_border(back_button)
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc"))
+        back_box = create_border(back_button, inner_color="#fbf5cc")
 
         header_box.add(header_label)
 

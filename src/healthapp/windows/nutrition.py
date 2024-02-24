@@ -23,20 +23,20 @@ class Nutrition():
 
         # button for behavioural analysis
         n_label = toga.Label("How much calories do you consume per day: ", style=Pack(font_size=15, padding=(0, 10)))
-        nless_1000_button = toga.Button('Less than 1000 calories', on_press=self.n_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        nless_1000_box = create_border(nless_1000_button)
+        nless_1000_button = toga.Button('Less than 1000 calories', on_press=self.n_handler, style=Pack(background_color="#fbf5cc"))
+        nless_1000_box = create_border(nless_1000_button, inner_color="#fbf5cc")
 
-        n1000_1499_button = toga.Button('1000 - 1500 calories', on_press=self.n_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        n1000_1499_box = create_border(n1000_1499_button)
+        n1000_1499_button = toga.Button('1000 - 1500 calories', on_press=self.n_handler, style=Pack(background_color="#fbf5cc"))
+        n1000_1499_box = create_border(n1000_1499_button, inner_color="#fbf5cc")
 
-        n1500_2000_button = toga.Button('1500 - 2000 calories', on_press=self.n_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        n1500_2000_box = create_border(n1500_2000_button)
+        n1500_2000_button = toga.Button('1500 - 2000 calories', on_press=self.n_handler, style=Pack(background_color="#fbf5cc"))
+        n1500_2000_box = create_border(n1500_2000_button, inner_color="#fbf5cc")
 
-        n2000_plus_button = toga.Button('More than 2000 calories', on_press=self.n_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        n2000_plus_box = create_border(n2000_plus_button)
+        n2000_plus_button = toga.Button('More than 2000 calories', on_press=self.n_handler, style=Pack(background_color="#fbf5cc"))
+        n2000_plus_box = create_border(n2000_plus_button, inner_color="#fbf5cc")
 
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(padding=(-6, -4, -6, -4), background_color="#fbf5cc"))
-        back_box = create_border(back_button)
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc"))
+        back_box = create_border(back_button, inner_color="#fbf5cc")
 
         #formatting the layout
         header_box.add(n_label)
