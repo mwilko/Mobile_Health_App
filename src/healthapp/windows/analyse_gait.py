@@ -8,10 +8,9 @@ from healthapp.app import HealthApp
 #-------------------------------------------------------------------------------------------------------#
 
 class AnalyseGait():
-    def __init__(self, main_window, app: HealthApp):
+    def __init__(self, app: HealthApp):
         print("Analyse Gait page loaded!")
         self.app = app 
-        self.main_window = main_window
         self.app.update_content(self.get_content())
 
     def get_content(self) -> toga.Box:
@@ -49,7 +48,7 @@ class AnalyseGait():
         #print("TQDM version:", tqdm.__version__)
         #print("Keras package:", keras.__package__)
         #print("TensorFlow Hub version:", hub.__version__)
-        
+
         # Here to make sure numpy gets added (think of it as a little test)
         #n = np.array([1,2,3])
         #print(n)
@@ -68,6 +67,4 @@ class AnalyseGait():
 
     def back_handler(self, widget):
         print("Back button pressed!")
-        # pass self as the app instance to the ChoiceMenu class
-        from healthapp.choice_menu import ChoiceMenu
-        ChoiceMenu(self.main_window, self.app)
+        self.app.show_menu()

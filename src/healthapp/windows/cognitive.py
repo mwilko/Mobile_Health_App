@@ -3,6 +3,7 @@ import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN
 
+from healthapp.app import HealthApp
 from healthapp.style import create_border
 #-------------------------------------------------------------------------------------------------------#
 
@@ -10,8 +11,7 @@ class Cognition():
     # Images would be imported into this class for the cognitive analysis, planning to add to the choice box
     # putting the image the user makes this decision based on inside of the 'choice_box' 
 
-    def __init__(self, main_window, app):  # accept a main_window argument
-        self.main_window = main_window
+    def __init__(self, app: HealthApp):  
         self.app = app
 
         # Create the main container
@@ -44,7 +44,7 @@ class Cognition():
             main_container.add(box)
 
         # set the main container as the content of the main window
-        self.main_window.content = main_container
+        self.app.update_content(main_container)
 
     def c_class_handler(self, widget):
         #add logic
@@ -52,6 +52,4 @@ class Cognition():
 
     def back_handler(self, widget):
         print("Back button pressed!")
-        # pass self as the app instance to the ChoiceMenu class
-        from healthapp.choice_menu import ChoiceMenu
-        ChoiceMenu(self.main_window, self.app)
+        self.app.show_menu()

@@ -8,8 +8,7 @@ from healthapp.app import HealthApp
 #-------------------------------------------------------------------------------------------------------#
 
 class Sleep():
-    def __init__(self, main_window, app: HealthApp):  # accept a main_window argument
-        self.main_window = main_window
+    def __init__(self, app: HealthApp):
         self.app = app
         self.app.update_content(self.get_content())
 
@@ -70,6 +69,4 @@ class Sleep():
 
     def back_handler(self, widget):
         print("Back button pressed!")
-        # pass self as the app instance to the ChoiceMenu class
-        from healthapp.choice_menu import ChoiceMenu
-        ChoiceMenu(self.main_window, self.app) 
+        self.app.show_menu()

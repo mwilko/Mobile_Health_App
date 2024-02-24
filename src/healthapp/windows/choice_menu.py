@@ -9,10 +9,9 @@ from healthapp.style import create_border
 
 # ChoiceMenu class for the choice menu
 class ChoiceMenu:
-    def __init__(self, main_window, app: HealthApp):
+    def __init__(self, app: HealthApp):
         # store app in a variable
         self.app = app
-        self.main_window = main_window
         self.app.update_content(self.get_content())
 
         print("ChoiceMenu class running...")
@@ -74,43 +73,35 @@ class ChoiceMenu:
     def gait_analysis_handler(self, widget):
         #add logic
         print("Gait Analysis button pressed!")
-        from healthapp.analyse_gait import AnalyseGait
-        AnalyseGait(self.app.main_window, self.app)
+        from healthapp.windows.analyse_gait import AnalyseGait
+        AnalyseGait(self.app)
 
     def personal_details_handler(self, widget):
         print("Personal Details button pressed!")
-        from healthapp.personal_details import PersonalDetails
-        PersonalDetails(self.app.main_window, self.app) 
+        from healthapp.windows.personal_details import PersonalDetails
+        PersonalDetails(self.app) 
 
     def sleep_handler(self, widget):
         print("Sleep button pressed!")
-        from healthapp.sleep import Sleep
-        Sleep(self.app.main_window, self.app)
+        from healthapp.windows.sleep import Sleep
+        Sleep(self.app)
 
     def lifestyle_handler(self, widget):
         print("Lifestyle button pressed!")
-        from healthapp.lifestyle import Lifestyle
-        Lifestyle(self.app.main_window, self.app)
+        from healthapp.windows.lifestyle import Lifestyle
+        Lifestyle(self.app)
 
     def cognition_handler(self, widget):
         print("Cognition button pressed!")
-        from healthapp.cognitive import Cognition
-        Cognition(self.app.main_window, self.app)
+        from healthapp.windows.cognitive import Cognition
+        Cognition(self.app)
 
     def heart_rate_handler(self, widget):
         print("Heart Rate button pressed!")
-        from healthapp.heart_rate import HeartRate
-        HeartRate(self.app.main_window, self.app)
+        from healthapp.windows.heart_rate import HeartRate
+        HeartRate(self.app)
 
     def nutrition_handler(self, widget):
         print("Nutrition button pressed!")
-        from healthapp.nutrition import Nutrition
-        Nutrition(self.app.main_window, self.app)
-
-
- 
-
-
-    
-
-        
+        from healthapp.windows.nutrition import Nutrition
+        Nutrition(self.app)
