@@ -64,6 +64,12 @@ requires = [
 ]
 # splash = "resources/android/healthapp-splash" TODO, different splash screens for android
 permission.camera = true
+build_gradle_dependencies = [
+    "androidx.appcompat:appcompat:1.6.1",
+    "com.google.android.material:material:1.11.0",
+    "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0",
+]
+base_theme = "Theme.MaterialComponents.Light.DarkActionBar"
 
 # Unsupported deployments
 [tool.briefcase.app.healthapp.web]
