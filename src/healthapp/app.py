@@ -24,7 +24,7 @@ class HealthApp(toga.App):
         self.main_window = toga.MainWindow(title=self.formal_name)
 
         # Login/Register
-        from healthapp.login import showAuthPage
+        from healthapp.windows.login import showAuthPage
         showAuthPage(self)
     
     def login_handler(self, user: User):
