@@ -25,6 +25,10 @@ test_sources = [
 requires = [
     "numpy",
     "pandas",
+    "opencv-python",
+    "scikit-learn",
+    "tqdm",
+    "matplotlib"
 ]
 test_requires = [
     "pytest",
@@ -36,12 +40,7 @@ requires = [
     "toga-cocoa~=0.4.2",
     "std-nslog~=1.0.0",
 
-    "tensorflow",
-    "tensorflow_hub",
-    "opencv-python",
-    "scikit-learn",
-    "tqdm",
-    "matplotlib"
+    "tflite_runtime"
 ]
 entitlement."com.apple.security.device.camera" = true
 info."NSCameraUsageDescription" = "You can use the camera to take a photo of yourself for gait/pose analysis."
@@ -50,12 +49,7 @@ info."NSCameraUsageDescription" = "You can use the camera to take a photo of you
 requires = [
     "toga-winforms~=0.4.2",
 
-    "tensorflow",
-    "tensorflow_hub",
-    "opencv-python",
-    "scikit-learn",
-    "tqdm",
-    "matplotlib"
+    "tflite_runtime"
 ]
 
 # Mobile deployments
@@ -66,12 +60,7 @@ supported=false
 requires = [
     "toga-android~=0.4.2",
 
-    "tensorflow",
-    "tensorflow_hub",
-    "opencv-python",
-    "scikit-learn",
-    "tqdm",
-    "matplotlib"
+    "tflite_runtime==2.5.0"
 ]
 # splash = "resources/android/healthapp-splash" TODO, different splash screens for android
 permission.camera = true

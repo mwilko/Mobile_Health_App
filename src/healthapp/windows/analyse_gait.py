@@ -1,4 +1,5 @@
 #-------------------------------------------------------------------------------------------------------#
+import time
 import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN
@@ -42,16 +43,12 @@ class AnalyseGait():
     async def analyse_gait_handler(self, widget):
         print("Analyse Gait button pressed!")
 
-        # Check the versions of the libraries (error testing)
-        #print("TensorFlow version:", tf.__version__)
-        #print("OpenCV version:", cv2.__version__)
-        #print("TQDM version:", tqdm.__version__)
-        #print("Keras package:", keras.__package__)
-        #print("TensorFlow Hub version:", hub.__version__)
-
-        # Here to make sure numpy gets added (think of it as a little test)
-        #n = np.array([1,2,3])
-        #print(n)
+        # to just test ML
+        #file = str(self.app.paths.data) + "/picture.png"
+        #print("starting tf - " + str(file))
+        #import threading
+        #threading.Thread(None, self.RUN_TEST, "tf-thread", [str(file)]).start()
+        #return
 
         # Note this doesnt return on iOS/macOS yet, fully working on android.
         if await self.app.camera.request_permission():
@@ -61,6 +58,10 @@ class AnalyseGait():
                 return
             file = str(self.app.paths.data) + "/picture.png"
             photo.save(file)
+            print("starting tf - " + str(file))
+            import threading
+            threading.Thread(None, self.RUN_TEST, "tf-thread", [str(file)]).start()
+            #self.RUN_TEST(file)
             self.app.main_window.info_dialog("Success!", "Photo has been saved to: " + file)
         else:
             self.app.main_window.info_dialog("Oh no!", "You have not granted permission to take photos")
@@ -68,3 +69,57 @@ class AnalyseGait():
     def back_handler(self, widget):
         print("Back button pressed!")
         self.app.show_menu()
+
+    # Only run from inside sub-thread.
+    def RUN_TEST(self, file):
+        import tflite_runtime.interpreter as tflite
+        import numpy as np
+        from PIL import Image
+
+        #print(file)
+        #print(str((self.app.paths.app / "resources/machine_learning/singlepose-thunder-tflite-float16-v4.tflite")))
+        
+        interpreter = tflite.Interpreter(model_path=str((self.app.paths.app / "resources/machine_learning/singlepose-thunder-tflite-float16-v4.tflite")))
+        interpreter.allocate_tensors()
+
+        input_details = interpreter.get_input_details()
+        output_details = interpreter.get_output_details()
+
+
+        # check the type of the input tensor
+        floating_model = input_details[0]['dtype'] == np.float32
+
+        # NxHxWxC, H:1, W:2
+        height = input_details[0]['shape'][1]
+        width = input_details[0]['shape'][2]
+        img = Image.open(file).resize((width, height))
+
+        # add N dim
+        input_data = np.expand_dims(img, axis=0)
+
+        input_mean = 127.5
+        input_std = 127.5
+
+        if floating_model:
+            input_data = (np.float32(input_data) - input_mean) / input_std
+
+        interpreter.set_tensor(input_details[0]['index'], input_data)
+
+        start_time = time.time()
+        interpreter.invoke()
+        stop_time = time.time()
+
+        output_data = interpreter.get_tensor(output_details[0]['index'])
+
+        results = np.squeeze(output_data)
+        #print(results)
+        for [y,x,score] in results:
+            print(f"Position ({x*256}, {y*256}) - Confidence ({score}/1)")
+        # 17 rows, [x, y, confidence score] (all 0.0-1.0)
+        # [nose, left eye, right eye, left ear, right ear, left shoulder, right shoulder, left elbow,
+        # right elbow, left wrist, right wrist, left hip, right hip, left knee, right knee, left ankle, right ankle]
+
+        print('time: {:.3f}ms'.format((stop_time - start_time) * 1000))
+
+        exit(0)
+        pass
