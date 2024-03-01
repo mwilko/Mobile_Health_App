@@ -26,10 +26,10 @@ class Cognition():
         # button for behavioural analysis
         c_label = toga.Label("Select the next image in the sequence: ", style=Pack(font_size=15, padding=(0, 10)))
 
-        submit_button = toga.Button('Submit', on_press=self.c_class_handler, style=Pack(background_color="#fbf5cc"))
+        submit_button = toga.Button('Submit', on_press=self.c_class_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
         submit_box = create_border(submit_button, inner_color="#fbf5cc")
 
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc"))
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
         back_box = create_border(back_button, inner_color="#fbf5cc")
 
         for button in [submit_box, back_box]:

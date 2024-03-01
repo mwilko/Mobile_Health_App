@@ -29,10 +29,10 @@ class Sleep():
         self.s_text_input = toga.TextInput(placeholder='hours', style=Pack(background_color="#fbf5cc"))
         s_text_input_box = create_border(self.s_text_input, inner_color="#fbf5cc")
 
-        submit_button = toga.Button('Submit', on_press=self.sleep_handler, style=Pack(background_color="#fbf5cc"))
+        submit_button = toga.Button('Submit', on_press=self.sleep_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
         submit_box = create_border(submit_button, inner_color="#fbf5cc")
 
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc"))
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
         back_box = create_border(back_button, inner_color="#fbf5cc")
 
         header_box.add(header_label)

@@ -45,10 +45,10 @@ class AnalysePose():
             img.close()
 
         # button for pose analysis
-        analyse_gait_button = toga.Button('Analyse Pose', on_press=self.analyse_pose_handler, style=Pack(background_color="#fbf5cc"))
+        analyse_gait_button = toga.Button('Analyse Pose', on_press=self.analyse_pose_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
         analyse_gait_box = create_border(analyse_gait_button, inner_color="#fbf5cc")
 
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc"))
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
         back_box = create_border(back_button, inner_color="#fbf5cc")
 
         header_box.add(toga.Label("Pose Analysis", style=Pack(font_size=20, padding=(5, 10))))

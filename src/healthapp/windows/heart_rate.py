@@ -29,10 +29,10 @@ class HeartRate():
         self.hr_text_input = toga.TextInput(placeholder='BPM', style=Pack(background_color="#fbf5cc"))
         hr_text_input_box = create_border(self.hr_text_input, inner_color="#fbf5cc")
 
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc"))
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
         back_box = create_border(back_button, inner_color="#fbf5cc")
 
-        submit_button = toga.Button('Submit', on_press=self.hr_handler, style=Pack(background_color="#fbf5cc"))
+        submit_button = toga.Button('Submit', on_press=self.hr_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
         sumbit_box = create_border(submit_button, inner_color="#fbf5cc")
 
         main_box.add(toga.Label(""))

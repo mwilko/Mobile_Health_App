@@ -36,10 +36,10 @@ class PersonalDetails():
         self.weight_input = toga.TextInput(placeholder='kg', style=Pack(background_color="#fbf5cc"))
         weight_input_box = create_border(self.weight_input, inner_color="#fbf5cc")
 
-        submit_button = toga.Button('Submit', on_press=self.submit_handler, style=Pack(background_color="#fbf5cc"))
+        submit_button = toga.Button('Submit', on_press=self.submit_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
         submit_box = create_border(submit_button, inner_color="#fbf5cc")
 
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc"))
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
         back_box = create_border(back_button, inner_color="#fbf5cc")
 
         header_box.add(header_label)
