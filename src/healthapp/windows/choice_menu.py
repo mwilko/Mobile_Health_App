@@ -35,8 +35,8 @@ class ChoiceMenu:
         machine_learning_box.add(ml_label)
 
         # button for choices
-        analyse_gait_button = toga.Button('Analyse Gait', on_press=self.gait_analysis_handler, style=Pack(background_color="#fbf5cc"))
-        gait_box = create_border(analyse_gait_button, inner_color="#fbf5cc")
+        analyse_pose_button = toga.Button('Pose Analysis', on_press=self.pose_analysis_handler, style=Pack(background_color="#fbf5cc"))
+        pose_box = create_border(analyse_pose_button, inner_color="#fbf5cc")
 
         personal_details_button = toga.Button('Personal Details', on_press=self.personal_details_handler, style=Pack(background_color="#fbf5cc"))
         pd_box = create_border(personal_details_button, inner_color="#fbf5cc")
@@ -57,7 +57,7 @@ class ChoiceMenu:
         nutrition_box = create_border(nutrition_button, inner_color="#fbf5cc")
 
         main_box.add(toga.Label("")) # Creates a space in background colour. ("Spacer")
-        for box in [gait_box, pd_box, sleep_box, lifestyle_box,
+        for box in [pose_box, pd_box, sleep_box, lifestyle_box,
                      cognition_box, heart_rate_box, nutrition_box]:
             main_box.add(box)
         main_box.add(toga.Label("")) # Creates a space in background colour. ("Spacer")
@@ -70,11 +70,10 @@ class ChoiceMenu:
         return content
 
     # buttons to select the choice, takes the user to the respective page
-    def gait_analysis_handler(self, widget):
-        #add logic
-        print("Gait Analysis button pressed!")
-        from healthapp.windows.analyse_gait import AnalyseGait
-        AnalyseGait(self.app)
+    def pose_analysis_handler(self, widget):
+        print("Pose Analysis button pressed!")
+        from healthapp.windows.analyse_pose import AnalysePose
+        AnalysePose(self.app)
 
     def personal_details_handler(self, widget):
         print("Personal Details button pressed!")

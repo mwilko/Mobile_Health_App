@@ -17,7 +17,7 @@ RESULTS_FILE = "pose-results.png"
 
 MODEL_OPTION = "thunder"  # thunder or lightning (thunder is bigger, slightly slower but more accurate & lightning is smaller, faster but less accurate)
 
-class AnalyseGait():
+class AnalysePose():
     def __init__(self, app: HealthApp):
         print("Analyse Gait page loaded!")
         self.app = app 
@@ -76,8 +76,8 @@ class AnalyseGait():
             img = _add_image_border(img)
             self.image.image = img
             img.close()
-            print("starting tf - " + str(file))
-            if self.RUN_TEST(file) == True:
+            print("starting pose analysis on file - " + str(file))
+            if self.run_analysis(file) == True:
                 self.app.main_window.info_dialog("Success!", "Pose analysis complete!")
                 self.image.image = str(self.app.paths.data / RESULTS_FILE)
             else:
@@ -89,13 +89,12 @@ class AnalyseGait():
         print("Back button pressed!")
         self.app.show_menu()
 
-    # Only run from inside sub-thread.
-    def RUN_TEST(self, file):
+    def run_analysis(self, file):
         import tflite_runtime.interpreter as tflite
 
         model_file = str((self.app.paths.app / f"resources/machine_learning/singlepose-{MODEL_OPTION}-tflite-float16-v4.tflite"))
 
-        print("Running pose analysis model: " + model_file)
+        print(f"Running pose analysis model '{model_file}' on file '{file}'")
         
         interpreter = tflite.Interpreter(model_path=model_file)
         interpreter.allocate_tensors()
@@ -108,7 +107,6 @@ class AnalyseGait():
         width = input_details[0]['shape'][2]
         img = Image.open(file)
         img = _add_image_border(img).resize((width, height))
-        # img.save(str(self.app.paths.data) + "/img1.png","PNG")
 
         # add N dim
         input_data = np.expand_dims(img, axis=0)
@@ -150,12 +148,13 @@ class AnalyseGait():
         # TODO: save data to user?
 
         draw = ImageDraw.Draw(img)
-        for [y,x,score] in results:
-            print(f"Position ({x*width}, {y*height}) - Confidence ({score}/1)")
-            if score > SCORE:
-                draw.rounded_rectangle((((x*width)-1, (y*height)-1),((x*width)+1, (y*height)+1)), fill=(255, 0, 0), width=2)
+        for [y, x, confidence] in results:  # yes the results are y,x not x,y coordinates.
+            print(f"Position ({x*width}, {y*height}) - Confidence ({confidence}/1)")
+            if confidence > SCORE:
+                # draw 2x2 red pixel square at each point if confidence > SCORE
+                draw.rounded_rectangle((((x*width)-1, (y*height)-1), ((x*width)+1, (y*height)+1)), fill=(255, 0, 0), width=2)
 
-        img.save(str(self.app.paths.data / RESULTS_FILE),"PNG")
+        img.save(str(self.app.paths.data / RESULTS_FILE), "PNG")
         img.close()
 
         print('Time taken to analyse pose: {:.3f}ms'.format((stop_time - start_time) * 1000))
