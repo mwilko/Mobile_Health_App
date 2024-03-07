@@ -63,3 +63,4 @@ logs/
 /.vs
 /beeware-venv
 /*venv*
+.vscode/settings.json
