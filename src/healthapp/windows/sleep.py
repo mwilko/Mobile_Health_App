@@ -19,7 +19,7 @@ class Sleep():
         header_box = toga.Box(style=Pack(padding=20))
         main_box = toga.Box(style=Pack(direction = COLUMN, padding=(2, 2), background_color="#fbf5cc"))
         main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
-        footer_box = toga.Box(style=Pack(padding=20))
+        footer_box = toga.Box(style=Pack(padding=5))
 
         # objects for behavioural analysis
         header_label = toga.Label("Sleep Schedule: ", style=Pack(font_size=15, padding=(0, 10)))

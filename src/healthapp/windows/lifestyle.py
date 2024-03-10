@@ -21,7 +21,7 @@ class Lifestyle():
         header_box = toga.Box(style=Pack(padding=20))
         main_box = toga.Box(style=Pack(direction = COLUMN, padding=(2, 2), background_color="#fbf5cc"))
         main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
-        footer_box = toga.Box(style=Pack(padding=20))
+        footer_box = toga.Box(style=Pack(padding=5))
 
         # label + button for behavioural analysis
         exercise_label = toga.Label("How much exercise do you get per week?", style=Pack(font_size=15, padding=(0, 5)))

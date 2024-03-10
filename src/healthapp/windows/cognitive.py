@@ -21,7 +21,7 @@ class Cognition():
         header_box = toga.Box(style=Pack(padding=20)) # for label
         main_box = toga.Box(style=Pack(padding=20)) # for cognitive choices
         choice_box = toga.Box(style=Pack(padding=20)) # for choice of the correct cognitive analysis
-        footer_box = toga.Box(style=Pack(padding=20)) # for submit + back buttons
+        footer_box = toga.Box(style=Pack(padding=5)) # for submit + back buttons
 
         # button for behavioural analysis
         c_label = toga.Label("Select the next image in the sequence: ", style=Pack(font_size=15, padding=(0, 10)))

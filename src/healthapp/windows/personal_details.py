@@ -18,7 +18,7 @@ class PersonalDetails():
         header_box = toga.Box(style=Pack(direction=COLUMN, padding=(20, 20, 0)))
         main_box = toga.Box(style=Pack(direction=COLUMN, padding=(2, 2), background_color="#fbf5cc"))
         main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
-        footer_box = toga.Box(style=Pack(padding=20))
+        footer_box = toga.Box(style=Pack(padding=5))
 
         # label for personal details
         header_label = toga.Label("Age, Height and Weight: ", style=Pack(font_size=20, padding=(5, 10)))

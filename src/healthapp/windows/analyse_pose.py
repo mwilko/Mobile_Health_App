@@ -29,7 +29,7 @@ class AnalysePose():
         header_box = toga.Box(style=Pack(direction=COLUMN, padding=(20, 20, 0)))
         main_box = toga.Box(style=Pack(direction=COLUMN, padding=(2, 2), background_color="#fbf5cc"))
         main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
-        footer_box = toga.Box(style=Pack(padding=20))
+        footer_box = toga.Box(style=Pack(padding=5))
 
         if (self.app.paths.data / RESULTS_FILE).exists():
             self.image = toga.ImageView(str(self.app.paths.data / RESULTS_FILE), style=Pack(width=256, height=256, direction=COLUMN, padding=20))
