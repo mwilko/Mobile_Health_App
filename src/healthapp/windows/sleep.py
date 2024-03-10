@@ -26,7 +26,7 @@ class Sleep():
 
         s_label = toga.Label("How many hours of sleep do you get?", style=Pack(font_size=15, padding=(0, 10)))
 
-        self.s_text_input = toga.TextInput(placeholder='hours', style=Pack(background_color="#fbf5cc"))
+        self.s_text_input = toga.TextInput(placeholder='hours', style=Pack(background_color="#fbf5cc"), value=self.app.user.sleep)
         s_text_input_box = create_border(self.s_text_input, inner_color="#fbf5cc")
 
         submit_button = toga.Button('Submit', on_press=self.sleep_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
@@ -63,11 +63,17 @@ class Sleep():
         return content
 
     def sleep_handler(self, widget):
-        #add logic
-        print("Lifestyle button pressed!")
-        # Access the value attribute of the TextInput widget to get the user's input
+        print("Sleep button pressed!")
+
         sleep_duration = self.s_text_input.value
-        print(f"Sleep duration: {sleep_duration}")
+        if sleep_duration.isnumeric() and int(sleep_duration) > 0:
+            print(f"Sleep duration: {sleep_duration}")
+            self.app.user.sleep = int(sleep_duration)
+            self.app.user.save()
+            self.app.show_menu()
+        else:
+            print("Invalid input. Please enter a number.")
+            self.app.main_window.info_dialog("Error!", "Input must be a positive integer.\nPlease try again.")
 
     def back_handler(self, widget):
         print("Back button pressed!")
