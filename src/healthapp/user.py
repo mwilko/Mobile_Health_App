@@ -25,6 +25,8 @@ class User:
 
         # These could be None as filled by the user whenever.
         self.age = None
+        self.height = None
+        self.weight = None
         self.sleep = None
         # add other info from the user here.
 
@@ -35,6 +37,8 @@ class User:
             "username": self.username,
             "sex": self.sex,
             "age": self.age,
+            "height": self.height,
+            "weight": self.weight,
             "sleep": self.sleep
         }
         data = json.dumps(data).encode("utf-8")
@@ -59,9 +63,11 @@ class User:
                 
                 # Optionals:
                 self.age = data.get("age", None)
+                self.height = data.get("height", None)
+                self.weight = data.get("weight", None)
                 self.sleep = data.get("sleep", None)
         except IOError as e:
             print(f"Error loading user data: {e}")
 
     def __str__(self) -> str:
-        return f"User[first: {self.first}, last: {self.last}, username: {self.username}, sex: {self.sex}, age: {self.age}, sleep: {self.sleep}]"
+        return f"User[first: {self.first}, last: {self.last}, username: {self.username}, sex: {self.sex}, age: {self.age}, height: {self.height}, weight: {self.weight}, sleep: {self.sleep}]"
