@@ -115,6 +115,9 @@ class PersonalDetails():
         self.app.user.age = age
         self.app.user.height = height
         self.app.user.weight = weight
+
+        # TODO, Calculate BMI (and save it to the user object?)
+
         self.app.user.save()
         print("User details saved!")
         self.app.main_window.info_dialog("Success!", "Details saved!")

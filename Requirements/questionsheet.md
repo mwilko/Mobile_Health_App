@@ -40,7 +40,8 @@ blood_glucose_level	- What is your blood glucose level? [-User Input-, Unsure] (
 ### Feature - Question - Answers:
 Gender - [Taken from user details]
 Age - [Taken from user details]	
-Sleep Duration - How long do you sleep on average per night? [Less than 4 hours, 4 - 6, 6+]	Quality of Sleep - How would you rate your quality of sleep? [Very Poor, Poor, Ok, Good, Very Good]	
+Sleep Duration - How long do you sleep on average per night? [Less than 4 hours, 4 - 6, 6+]
+Quality of Sleep - How would you rate your quality of sleep? [Very Poor, Poor, Ok, Good, Very Good]	
 Physical Activity Level - How much physical activity do you get per week? [Less than 1 hour, 1 - 4, 4 +]
 Stress Level - How stressed out are you? [Not stressed, A little stressed, Stressed, Very Stressed]	
 BMI Category - [Taken from user details]	
