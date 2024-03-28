@@ -32,14 +32,15 @@ class User:
         # add other info from the user here.
     
     	# For heart-disease MLA
-        self.highbp = None #[1,0]
-        self.highcol = None #[1,0]
-        self.smoker = None #[1,0]
-        self.stroke = None #[1,0]
-        self.physact = None #[1,0]
-        self.alcohol = None #[1,0]
-        self.physhealth = None #[Int]
-        self.diffwalking = None #[1,0]
+        self.highbp = 0 #[1,0]
+        self.highcol = 0 #[1,0]
+        self.smoker = 0 #[1,0]
+        self.stroke = 0 #[1,0]
+        self.diabetes = 0 #[1,0]
+        self.physact = 0 #[1,0]
+        self.alcohol = 0 #[1,0]
+        self.physhealth = 0 #[Int]
+        self.diffwalking = 0 #[1,0]
     	
     	
     # When user enters their height and weight this updates the BMI    

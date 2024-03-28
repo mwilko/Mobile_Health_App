@@ -5,6 +5,8 @@ from toga.style.pack import COLUMN
 
 from healthapp.app import HealthApp
 from healthapp.style import create_border
+
+from healthapp.machine_learning import perform_prediction
 #-------------------------------------------------------------------------------------------------------#
 
 # ChoiceMenu class for the choice menu
@@ -30,10 +32,21 @@ class ChoiceMenu:
         # Label for the choice menu
         name_label = toga.Label(f"Welcome, {self.app.user.first} {self.app.user.last}", style=Pack(font_size=12, padding=(5, 10)))
         ml_label = toga.Label("Machine Learning Algorithm has no data", style=Pack(font_size=15, padding=(0, 10)))
+        
+        # Calculate prediction percentage -----------------------------------------
+        #input_data = [[1, 1, 100, 1, 1, 1, 1, 1, 1, 1, 1, 70]]  # Example input data
+        #prediction_percentage = perform_prediction(input_data)
+
+        # Update ML label text with prediction percentage
+        prediction_percentage = self.prediction_handler()
+        ml_label.text = f"Prediction: {prediction_percentage:.1f}%"
 
         machine_learning_box.add(name_label)
         machine_learning_box.add(ml_label)
 
+        machine_learning_box.add(name_label)
+        machine_learning_box.add(ml_label)
+        #--------------------------------------------------------------------------
         # button for choices
         analyse_pose_button = toga.Button('Pose Analysis', on_press=self.pose_analysis_handler, style=Pack(color = 'black', background_color="#fbf5cc", padding=(-3)))
         pose_box = create_border(analyse_pose_button, inner_color="#fbf5cc")
@@ -53,7 +66,7 @@ class ChoiceMenu:
         heart_rate_button = toga.Button('Heart Rate', on_press=self.heart_rate_handler, style=Pack(color = 'black', background_color="#fbf5cc", padding=(-3)))
         heart_rate_box = create_border(heart_rate_button, inner_color="#fbf5cc")
 
-        nutrition_button = toga.Button('Nutrition', on_press=self.nutrition_handler, style=Pack(color = 'black', background_color="#fbf5cc", padding=(-3)))
+        nutrition_button = toga.Button('Nutrition', on_press=self.prediction_handler, style=Pack(color = 'black', background_color="#fbf5cc", padding=(-3)))
         nutrition_box = create_border(nutrition_button, inner_color="#fbf5cc")
 
         main_box.add(toga.Label("")) # Creates a space in background colour. ("Spacer")
@@ -66,7 +79,7 @@ class ChoiceMenu:
 
         for box in [machine_learning_box, main_black_box]:
             content.add(box)
-
+            
         return content
 
     # buttons to select the choice, takes the user to the respective page
@@ -104,3 +117,33 @@ class ChoiceMenu:
         print("Nutrition button pressed!")
         from healthapp.windows.nutrition import Nutrition
         Nutrition(self.app)
+        
+    def get_input_data(self, widget):
+        input_data = [
+        [self.app.user.highbp, self.app.user.highcol, self.app.user.bmi, self.app.user.smoker, self.app.user.stroke, self.app.user.diabetes,
+         self.app.user.physact, self.app.user.alcohol, self.app.user.physhealth, self.app.user.diffwalking, self.app.user.sex, self.app.user.age]
+        ]
+        #input_data = [[1, 1, 100, 1, 1, 1, 1, 1, 1, 1, 1, 70]]
+        
+    def get_input_data(self):
+       
+        # Construct the input data list using the user's attributes
+        input_data = [
+        [self.app.user.highbp, self.app.user.highcol, self.app.user.bmi, self.app.user.smoker, self.app.user.stroke, self.app.user.diabetes,
+         self.app.user.physact, self.app.user.alcohol, self.app.user.physhealth, self.app.user.diffwalking, self.app.user.sex, self.app.user.age]
+        ]
+        
+        return input_data
+    
+    def prediction_handler(self):#, widget):
+        print("Prediction button pressed!")
+
+        # Get the input data for prediction
+        input_data = self.get_input_data()
+
+        # Perform prediction using the input data
+        prediction_result = perform_prediction(input_data)
+
+        # Display prediction result
+        print("Prediction:", prediction_result)
+        return prediction_result

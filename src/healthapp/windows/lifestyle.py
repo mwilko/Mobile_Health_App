@@ -16,6 +16,7 @@ class Lifestyle():
         content = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
         # Create an instance of variable to store the user's selection
         self.exercise_selection = None
+        
 
         # Main box for the initial content
         header_box = toga.Box(style=Pack(padding=20))
@@ -75,7 +76,16 @@ class Lifestyle():
         yesstroke_box = create_border(yesstroke_button, inner_color="#fbf5cc")
         
         nostroke_button = toga.Button('No', on_press=self.smoker_handler, style=Pack(color='black', background_color="#fbf5cc", padding=(-3)))
-        nostroke_box = create_border(nostroke_button, inner_color="#fbf5cc")       
+        nostroke_box = create_border(nostroke_button, inner_color="#fbf5cc")  
+        
+        # label + button for diabetes
+        diabetes_label = toga.Label("Have you had a stroke?", style=Pack(color='black', font_size=15, padding=(0, 5)))
+        
+        yesdiabetes_button = toga.Button('Yes', on_press=self.stroke_handler, style=Pack(color='black', background_color="#fbf5cc", padding=(-3)))
+        yesdiabetes_box = create_border(yesdiabetes_button, inner_color="#fbf5cc")
+        
+        nodiabetes_button = toga.Button('No', on_press=self.diabetes_handler, style=Pack(color='black', background_color="#fbf5cc", padding=(-3)))
+        nodiabetes_box = create_border(nodiabetes_button, inner_color="#fbf5cc")            
         
         # label + button for alcohol
         alcohol_label = toga.Label("Do you drink alcohol?", style=Pack(color='black', font_size=15, padding=(0, 5)))
@@ -96,13 +106,13 @@ class Lifestyle():
         nowalk_box = create_border(nowalk_button, inner_color="#fbf5cc")        
 
         
-        
         # adding labels to page
         header_box.add(exercise_label)
         header_box.add(highbp_label)
         header_box.add(highcol_label)
         header_box.add(smoker_label)
         header_box.add(stroke_label)
+        header_box.add(diabetes_label)
         header_box.add(alcohol_label)
         header_box.add(walking_label)
         
@@ -148,6 +158,13 @@ class Lifestyle():
         main_box.add(yesstroke_box)
         main_box.add(nostroke_box)
         main_box.add(toga.Label(""))
+
+        # Diabetes labels 
+        main_box.add(toga.Label(""))
+        main_box.add(stroke_label)
+        main_box.add(yesdiabetes_box)
+        main_box.add(nodiabetes_box)
+        main_box.add(toga.Label(""))
         
         # Alcohol labels 
         main_box.add(toga.Label(""))
@@ -162,8 +179,6 @@ class Lifestyle():
         main_box.add(yeswalk_box)
         main_box.add(nowalk_box)
         main_box.add(toga.Label(""))
-        
-        
 
         return content
 
@@ -206,6 +221,14 @@ class Lifestyle():
            self.app.user.stroke = 0
         print(f"Smoker: {self.app.user.stroke}")
 
+    def diabetes_handler(self, widget):
+    # Update the high blood pressure variable based on the user's selection
+        if widget.text == 'Yes':
+           self.app.user.stroke = 1
+        elif widget.text == 'No':
+           self.app.user.stroke = 0
+        print(f"Smoker: {self.app.user.diabetes}")
+        
     def alcohol_handler(self, widget):
     # Update the high blood pressure variable based on the user's selection
         if widget.text == 'Yes':
