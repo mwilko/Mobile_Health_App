@@ -28,7 +28,35 @@ class User:
         self.height = None
         self.weight = None
         self.sleep = None
+        self.bmi = None
         # add other info from the user here.
+    
+    	# For heart-disease MLA
+        self.highbp = None #[1,0]
+        self.highcol = None #[1,0]
+        self.smoker = None #[1,0]
+        self.stroke = None #[1,0]
+        self.physact = None #[1,0]
+        self.alcohol = None #[1,0]
+        self.physhealth = None #[Int]
+        self.diffwalking = None #[1,0]
+    	
+    	
+    # When user enters their height and weight this updates the BMI    
+    def update_bmi(self):
+        if self.height is not None and self.weight is not None:
+   		    # Convert height to meters
+            height_meters = self.height / 100  # Assuming height is in centimeters
+
+    	    # Calculate BMI
+            self.bmi = round(self.weight / (height_meters ** 2))
+        else:
+            self.bmi = None
+            
+        if hasattr(self.app, 'bmi_label'):
+            self.app.bmi_label.text = 'BMI: {}'.format(self.bmi)
+
+
 
     def save(self) -> None:
         data = {
@@ -39,7 +67,8 @@ class User:
             "age": self.age,
             "height": self.height,
             "weight": self.weight,
-            "sleep": self.sleep
+            "sleep": self.sleep,
+            "bmi": self.bmi
         }
         data = json.dumps(data).encode("utf-8")
         
@@ -66,6 +95,7 @@ class User:
                 self.height = data.get("height", None)
                 self.weight = data.get("weight", None)
                 self.sleep = data.get("sleep", None)
+                self.bmi = data.get("bmi", None)
         except IOError as e:
             print(f"Error loading user data: {e}")
 

@@ -6,4 +6,7 @@ the data collection
 
 '''
 
+from healthapp.config import USER_DATA_FILE
+
+
 # :) 
