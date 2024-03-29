@@ -7,6 +7,8 @@ from healthapp.style import create_border
 from healthapp.app import HealthApp
 #-------------------------------------------------------------------------------------------------------#
 
+
+
 class Lifestyle():
     def __init__(self, app: HealthApp):
         self.app = app
@@ -130,7 +132,9 @@ class Lifestyle():
 
         for box in [header_box, main_black_box, footer_box]:
             content.add(box)
-           
+
+        return content 
+        
         # HighBP labels 
         main_box.add(toga.Label(""))
         main_box.add(highbp_label)
@@ -179,6 +183,7 @@ class Lifestyle():
         main_box.add(yeswalk_box)
         main_box.add(nowalk_box)
         main_box.add(toga.Label(""))
+        
 
         return content
 
