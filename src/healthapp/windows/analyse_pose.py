@@ -2,12 +2,21 @@
 import time
 import toga
 import numpy as np
+import warnings
 from toga.style import Pack
 from toga.style.pack import COLUMN
 from PIL import Image, ImageDraw
+from pathlib import Path
 
 from healthapp.style import create_border
 from healthapp.app import HealthApp
+#-------------------------------------------------------------------------------------------------------#
+# Raw android imports for interacting directly with the camera (IDE probably wont know about these dont worry)
+from android.content import Intent # type: ignore
+from android.content.pm import PackageManager # type: ignore
+from android.provider import MediaStore # type: ignore
+from androidx.core.content import FileProvider # type: ignore
+from java.io import File # type: ignore
 #-------------------------------------------------------------------------------------------------------#
 
 # Confidence score for pose detection, 1 = 100% confidence, 0 = 0% confidence
@@ -31,9 +40,9 @@ class AnalysePose():
         main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
         footer_box = toga.Box(style=Pack(padding=5))
 
-        if (self.app.paths.data / RESULTS_FILE).exists():
+        if (False):#self.app.paths.data / RESULTS_FILE).exists():
             self.image = toga.ImageView(str(self.app.paths.data / RESULTS_FILE), style=Pack(width=256, height=256, direction=COLUMN, padding=20))
-        elif (self.app.paths.data / PHOTO_FILE).exists():
+        elif (False):#self.app.paths.data / PHOTO_FILE).exists():
             img = Image.open(str(self.app.paths.data / PHOTO_FILE))
             img = _add_image_border(img)
             self.image = toga.ImageView(img, style=Pack(width=256, height=256, direction=COLUMN, padding=20))
@@ -67,6 +76,19 @@ class AnalysePose():
         print("Analyse Pose button pressed!")
 
         if await self.app.camera.request_permission():
+
+            def result(video_path):
+                print(video_path)
+                if video_path is not None:
+                    print("Video taken!")
+                    print(video_path)
+                    self.app.main_window.info_dialog("Success!", "Video taken!")
+                else:
+                    print("Video not taken!")
+            self.take_video(result)
+            return
+        
+
             photo = await self.app.camera.take_photo()
             if photo is None:
                 return
@@ -83,7 +105,7 @@ class AnalysePose():
             else:
                 self.app.main_window.info_dialog("Error", "Pose analysis failed!")
         else:
-            self.app.main_window.info_dialog("Oh no!", "You have not granted permission to take photos")
+            self.app.main_window.info_dialog("Oh no!", "You have not granted permission to use the camera!")
 
     def back_handler(self, widget):
         print("Back button pressed!")
@@ -160,6 +182,48 @@ class AnalysePose():
         print('Time taken to analyse pose: {:.3f}ms'.format((stop_time - start_time) * 1000))
 
         return True
+    
+    def choose_video(self, callable):
+        #TODO: Implement video selection from gallery/photos.
+        callable(None)
+        return
+    
+    def take_video(self, callable):
+        context = self.app._impl.native.getApplicationContext()
+        has_camera = context.getPackageManager().hasSystemFeature(
+            PackageManager.FEATURE_CAMERA
+        )
+
+        if not has_camera:
+            warnings.warn("No camera is available")
+            callable(None)
+            return
+
+        shared_folder = File(context.getCacheDir(), "shared")
+        if not shared_folder.exists():
+            shared_folder.mkdirs()
+
+        # Create a temporary file in the shared folder,
+        # and convert it to a URI using the app's fileprovider.
+        mp4_file = File.createTempFile("camera_video_", ".mp4", shared_folder)
+        mp4_uri = FileProvider.getUriForFile(
+            context,
+            f"{self.app.app_id}.fileprovider",
+            mp4_file,
+        )
+
+        def video_taken(code, data):
+            # Completed == 0
+            if code == 0:
+                callable(Path(mp4_file.getAbsolutePath()))
+            else:
+                callable(None)
+
+        intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
+        #intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 10) # 10 seconds (doesnt work?)
+        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0) # 0 = low quality, 1 = high quality
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mp4_uri)
+        self.app._impl.start_activity(intent, on_complete=video_taken)
 
 
 def _add_image_border(image, background_color=(0,0,0)):
