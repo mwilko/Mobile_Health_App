@@ -17,6 +17,7 @@ from android.content.pm import PackageManager # type: ignore
 from android.provider import MediaStore # type: ignore
 from androidx.core.content import FileProvider # type: ignore
 from java.io import File # type: ignore
+from java import jarray, jbyte # type: ignore
 #-------------------------------------------------------------------------------------------------------#
 
 # Confidence score for pose detection, 1 = 100% confidence, 0 = 0% confidence
@@ -76,6 +77,9 @@ class AnalysePose():
         print("Analyse Pose button pressed!")
 
         if await self.app.camera.request_permission():
+
+            self.choose_video(lambda video_path: print(video_path))
+            return
 
             def result(video_path):
                 print(video_path)
@@ -183,10 +187,97 @@ class AnalysePose():
 
         return True
     
+    def choose_picture(self, callable):
+        context = self.app._impl.native.getApplicationContext()
+
+        shared_folder = File(context.getCacheDir(), "shared")
+        if not shared_folder.exists():
+            shared_folder.mkdirs()
+
+        # Create a temporary file in the shared folder,
+        # and convert it to a URI using the app's fileprovider.
+        jpg_file = File.createTempFile("camera_", ".jpg", shared_folder)
+        jpg_uri = FileProvider.getUriForFile(
+            context,
+            f"{self.app.app_id}.fileprovider",
+            jpg_file,
+        )
+
+        def file_chosen(code, data):
+            # Completed == -1
+            if code == -1:
+                stream = context.getContentResolver().openInputStream(data.getData())
+                def read_stream(stream):
+                    block = jarray(jbyte)(1024 * 1024)
+                    blocks = []
+                    while True:
+                        bytes_read = stream.read(block)
+                        if bytes_read == -1:
+                            return b"".join(blocks)
+                        else:
+                            blocks.append(bytes(block)[:bytes_read])
+                data = read_stream(stream)
+                stream.close()
+                
+                jpg_stream = context.getContentResolver().openOutputStream(jpg_uri)
+                jpg_stream.write(data)
+                jpg_stream.flush()
+                jpg_stream.close()
+                stream.close()
+
+                callable(Path(jpg_file.getAbsolutePath()))
+            else:
+                callable(None)
+
+        intent = Intent(MediaStore.ACTION_PICK_IMAGES)
+        intent.setTypeAndNormalize("image/*") #Takes a MIME type to filter the users choices
+        self.app._impl.start_activity(intent, on_complete=file_chosen)
+    
     def choose_video(self, callable):
-        #TODO: Implement video selection from gallery/photos.
-        callable(None)
-        return
+        context = self.app._impl.native.getApplicationContext()
+
+        shared_folder = File(context.getCacheDir(), "shared")
+        if not shared_folder.exists():
+            shared_folder.mkdirs()
+
+        # Create a temporary file in the shared folder,
+        # and convert it to a URI using the app's fileprovider.
+        mp4_file = File.createTempFile("camera_video_", ".mp4", shared_folder)
+        mp4_uri = FileProvider.getUriForFile(
+            context,
+            f"{self.app.app_id}.fileprovider",
+            mp4_file,
+        )
+
+        def file_chosen(code, data):
+            # Completed == -1
+            if code == -1:
+                stream = context.getContentResolver().openInputStream(data.getData())
+                def read_stream(stream):
+                    block = jarray(jbyte)(1024 * 1024)
+                    blocks = []
+                    while True:
+                        bytes_read = stream.read(block)
+                        if bytes_read == -1:
+                            return b"".join(blocks)
+                        else:
+                            blocks.append(bytes(block)[:bytes_read])
+                data = read_stream(stream)
+                stream.close()
+                
+                mp4_stream = context.getContentResolver().openOutputStream(mp4_uri)
+                mp4_stream.write(data)
+                mp4_stream.flush()
+                mp4_stream.close()
+                stream.close()
+
+                callable(Path(mp4_file.getAbsolutePath()))
+            else:
+                callable(None)
+
+        intent = Intent(MediaStore.ACTION_PICK_IMAGES)
+        intent.setTypeAndNormalize("video/*") #Takes a MIME type to filter the users choices
+        self.app._impl.start_activity(intent, on_complete=file_chosen)
     
     def take_video(self, callable):
         context = self.app._impl.native.getApplicationContext()
