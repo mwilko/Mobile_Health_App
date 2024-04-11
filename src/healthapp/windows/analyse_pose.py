@@ -55,8 +55,17 @@ class AnalysePose():
             img.close()
 
         # button for pose analysis
-        analyse_gait_button = toga.Button('Analyse Pose', on_press=self.analyse_pose_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
+        analyse_gait_button = toga.Button('Analyse Pose - Picture', on_press=self.analyse_pose_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
         analyse_gait_box = create_border(analyse_gait_button, inner_color="#fbf5cc")
+
+        analyse_gait_2_button = toga.Button('Analyse Pose - Picture (gallery)', on_press=self.analyse_pose_handler_2, style=Pack(background_color="#fbf5cc", padding=(-3)))
+        analyse_gait_2_box = create_border(analyse_gait_2_button, inner_color="#fbf5cc")
+
+        analyse_gait_3_button = toga.Button('Analyse Pose - Video', on_press=self.analyse_pose_handler_3, style=Pack(background_color="#fbf5cc", padding=(-3)))
+        analyse_gait_3_box = create_border(analyse_gait_3_button, inner_color="#fbf5cc")
+
+        analyse_gait_4_button = toga.Button('Analyse Pose - Video (gallery)', on_press=self.analyse_pose_handler_4, style=Pack(background_color="#fbf5cc", padding=(-3)))
+        analyse_gait_4_box = create_border(analyse_gait_4_button, inner_color="#fbf5cc")
 
         back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
         back_box = create_border(back_button, inner_color="#fbf5cc")
@@ -64,6 +73,9 @@ class AnalysePose():
         header_box.add(toga.Label("Pose Analysis", style=Pack(font_size=20, padding=(5, 10))))
         main_box.add(self.image)
         main_box.add(analyse_gait_box)
+        main_box.add(analyse_gait_2_box)
+        main_box.add(analyse_gait_3_box)
+        main_box.add(analyse_gait_4_box)
         main_box.add(toga.Label("")) # Creates a space in background colour. ("Spacer")      
         main_black_box.add(main_box)
         footer_box.add(back_box)
@@ -77,22 +89,6 @@ class AnalysePose():
         print("Analyse Pose button pressed!")
 
         if await self.app.camera.request_permission():
-
-            self.choose_video(lambda video_path: print(video_path))
-            return
-
-            def result(video_path):
-                print(video_path)
-                if video_path is not None:
-                    print("Video taken!")
-                    print(video_path)
-                    self.app.main_window.info_dialog("Success!", "Video taken!")
-                else:
-                    print("Video not taken!")
-            self.take_video(result)
-            return
-        
-
             photo = await self.app.camera.take_photo()
             if photo is None:
                 return
@@ -110,6 +106,41 @@ class AnalysePose():
                 self.app.main_window.info_dialog("Error", "Pose analysis failed!")
         else:
             self.app.main_window.info_dialog("Oh no!", "You have not granted permission to use the camera!")
+    
+    async def analyse_pose_handler_2(self, widget):
+        print("Analyse Pose button pressed! (Gallery)")
+
+        def run(photo):
+            if(photo is None):
+                return
+            else:
+                file = str(self.app.paths.data) + "/picture.png"
+                photo.save(file)
+                img = Image.open(str(self.app.paths.data / PHOTO_FILE))
+                img = _add_image_border(img)
+                self.image.image = img
+                img.close()
+                print("starting pose analysis on file - " + str(file))
+                if self.run_analysis(file) == True:
+                    self.app.main_window.info_dialog("Success!", "Pose analysis complete!")
+                    self.image.image = str(self.app.paths.data / RESULTS_FILE)
+                else:
+                    self.app.main_window.info_dialog("Error", "Pose analysis failed!")
+
+        self.choose_picture(lambda photo: run(photo))
+        
+    async def analyse_pose_handler_3(self, widget):
+        print("Analyse Pose button pressed! (Video)")
+
+        if await self.app.camera.request_permission():
+            self.take_video(lambda video_path: print(video_path))
+        else:
+            self.app.main_window.info_dialog("Oh no!", "You have not granted permission to use the camera!")
+    
+    async def analyse_pose_handler_4(self, widget):
+        print("Analyse Pose button pressed! (Video Gallery)")
+
+        self.choose_video(lambda video_path: print(video_path))
 
     def back_handler(self, widget):
         print("Back button pressed!")
@@ -225,7 +256,7 @@ class AnalysePose():
                 jpg_stream.close()
                 stream.close()
 
-                callable(Path(jpg_file.getAbsolutePath()))
+                callable(toga.Image(Path(jpg_file.getAbsolutePath())))
             else:
                 callable(None)
 
