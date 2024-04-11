@@ -118,13 +118,6 @@ class ChoiceMenu:
         from healthapp.windows.nutrition import Nutrition
         Nutrition(self.app)
         
-    def get_input_data(self, widget):
-        input_data = [
-        [self.app.user.highbp, self.app.user.highcol, self.app.user.bmi, self.app.user.smoker, self.app.user.stroke, self.app.user.diabetes,
-         self.app.user.physact, self.app.user.alcohol, self.app.user.physhealth, self.app.user.diffwalking, self.app.user.sex, self.app.user.age]
-        ]
-        #input_data = [[1, 1, 100, 1, 1, 1, 1, 1, 1, 1, 1, 70]]
-        
     def get_input_data(self):
        
         # Construct the input data list using the user's attributes
@@ -135,14 +128,14 @@ class ChoiceMenu:
         
         return input_data
     
-    def prediction_handler(self):#, widget):
+    def prediction_handler(self):
         print("Prediction button pressed!")
 
         # Get the input data for prediction
         input_data = self.get_input_data()
 
         # Perform prediction using the input data
-        prediction_result = perform_prediction(input_data)
+        prediction_result = perform_prediction(self.app, input_data)
 
         # Display prediction result
         print("Prediction:", prediction_result)

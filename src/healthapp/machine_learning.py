@@ -15,9 +15,10 @@ from healthapp.app import HealthApp
 import pickle
 
 
-def perform_prediction(input_data):
+def perform_prediction(app, input_data):
     # Load the trained model
-    with open('/home/jamie01/Desktop/Git/Mobile_Health_App/src/healthapp/HeartDisease.pkl', 'rb') as file:
+    path = str((app.paths.app / f"resources/machine_learning/HeartDisease.pkl"))
+    with open(path, 'rb') as file:
         model = pickle.load(file)
     
     # Perform prediction
