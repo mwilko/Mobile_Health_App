@@ -1,4 +1,5 @@
 #-------------------------------------------------------------------------------------------------------#
+import asyncio
 import time
 import toga
 import numpy as np
@@ -21,8 +22,7 @@ from java import jarray, jbyte # type: ignore
 #-------------------------------------------------------------------------------------------------------#
 
 # Confidence score for pose detection, 1 = 100% confidence, 0 = 0% confidence
-SCORE = 0.5
-PHOTO_FILE = "picture.png"
+SCORE = 0.4
 RESULTS_FILE = "pose-results.png"
 
 MODEL_OPTION = "thunder"  # thunder or lightning (thunder is bigger, slightly slower but more accurate & lightning is smaller, faster but less accurate)
@@ -32,6 +32,20 @@ class AnalysePose():
         print("Analyse Gait page loaded!")
         self.app = app 
         self.app.update_content(self.get_content())
+        self.image_path = None
+        self.video_path = None
+
+    def get_loading_content(self) -> toga.Box:
+        content = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
+        header_box = toga.Box(style=Pack(direction=COLUMN, padding=(20, 20, 0)))
+        footer_box = toga.Box(style=Pack(padding=5))
+        text = toga.Label("Analyzing pose, please wait...", style=Pack(font_size=20, padding=(5, 10)))
+        header_box.add(text)
+        bar = toga.ProgressBar(style=Pack(padding=10, width=300), running=True, max=None)
+        footer_box.add(bar)
+        for box in [header_box, footer_box]:
+            content.add(box)
+        return content
 
     def get_content(self) -> toga.Box:
         content = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
@@ -41,13 +55,8 @@ class AnalysePose():
         main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
         footer_box = toga.Box(style=Pack(padding=5))
 
-        if (False):#self.app.paths.data / RESULTS_FILE).exists():
+        if (self.app.paths.data / RESULTS_FILE).exists():
             self.image = toga.ImageView(str(self.app.paths.data / RESULTS_FILE), style=Pack(width=256, height=256, direction=COLUMN, padding=20))
-        elif (False):#self.app.paths.data / PHOTO_FILE).exists():
-            img = Image.open(str(self.app.paths.data / PHOTO_FILE))
-            img = _add_image_border(img)
-            self.image = toga.ImageView(img, style=Pack(width=256, height=256, direction=COLUMN, padding=20))
-            img.close()
         else:
             img = Image.new("RGB", (256, 256), (255, 0, 0))
             ImageDraw.Draw(img).text((10, 10), "No image found\nPress button to take a picture", fill=(255, 255, 255))
@@ -94,64 +103,111 @@ class AnalysePose():
                 return
             file = str(self.app.paths.data) + "/picture.png"
             photo.save(file)
-            img = Image.open(str(self.app.paths.data / PHOTO_FILE))
-            img = _add_image_border(img)
-            self.image.image = img
-            img.close()
+            
             print("starting pose analysis on file - " + str(file))
-            if self.run_analysis(file) == True:
-                self.app.main_window.info_dialog("Success!", "Pose analysis complete!")
-                self.image.image = str(self.app.paths.data / RESULTS_FILE)
-            else:
-                self.app.main_window.info_dialog("Error", "Pose analysis failed!")
+            self.image_path = file
+            self.app.update_content(self.get_loading_content())
+            self.app.add_background_task(self.run_image_analysis)
         else:
             self.app.main_window.info_dialog("Oh no!", "You have not granted permission to use the camera!")
     
     async def analyse_pose_handler_2(self, widget):
         print("Analyse Pose button pressed! (Gallery)")
 
-        def run(photo):
-            if(photo is None):
+        def run(pic_path):
+            if(pic_path is None):
                 return
             else:
-                file = str(self.app.paths.data) + "/picture.png"
-                photo.save(file)
-                img = Image.open(str(self.app.paths.data / PHOTO_FILE))
-                img = _add_image_border(img)
-                self.image.image = img
-                img.close()
-                print("starting pose analysis on file - " + str(file))
-                if self.run_analysis(file) == True:
-                    self.app.main_window.info_dialog("Success!", "Pose analysis complete!")
-                    self.image.image = str(self.app.paths.data / RESULTS_FILE)
-                else:
-                    self.app.main_window.info_dialog("Error", "Pose analysis failed!")
-
-        self.choose_picture(lambda photo: run(photo))
+                print("starting pose analysis on image file - " + str(pic_path))
+                self.image_path = pic_path
+                self.app.update_content(self.get_loading_content())
+                self.app.add_background_task(self.run_image_analysis)
+        self.choose_picture(lambda pic_path: run(pic_path))
         
     async def analyse_pose_handler_3(self, widget):
         print("Analyse Pose button pressed! (Video)")
 
         if await self.app.camera.request_permission():
-            self.take_video(lambda video_path: print(video_path))
+            def run(video_path):
+                if(video_path is None):
+                    return
+                else:
+                    print("starting pose analysis on video file - " + str(video_path))
+                    self.video_path = video_path
+                    self.app.update_content(self.get_loading_content())
+                    self.app.add_background_task(self.run_video_analysis)
+            self.take_video(lambda video_path: run(video_path))
         else:
             self.app.main_window.info_dialog("Oh no!", "You have not granted permission to use the camera!")
     
     async def analyse_pose_handler_4(self, widget):
         print("Analyse Pose button pressed! (Video Gallery)")
 
-        self.choose_video(lambda video_path: print(video_path))
+        def run(video_path):
+            if(video_path is None):
+                return
+            else:
+                print("starting pose analysis on video file - " + str(video_path))
+                self.video_path = video_path
+                self.app.update_content(self.get_loading_content())
+                self.app.add_background_task(self.run_video_analysis)
+        self.choose_video(lambda video_path: run(video_path))
 
     def back_handler(self, widget):
         print("Back button pressed!")
         self.app.show_menu()
+    
+    async def run_video_analysis(self, app, **kwargs):
+        time_start = time.time()
+        file = self.video_path
+        import cv2
+        images = []
+        vidcap = cv2.VideoCapture(str(file))
+        success,image = vidcap.read()
+        count = 0
+        while success:
+            cv2.imwrite(str(self.app.paths.data / ("frame%d.jpg" % count)), image)     # save frame as JPEG file      
+            self.run_analysis(str(self.app.paths.data / ("frame%d.jpg" % count)), "frame%d-results.jpg" % count)
+            images.append(Image.open(str(self.app.paths.data / ("frame%d-results.jpg" % count))))
+            success,image = vidcap.read()
+            await asyncio.sleep(0.1)
+            count += 1
+        #compress to gif?
+        self.run_analysis(str(self.app.paths.data / ("frame%d.jpg" % (count - 2))))
+        self.image.image = str(self.app.paths.data / RESULTS_FILE)
+        time_end = time.time()
+        print('Time taken to analyse whole video pose: {:.3f}s'.format(time_end - time_start))
 
-    def run_analysis(self, file):
+        images[0].save(str(self.app.paths.data / "results.gif"),
+               save_all=True, append_images=images[1:], optimize=False, duration=33, loop=0)
+
+        for image in images:
+            image.close()
+        
+        #delete all the frame images
+        for i in range(count):
+            Path(str(self.app.paths.data / ("frame%d.jpg" % i))).unlink()
+            Path(str(self.app.paths.data / ("frame%d-results.jpg" % i))).unlink()
+
+        self.app.main_window.info_dialog("Success!", "Pose analysis complete!\nResults saved as 'results.gif' in the data folder.")
+        self.app.update_content(self.get_content())
+        return True
+    
+    async def run_image_analysis(self, app, **kwargs):
+        file = self.image_path
+        self.run_analysis(file)
+        self.image.image = str(self.app.paths.data / RESULTS_FILE)
+
+        self.app.main_window.info_dialog("Success!", "Pose analysis complete!\nResults saved as '" + RESULTS_FILE + "' in the data folder.")
+        self.app.update_content(self.get_content())
+        return True
+
+    def run_analysis(self, file, output_file=RESULTS_FILE):
         import tflite_runtime.interpreter as tflite
 
         model_file = str((self.app.paths.app / f"resources/machine_learning/singlepose-{MODEL_OPTION}-tflite-float16-v4.tflite"))
 
-        print(f"Running pose analysis model '{model_file}' on file '{file}'")
+        #print(f"Running pose analysis model '{model_file}' on file '{file}'")
         
         interpreter = tflite.Interpreter(model_path=model_file)
         interpreter.allocate_tensors()
@@ -202,19 +258,17 @@ class AnalysePose():
             "right_ankle": results[16]
         }
 
-        # TODO: save data to user?
-
         draw = ImageDraw.Draw(img)
         for [y, x, confidence] in results:  # yes the results are y,x not x,y coordinates.
-            print(f"Position ({x*width}, {y*height}) - Confidence ({confidence}/1)")
+            #print(f"Position ({x*width}, {y*height}) - Confidence ({confidence}/1)")
             if confidence > SCORE:
                 # draw 2x2 red pixel square at each point if confidence > SCORE
                 draw.rounded_rectangle((((x*width)-1, (y*height)-1), ((x*width)+1, (y*height)+1)), fill=(255, 0, 0), width=2)
 
-        img.save(str(self.app.paths.data / RESULTS_FILE), "PNG")
+        img.save(str(self.app.paths.data / output_file), "PNG")
         img.close()
 
-        print('Time taken to analyse pose: {:.3f}ms'.format((stop_time - start_time) * 1000))
+        #print('Time taken to analyse pose: {:.3f}ms'.format((stop_time - start_time) * 1000))
 
         return True
     
@@ -256,7 +310,7 @@ class AnalysePose():
                 jpg_stream.close()
                 stream.close()
 
-                callable(toga.Image(Path(jpg_file.getAbsolutePath())))
+                callable(Path(jpg_file.getAbsolutePath()))
             else:
                 callable(None)
 
