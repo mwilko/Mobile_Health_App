@@ -18,8 +18,6 @@ import pickle
 
 
 def perform_prediction(app, input_data):
-    return 1 # Placeholder for now because MLA causing crash
-
     # Load the trained model
     path = str((app.paths.app / f"resources/machine_learning/HeartDisease-1.1.3.pkl"))
     with open(path, 'rb') as file:
