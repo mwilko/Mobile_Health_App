@@ -129,15 +129,11 @@ class PersonalDetails():
                 self.app.main_window.info_dialog("Error!", "Invalid weight input,\nPlease enter a valid weight.")
                 return
                 
-        self.app.user.update_bmi()
         print(f"Age: {age}, Height: {height}, Weight: {weight}, BMI: {self.app.user.bmi}")
         self.app.user.age = age
         self.app.user.height = height
         self.app.user.weight = weight
-        
-
-        # TODO, Calculate BMI (and save it to the user object?)
-        
+        self.app.user.update_bmi()
 
         self.app.user.save()
         print("User details saved!")

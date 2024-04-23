@@ -54,7 +54,10 @@ class ChoiceMenu:
 
         # Update ML label text with prediction percentage
         prediction_percentage = self.prediction_handler()
-        ml_label.text = f"Prediction: {prediction_percentage:.1f}%"
+        if(prediction_percentage == "Unknown"):
+            ml_label.text = f"Prediction: {prediction_percentage}"
+        else:
+            ml_label.text = f"Prediction: {prediction_percentage:.1f}%"
 
         machine_learning_box.add(name_label)
         machine_learning_box.add(ml_label)
@@ -81,7 +84,7 @@ class ChoiceMenu:
         heart_rate_button = toga.Button('Heart Rate', on_press=self.heart_rate_handler, style=Pack(color = 'black', background_color="#fbf5cc", padding=(-3)))
         heart_rate_box = create_border(heart_rate_button, inner_color="#fbf5cc")
 
-        nutrition_button = toga.Button('Nutrition', on_press=self.prediction_handler, style=Pack(color = 'black', background_color="#fbf5cc", padding=(-3)))
+        nutrition_button = toga.Button('Nutrition', on_press=self.nutrition_handler, style=Pack(color = 'black', background_color="#fbf5cc", padding=(-3)))
         nutrition_box = create_border(nutrition_button, inner_color="#fbf5cc")
 
         main_box.add(toga.Label("")) # Creates a space in background colour. ("Spacer")
@@ -144,13 +147,15 @@ class ChoiceMenu:
         return input_data
     
     def prediction_handler(self):
-        print("Prediction button pressed!")
-
         # Get the input data for prediction
         input_data = self.get_input_data()
 
         # Perform prediction using the input data
-        prediction_result = perform_prediction(self.app, input_data)
+        try:
+            prediction_result = perform_prediction(self.app, input_data)
+        except Exception as e:
+            print("Error:", e)
+            prediction_result = "Unknown"
 
         # Display prediction result
         print("Prediction:", prediction_result)
