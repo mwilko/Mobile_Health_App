@@ -38,10 +38,10 @@ class CognitiveSpell():
 
         header_box.add(cs_label)
 
-        main_container.add(toga.Label(""))
+        main_box.add(toga.Label(""))
         for button in [choice1_box, choice2_box, choice3_box]:
             main_box.add(button)
-        main_container.add(toga.Label(""))
+        main_box.add(toga.Label(""))
 
         main_black_box.add(main_box)
 

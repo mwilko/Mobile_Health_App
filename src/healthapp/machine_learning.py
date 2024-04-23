@@ -4,6 +4,8 @@ This file will contain the any needed implementation ML model for the health app
 to predict the risk factor of the user on chronic conditions based on
 the data collection
 
+DATA COMMENTED OUT FOR DEVELOPMENT TESTING AS IT CRASHES PROGRAM AT LAUNCH
+
 '''
 import toga
 from toga.style import Pack
@@ -16,6 +18,8 @@ import pickle
 
 
 def perform_prediction(app, input_data):
+    return 1 # Placeholder for now because MLA causing crash
+
     # Load the trained model
     path = str((app.paths.app / f"resources/machine_learning/HeartDisease.pkl"))
     with open(path, 'rb') as file:
