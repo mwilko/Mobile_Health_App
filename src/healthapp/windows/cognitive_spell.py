@@ -55,18 +55,18 @@ class CognitiveSpell():
 
     def choice1_handler(self, widget):
         print("Choice 1 button pressed! (Incorrect)")
-        print("Cognitive Score: " + Cognition.cognitive_score)
+        print(f"Cognitive Score: {Cognition.cognitive_score}")
         self.app.show_cognitive()
     
     def choice2_handler(self, widget):
         print("Choice 2 button pressed! (Correct)")
         Cognition.increment_score()
-        print("Cognitive Score: " + Cognition.cognitive_score)
+        print(f"Cognitive Score: {Cognition.cognitive_score}")
         self.app.show_cognitive()
 
     def choice3_handler(self, widget):
         print("Choice 3 button pressed! (Incorrect)")
-        print("Cognitive Score: " + Cognition.cognitive_score)
+        print(f"Cognitive Score: {Cognition.cognitive_score}")
         self.app.show_cognitive()
     
     def cs_class_handler(self, widget):
