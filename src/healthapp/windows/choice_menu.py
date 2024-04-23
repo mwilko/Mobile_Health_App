@@ -9,6 +9,7 @@ from healthapp.style import create_border
 
 # ChoiceMenu class for the choice menu
 class ChoiceMenu:
+
     def __init__(self, app: HealthApp):
         # store app in a variable
         self.app = app

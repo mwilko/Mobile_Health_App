@@ -37,6 +37,27 @@ class HealthApp(toga.App):
         from healthapp.windows.choice_menu import ChoiceMenu
         ChoiceMenu(self)
 
+    def show_cognitive(self):
+        # pass self as the app instance to the Cognition class
+        from healthapp.windows.cognitive import Cognition
+        Cognition(self)
+
+    def show_cognitive_memory(self):
+        # pass self as the app instance to the Cognition class
+        from healthapp.windows.cognitive_memory import CognitiveMemory
+        CognitiveMemory(self)
+    
+    def show_cognitive_math(self):
+        # pass self as the app instance to the Cognition class
+        from healthapp.windows.cognitive_math import CognitiveMath
+        CognitiveMath(self)
+    
+    def show_cognitive_spell(self):
+        # pass self as the app instance to the Cognition class
+        from healthapp.windows.cognitive_spell import CognitiveSpell
+        CognitiveSpell(self)
+
+
     def update_content(self, content) -> None:
         self.main_window.content = content
         self.main_window.show()
