@@ -6,7 +6,7 @@ from toga.style.pack import COLUMN
 from healthapp.app import HealthApp
 from healthapp.style import create_border
 
-from healthapp.windows.cognitive import Cognition
+from healthapp.windows.choice_menu import ChoiceMenu as cm
 from healthapp.popup_window import PopupWindow
 #-------------------------------------------------------------------------------------------------------#
 class CognitiveSpell():
@@ -55,18 +55,21 @@ class CognitiveSpell():
 
     def choice1_handler(self, widget):
         print("Choice 1 button pressed! (Incorrect)")
-        print(f"Cognitive Score: {Cognition.cognitive_score}")
+        print(f"Cognitive Score: {cm.cognitive_score}")
+        # PopupWindow.show_message(self.app, "Incorrect!")
         self.app.show_cognitive()
     
     def choice2_handler(self, widget):
         print("Choice 2 button pressed! (Correct)")
-        Cognition.increment_score()
-        print(f"Cognitive Score: {Cognition.cognitive_score}")
+        cm.increment_score()
+        print(f"Cognitive Score: {cm.cognitive_score}")
+        # PopupWindow.show_message(self.app, "Correct!")
         self.app.show_cognitive()
 
     def choice3_handler(self, widget):
         print("Choice 3 button pressed! (Incorrect)")
-        print(f"Cognitive Score: {Cognition.cognitive_score}")
+        print(f"Cognitive Score: {cm.cognitive_score}")
+        # PopupWindow.show_message(self.app, "Incorrect!")
         self.app.show_cognitive()
     
     def cs_class_handler(self, widget):

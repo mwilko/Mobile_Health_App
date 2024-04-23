@@ -11,11 +11,6 @@ class Cognition():
     # Images would be imported into this class for the cognitive analysis, planning to add to the choice box
     # putting the image the user makes this decision based on inside of the 'choice_box' 
 
-    cognitive_score = 0 # to store the score of the user's cognitive analysis
-
-    def increment_score():
-        Cognition.cognitive_score += 1
-
     def __init__(self, app: HealthApp):  
         self.app = app
 

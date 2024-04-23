@@ -12,6 +12,11 @@ from healthapp.machine_learning import perform_prediction
 # ChoiceMenu class for the choice menu
 class ChoiceMenu:
 
+    cognitive_score = 0 # to store the score of the user's cognitive analysis
+
+    def increment_score():
+        ChoiceMenu.cognitive_score += 1
+
     def __init__(self, app: HealthApp):
         # store app in a variable
         self.app = app
