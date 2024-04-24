@@ -22,7 +22,7 @@ class Nutrition():
         footer_box = toga.Box(style=Pack(padding=5))
 
         # button for behavioural analysis
-        n_label = toga.Label("How much calories do you consume per day: ", style=Pack(font_size=15, padding=(0, 10)))
+        n_label = toga.Label("How much calories do you consume per day: ", style=Pack(font_size=13.5, padding=(0, 10)))
         nless_1000_button = toga.Button('Less than 1000 calories', on_press=self.n_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
         nless_1000_box = create_border(nless_1000_button, inner_color="#fbf5cc")
 

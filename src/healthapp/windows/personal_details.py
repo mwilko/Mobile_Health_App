@@ -40,7 +40,7 @@ class PersonalDetails():
         self.app.user.update_bmi()
         self.bmi_label = toga.Label(format(self.app.user.bmi), style=Pack(color='black'))
         bmi_box = create_border(self.bmi_label, inner_color="#fbf5cc", padding=(2, 13, 0))
-	#------------------------------------------------------------------------------
+	    #------------------------------------------------------------------------------
 	
         submit_button = toga.Button('Submit', on_press=self.submit_handler, style=Pack(color = 'black', background_color="#fbf5cc", padding=(-3)))
         submit_box = create_border(submit_button, inner_color="#fbf5cc")

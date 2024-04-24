@@ -48,8 +48,8 @@ class ChoiceMenu:
         main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
 
         # Label for the choice menu
-        name_label = toga.Label(f"Welcome, {self.app.user.first} {self.app.user.last}", style=Pack(font_size=12, padding=(5, 10)))
-        ml_label = toga.Label("Machine Learning Algorithm has no data", style=Pack(font_size=15, padding=(0, 10)))
+        name_label = toga.Label(f"Welcome, {self.app.user.first} {self.app.user.last}", style=Pack(color='black', font_size=12, padding=(5, 10)))
+        ml_label = toga.Label("Machine Learning Algorithm has no data", style=Pack(color='black', font_size=15, padding=(0, 10)))
         
         # Calculate prediction percentage -----------------------------------------
         #input_data = [[1, 1, 100, 1, 1, 1, 1, 1, 1, 1, 1, 70]]  # Example input data
