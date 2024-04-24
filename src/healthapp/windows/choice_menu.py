@@ -16,6 +16,9 @@ class ChoiceMenu:
 
     def increment_score():
         ChoiceMenu.cognitive_score += 1
+    
+    def reset_score():
+        ChoiceMenu.cognitive_score = 0
 
     def __init__(self, app: HealthApp):
         # store app in a variable

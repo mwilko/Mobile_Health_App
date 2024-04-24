@@ -5,6 +5,8 @@ from toga.style.pack import COLUMN
 
 from healthapp.app import HealthApp
 from healthapp.style import create_border
+
+from healthapp.windows.choice_menu import ChoiceMenu as cm
 #-------------------------------------------------------------------------------------------------------#
 
 class Cognition():
@@ -19,12 +21,13 @@ class Cognition():
 
         # Main box for the initial content
         header_box = toga.Box(style=Pack(padding=20)) # for label
+        header_box
         main_box = toga.Box(style=Pack(direction = COLUMN, padding=(2, 2), background_color="#fbf5cc"))
         main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
         footer_box = toga.Box(style=Pack(padding=5)) # for submit + back buttons
 
         # button for behavioural analysis
-        c_label = toga.Label("Select your cognitive test: ", style=Pack(font_size=15, padding=(0, 10)))
+        cognitive_score_label = toga.Label(f"Your Cognitive Score is Currently: {cm.cognitive_score}", style=Pack(font_size=15, padding=(0, 10)))
 
         spelling_button = toga.Button('Spelling', on_press=self.spelling_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
         spelling_box = create_border(spelling_button, inner_color="#fbf5cc")
@@ -41,8 +44,11 @@ class Cognition():
         back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
         back_box = create_border(back_button, inner_color="#fbf5cc")
 
+        reset_score_button = toga.Button('Reset Score', on_press=self.reset_score_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
+        reset_score_box = create_border(reset_score_button, inner_color="#fbf5cc")
+
         # add the label to the header box
-        header_box.add(c_label)
+        header_box.add(cognitive_score_label)
 
         main_box.add(toga.Label(""))
         for button in [spelling_box, memory_box, maths_box]:
@@ -51,7 +57,7 @@ class Cognition():
 
         main_black_box.add(main_box)
 
-        for button in [submit_box, back_box]:
+        for button in [submit_box, reset_score_box, back_box]:
             # add the submit and back buttons to the footer_box
             footer_box.add(button) 
 
@@ -80,6 +86,11 @@ class Cognition():
     def c_class_handler(self, widget):
         #add logic
         print("Submit button pressed!")
+
+    def reset_score_handler(self, widget):
+        print("Reset Cognitive Score button pressed!")
+        cm.reset_score()
+        self.app.show_cognitive()
 
     def back_handler(self, widget):
         print("Back button pressed!")
