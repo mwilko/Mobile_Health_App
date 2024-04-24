@@ -2,7 +2,7 @@
 [tool.briefcase]
 project_name = "Health App"
 bundle = "org.lincoln"
-version = "0.0.4"
+version = "0.0.5"
 url = "https://example.com/healthapp"
 license = "BSD license"
 author = "Max Wilkinson"
