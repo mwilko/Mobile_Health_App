@@ -76,7 +76,7 @@ class Stroke():
             self.app.user.stroke = 1
         elif widget.text == 'No':
             self.app.user.stroke = 0
-        print(f"Smoker: {self.app.user.stroke}")
+        print(f"Stroke: {self.app.user.stroke}")
 
     def back_handler(self, widget):
         print("Back button pressed!")
