@@ -1,38 +1,48 @@
-#-------------------------------------------------------------------------------------------------------#
+# -------------------------------------------------------------------------------------------------------#
 import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN
 
 from healthapp.style import create_border
 from healthapp.app import HealthApp
-#-------------------------------------------------------------------------------------------------------#
+# -------------------------------------------------------------------------------------------------------#
+
 
 class HeartRate():
-    def __init__(self, app: HealthApp):  
+    def __init__(self, app: HealthApp):
         self.app = app
         self.app.update_content(self.get_content())
 
     def get_content(self) -> toga.Box:
 
-        content = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
+        content = toga.Box(style=Pack(
+            direction=COLUMN, background_color="#e0965e"))
 
         # Main box + choice box for the initial content
         header_box = toga.Box(style=Pack(padding=20))
-        main_box = toga.Box(style=Pack(direction = COLUMN, padding=(2, 2), background_color="#fbf5cc"))
-        main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
+        main_box = toga.Box(style=Pack(
+            direction=COLUMN, padding=(2, 2), background_color="#fbf5cc"))
+        main_black_box = toga.Box(style=Pack(
+            direction=COLUMN, padding=(0, 18, 18), background_color="black"))
         footer_box = toga.Box(style=Pack(padding=5))
 
         # button for behavioural analysis
-        hr_label1 = toga.Label("Feel your pulse until the timer reaches 0", style=Pack(font_size=15, padding=(0, 2)))
-        hr_label2 = toga.Label("Record the beats per minute", style=Pack(font_size=15, padding=(0, 2)))
+        hr_label1 = toga.Label("Feel your pulse until the timer reaches 0",
+                               color="black", style=Pack(font_size=15, padding=(0, 2)))
+        hr_label2 = toga.Label("Record the beats per minute",
+                               style=Pack(font_size=15, padding=(0, 2)))
 
-        self.hr_text_input = toga.TextInput(placeholder='BPM', style=Pack(background_color="#fbf5cc"))
-        hr_text_input_box = create_border(self.hr_text_input, inner_color="#fbf5cc")
+        self.hr_text_input = toga.TextInput(
+            placeholder='BPM', style=Pack(background_color="#fbf5cc"))
+        hr_text_input_box = create_border(
+            self.hr_text_input, inner_color="#fbf5cc")
 
-        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
+        back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(
+            background_color="#fbf5cc", padding=(-3)))
         back_box = create_border(back_button, inner_color="#fbf5cc")
 
-        submit_button = toga.Button('Submit', on_press=self.hr_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
+        submit_button = toga.Button('Submit', on_press=self.hr_handler, style=Pack(
+            background_color="#fbf5cc", padding=(-3)))
         sumbit_box = create_border(submit_button, inner_color="#fbf5cc")
 
         main_box.add(toga.Label(""))
@@ -63,7 +73,7 @@ class HeartRate():
         return content
 
     def hr_handler(self, widget):
-        #add logic
+        # add logic
         print("Heart Rate button pressed!")
         heart_rate = self.hr_text_input.value
         print(f"Heart rate: {heart_rate}")
