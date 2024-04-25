@@ -75,7 +75,7 @@ class Alcohol():
             self.app.user.alcohol = 1
         elif widget.text == 'No':
             self.app.user.alcohol = 0
-        print(f"Smoker: {self.app.user.alcohol}")
+        print(f"Alcohol: {self.app.user.alcohol}")
 
     def back_handler(self, widget):
         print("Back button pressed!")
