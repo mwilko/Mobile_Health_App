@@ -78,7 +78,7 @@ class Diabetes():
             self.app.user.stroke = 1
         elif widget.text == 'No':
             self.app.user.stroke = 0
-        print(f"Smoker: {self.app.user.diabetes}")
+        print(f"Diabetes: {self.app.user.diabetes}")
 
     def back_handler(self, widget):
         print("Back button pressed!")
