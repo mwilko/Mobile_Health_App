@@ -74,7 +74,7 @@ class Walking():
             self.app.user.diffwalking = 1
         elif widget.text == 'No':
             self.app.user.diffwalking = 0
-        print(f"Smoker: {self.app.user.diffwalking}")
+        print(f"Walking: {self.app.user.diffwalking}")
 
     def back_handler(self, widget):
         print("Back button pressed!")
