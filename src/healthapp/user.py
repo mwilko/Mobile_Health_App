@@ -25,7 +25,39 @@ class User:
 
         # These could be None as filled by the user whenever.
         self.age = None
+        self.height = None
+        self.weight = None
+        self.sleep = None
+        self.bmi = None
         # add other info from the user here.
+    
+    	# For heart-disease MLA
+        self.highbp = 0 #[1,0]
+        self.highcol = 0 #[1,0]
+        self.smoker = 0 #[1,0]
+        self.stroke = 0 #[1,0]
+        self.diabetes = 0 #[1,0]
+        self.physact = 0 #[1,0]
+        self.alcohol = 0 #[1,0]
+        self.physhealth = 0 #[Int]
+        self.diffwalking = 0 #[1,0]
+    	
+    	
+    # When user enters their height and weight this updates the BMI    
+    def update_bmi(self):
+        if self.height is not None and self.weight is not None:
+   		    # Convert height to meters
+            height_meters = self.height / 100  # Assuming height is in centimeters
+
+    	    # Calculate BMI
+            self.bmi = round(self.weight / (height_meters ** 2))
+        else:
+            self.bmi = None
+            
+        if hasattr(self.app, 'bmi_label'):
+            self.app.bmi_label.text = 'BMI: {}'.format(self.bmi)
+
+
 
     def save(self) -> None:
         data = {
@@ -33,7 +65,11 @@ class User:
             "last": self.last,
             "username": self.username,
             "sex": self.sex,
-            "age": self.age
+            "age": self.age,
+            "height": self.height,
+            "weight": self.weight,
+            "sleep": self.sleep,
+            "bmi": self.bmi
         }
         data = json.dumps(data).encode("utf-8")
         
@@ -54,9 +90,15 @@ class User:
                 self.last = data["last"]
                 self.username = data["username"]
                 self.sex = data["sex"]
-                self.age = data["age"]
+                
+                # Optionals:
+                self.age = data.get("age", None)
+                self.height = data.get("height", None)
+                self.weight = data.get("weight", None)
+                self.sleep = data.get("sleep", None)
+                self.bmi = data.get("bmi", None)
         except IOError as e:
             print(f"Error loading user data: {e}")
 
     def __str__(self) -> str:
-        return f"User[first: {self.first}, last: {self.last}, username: {self.username}, sex: {self.sex}, age: {self.age}]"
+        return f"User[first: {self.first}, last: {self.last}, username: {self.username}, sex: {self.sex}, age: {self.age}, height: {self.height}, weight: {self.weight}, sleep: {self.sleep}]"

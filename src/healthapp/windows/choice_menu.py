@@ -5,14 +5,34 @@ from toga.style.pack import COLUMN
 
 from healthapp.app import HealthApp
 from healthapp.style import create_border
+
+from healthapp.machine_learning import perform_prediction
 #-------------------------------------------------------------------------------------------------------#
 
 # ChoiceMenu class for the choice menu
 class ChoiceMenu:
+
+    cognitive_score = 0 # to store the score of the user's cognitive analysis
+
+    def increment_score():
+        ChoiceMenu.cognitive_score += 1
+    
+    def reset_score():
+        ChoiceMenu.cognitive_score = 0
+
     def __init__(self, app: HealthApp):
         # store app in a variable
         self.app = app
-        self.app.update_content(self.get_content())
+
+        cont = toga.OptionContainer(content=[
+            toga.OptionItem("Main Menu", self.get_content()),
+            toga.OptionItem("Analysis", toga.Box(children=[toga.Label("Analysis / Results page?")])),
+            toga.OptionItem("Profile", toga.Box(children=[toga.Label("Profile / Settings?")]))
+        ])
+        
+        self.app.update_content(cont)
+
+        #self.app.update_content(self.get_content())
 
         print("ChoiceMenu class running...")
 
@@ -28,32 +48,46 @@ class ChoiceMenu:
         main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
 
         # Label for the choice menu
-        name_label = toga.Label(f"Welcome, {self.app.user.first} {self.app.user.last}", style=Pack(font_size=12, padding=(5, 10)))
-        ml_label = toga.Label("Machine Learning Algorithm has no data", style=Pack(font_size=15, padding=(0, 10)))
+        name_label = toga.Label(f"Welcome, {self.app.user.first} {self.app.user.last}", style=Pack(color='black', font_size=12, padding=(5, 10)))
+        ml_label = toga.Label("Machine Learning Algorithm has no data", style=Pack(color='black', font_size=15, padding=(0, 10)))
+        
+        # Calculate prediction percentage -----------------------------------------
+        #input_data = [[1, 1, 100, 1, 1, 1, 1, 1, 1, 1, 1, 70]]  # Example input data
+        #prediction_percentage = perform_prediction(input_data)
+
+        # Update ML label text with prediction percentage
+        prediction_percentage = self.prediction_handler()
+        if(prediction_percentage == "Unknown"):
+            ml_label.text = f"Prediction: {prediction_percentage}"
+        else:
+            ml_label.text = f"Prediction: {prediction_percentage:.1f}%"
 
         machine_learning_box.add(name_label)
         machine_learning_box.add(ml_label)
 
+        machine_learning_box.add(name_label)
+        machine_learning_box.add(ml_label)
+        #--------------------------------------------------------------------------
         # button for choices
-        analyse_pose_button = toga.Button('Pose Analysis', on_press=self.pose_analysis_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
+        analyse_pose_button = toga.Button('Pose Analysis', on_press=self.pose_analysis_handler, style=Pack(color = 'black', background_color="#fbf5cc", padding=(-3)))
         pose_box = create_border(analyse_pose_button, inner_color="#fbf5cc")
 
-        personal_details_button = toga.Button('Personal Details', on_press=self.personal_details_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
+        personal_details_button = toga.Button('Personal Details', on_press=self.personal_details_handler, style=Pack(color = 'black', background_color="#fbf5cc", padding=(-3)))
         pd_box = create_border(personal_details_button, inner_color="#fbf5cc")
 
-        sleep_button = toga.Button('Sleep', on_press=self.sleep_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
+        sleep_button = toga.Button('Sleep', on_press=self.sleep_handler, style=Pack(color = 'black', background_color="#fbf5cc", padding=(-3)))
         sleep_box = create_border(sleep_button, inner_color="#fbf5cc")
 
-        lifestyle_button = toga.Button('Lifestyle', on_press=self.lifestyle_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
+        lifestyle_button = toga.Button('Lifestyle', on_press=self.lifestyle_handler, style=Pack(color = 'black', background_color="#fbf5cc", padding=(-3)))
         lifestyle_box = create_border(lifestyle_button, inner_color="#fbf5cc")
 
-        cognition_button = toga.Button('Cognition', on_press=self.cognition_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
+        cognition_button = toga.Button('Cognition', on_press=self.cognition_handler, style=Pack(color = 'black', background_color="#fbf5cc", padding=(-3)))
         cognition_box = create_border(cognition_button, inner_color="#fbf5cc")
 
-        heart_rate_button = toga.Button('Heart Rate', on_press=self.heart_rate_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
+        heart_rate_button = toga.Button('Heart Rate', on_press=self.heart_rate_handler, style=Pack(color = 'black', background_color="#fbf5cc", padding=(-3)))
         heart_rate_box = create_border(heart_rate_button, inner_color="#fbf5cc")
 
-        nutrition_button = toga.Button('Nutrition', on_press=self.nutrition_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
+        nutrition_button = toga.Button('Nutrition', on_press=self.nutrition_handler, style=Pack(color = 'black', background_color="#fbf5cc", padding=(-3)))
         nutrition_box = create_border(nutrition_button, inner_color="#fbf5cc")
 
         main_box.add(toga.Label("")) # Creates a space in background colour. ("Spacer")
@@ -66,7 +100,7 @@ class ChoiceMenu:
 
         for box in [machine_learning_box, main_black_box]:
             content.add(box)
-
+            
         return content
 
     # buttons to select the choice, takes the user to the respective page
@@ -104,3 +138,28 @@ class ChoiceMenu:
         print("Nutrition button pressed!")
         from healthapp.windows.nutrition import Nutrition
         Nutrition(self.app)
+        
+    def get_input_data(self):
+       
+        # Construct the input data list using the user's attributes
+        input_data = [
+        [self.app.user.highbp, self.app.user.highcol, self.app.user.bmi, self.app.user.smoker, self.app.user.stroke, self.app.user.diabetes,
+         self.app.user.physact, self.app.user.alcohol, self.app.user.physhealth, self.app.user.diffwalking, self.app.user.sex, self.app.user.age]
+        ]
+        
+        return input_data
+    
+    def prediction_handler(self):
+        # Get the input data for prediction
+        input_data = self.get_input_data()
+
+        # Perform prediction using the input data
+        try:
+            prediction_result = perform_prediction(self.app, input_data)
+        except Exception as e:
+            print("Error:", e)
+            prediction_result = "Unknown"
+
+        # Display prediction result
+        print("Prediction:", prediction_result)
+        return prediction_result
