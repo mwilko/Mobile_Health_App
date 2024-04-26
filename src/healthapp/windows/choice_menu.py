@@ -24,15 +24,16 @@ class ChoiceMenu:
         # store app in a variable
         self.app = app
 
-        cont = toga.OptionContainer(content=[
-            toga.OptionItem("Main Menu", self.get_content()),
-            toga.OptionItem("Analysis", toga.Box(children=[toga.Label("Analysis / Results page?")])),
-            toga.OptionItem("Profile", toga.Box(children=[toga.Label("Profile / Settings?")]))
-        ])
-        
-        self.app.update_content(cont)
-
-        #self.app.update_content(self.get_content())
+        # With menu bar:
+        # cont = toga.OptionContainer(content=[
+        #     toga.OptionItem("Main Menu", self.get_content()),
+        #     toga.OptionItem("Analysis", toga.Box(children=[toga.Label("Analysis / Results page?")])),
+        #     toga.OptionItem("Profile", toga.Box(children=[toga.Label("Profile / Settings?")]))
+        # ])
+        # self.app.update_content(cont)
+        #
+        # Without menu bar:
+        self.app.update_content(self.get_content())
 
         print("ChoiceMenu class running...")
 

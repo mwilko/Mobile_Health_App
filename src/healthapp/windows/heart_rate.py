@@ -28,7 +28,7 @@ class HeartRate():
 
         # button for behavioural analysis
         hr_label1 = toga.Label("Feel your pulse until the timer reaches 0",
-                               color="black", style=Pack(font_size=15, padding=(0, 2)))
+                               style=Pack(font_size=15, padding=(0, 2)))
         hr_label2 = toga.Label("Record the beats per minute",
                                style=Pack(font_size=15, padding=(0, 2)))
 
