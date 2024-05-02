@@ -25,39 +25,25 @@ class Nutrition():
             direction=COLUMN, padding=(0, 18, 18), background_color="black"))
         footer_box = toga.Box(style=Pack(padding=5))
 
-        # button for behavioural analysis
-        n_label = toga.Label("How much calories do you consume per day: ",
-                             style=Pack(font_size=13.5, padding=(0, 10)))
-        nless_1000_button = toga.Button('Less than 1000 calories', on_press=self.n_handler, style=Pack(
+        h_label = toga.Label("Nutrition", style=Pack(font_size=20, padding=(0, 10)))
+        header_box.add(h_label)
+
+        n_label = toga.Label("How many calories do you consume\nroughly, per day (eg 1500): ",
+                             style=Pack(font_size=15, padding=(5, 15)))
+        
+        self.cal_input = toga.TextInput(placeholder='1500 Calories', style=Pack(background_color="#fbf5cc", padding=(0, 0)))
+        cal_input_box = create_border(self.cal_input, inner_color="#fbf5cc", padding=(0, 13, 0))
+
+        submit_button = toga.Button('Submit', on_press=self.submit_handler, style=Pack(
             background_color="#fbf5cc", padding=(-3)))
-        nless_1000_box = create_border(
-            nless_1000_button, inner_color="#fbf5cc")
+        submit_box = create_border(submit_button, inner_color="#fbf5cc")
 
-        n1000_1499_button = toga.Button(
-            '1000 - 1500 calories', on_press=self.n_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
-        n1000_1499_box = create_border(
-            n1000_1499_button, inner_color="#fbf5cc")
-
-        n1500_2000_button = toga.Button(
-            '1500 - 2000 calories', on_press=self.n_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
-        n1500_2000_box = create_border(
-            n1500_2000_button, inner_color="#fbf5cc")
-
-        n2000_plus_button = toga.Button('More than 2000 calories', on_press=self.n_handler, style=Pack(
-            background_color="#fbf5cc", padding=(-3)))
-        n2000_plus_box = create_border(
-            n2000_plus_button, inner_color="#fbf5cc")
 
         back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(
             background_color="#fbf5cc", padding=(-3)))
         back_box = create_border(back_button, inner_color="#fbf5cc")
 
-        # formatting the layout
-        header_box.add(n_label)
-
-        main_box.add(toga.Label(""))
-        for button in [nless_1000_box, n1000_1499_box, n1500_2000_box,
-                       n2000_plus_box, back_box]:
+        for button in [n_label, cal_input_box, submit_box, back_box]:
             if button != back_box:
                 main_box.add(button)
                 main_box.add(toga.Label(""))
@@ -72,11 +58,20 @@ class Nutrition():
 
         return content
 
-    def n_handler(self, widget):
-        # TODO: add logic
-        # Access the label attribute of the button widget to get the user's selection
-        nutrition = widget.text
-        print(f"Nutrition: {nutrition}")
+    def submit_handler(self, widget):
+        calories = self.cal_input.value
+        if calories == "":
+            self.app.main_window.error_dialog('Error', 'Please enter the number of calories you consume daily.')
+            return
+        if not calories.isdigit():
+            self.app.main_window.error_dialog('Error', 'Please enter a valid number of calories.')
+            return
+        if int(calories) <= 0:
+            self.app.main_window.error_dialog('Error', 'Please enter a valid number of calories.')
+            return
+        self.app.user.calories = int(calories)
+        self.app.user.save()
+        self.app.main_window.info_dialog('Success', 'Calories saved successfully')
 
     def back_handler(self, widget):
         self.app.show_menu()

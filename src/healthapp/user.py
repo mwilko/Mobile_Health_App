@@ -29,6 +29,7 @@ class User:
         self.weight = None
         self.sleep = None
         self.bmi = None
+        self.calories = None
         # add other info from the user here.
     
     	# For heart-disease MLA
@@ -69,7 +70,19 @@ class User:
             "height": self.height,
             "weight": self.weight,
             "sleep": self.sleep,
-            "bmi": self.bmi
+            "bmi": self.bmi,
+            "calories": self.calories,
+
+            # For heart-disease MLA
+            "highbp": self.highbp,
+            "highcol": self.highcol,
+            "smoker": self.smoker,
+            "stroke": self.stroke,
+            "diabetes": self.diabetes,
+            "physact": self.physact,
+            "alcohol": self.alcohol,
+            "physhealth": self.physhealth,
+            "diffwalking": self.diffwalking
         }
         data = json.dumps(data).encode("utf-8")
         
@@ -97,8 +110,20 @@ class User:
                 self.weight = data.get("weight", None)
                 self.sleep = data.get("sleep", None)
                 self.bmi = data.get("bmi", None)
+                self.calories = data.get("calories", None)
+
+                # For heart-disease MLA
+                self.highbp = data.get("highbp", 0)
+                self.highcol = data.get("highcol", 0)
+                self.smoker = data.get("smoker", 0)
+                self.stroke = data.get("stroke", 0)
+                self.diabetes = data.get("diabetes", 0)
+                self.physact = data.get("physact", 0)
+                self.alcohol = data.get("alcohol", 0)
+                self.physhealth = data.get("physhealth", 0)
+                self.diffwalking = data.get("diffwalking", 0)
         except IOError as e:
             print(f"Error loading user data: {e}")
 
     def __str__(self) -> str:
-        return f"User[first: {self.first}, last: {self.last}, username: {self.username}, sex: {self.sex}, age: {self.age}, height: {self.height}, weight: {self.weight}, sleep: {self.sleep}]"
+        return f"User[first: {self.first}, last: {self.last}, username: {self.username}, sex: {self.sex}, age: {self.age}, height: {self.height}, weight: {self.weight}, sleep: {self.sleep}, bmi: {self.bmi}, calories: {self.calories}, highbp: {self.highbp}, highcol: {self.highcol}, smoker: {self.smoker}, stroke: {self.stroke}, diabetes: {self.diabetes}, physact: {self.physact}, alcohol: {self.alcohol}, physhealth: {self.physhealth}, diffwalking: {self.diffwalking}]"
