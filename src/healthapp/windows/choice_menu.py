@@ -4,9 +4,8 @@ from toga.style import Pack
 from toga.style.pack import COLUMN
 
 from healthapp.app import HealthApp
+from healthapp.windows.mla import MLA
 from healthapp.style import create_border
-
-from healthapp.machine_learning import perform_prediction
 #-------------------------------------------------------------------------------------------------------#
 
 # ChoiceMenu class for the choice menu
@@ -25,15 +24,14 @@ class ChoiceMenu:
         self.app = app
 
         # With menu bar:
-        # cont = toga.OptionContainer(content=[
-        #     toga.OptionItem("Main Menu", self.get_content()),
-        #     toga.OptionItem("Analysis", toga.Box(children=[toga.Label("Analysis / Results page?")])),
-        #     toga.OptionItem("Profile", toga.Box(children=[toga.Label("Profile / Settings?")]))
-        # ])
-        # self.app.update_content(cont)
-        #
+        cont = toga.OptionContainer(content=[
+            toga.OptionItem("Main Menu", self.get_content()),
+            toga.OptionItem("Health Analysis", MLA(self.app).get_content()),
+        ])
+        self.app.update_content(cont)
+
         # Without menu bar:
-        self.app.update_content(self.get_content())
+        # self.app.update_content(self.get_content())
 
         print("ChoiceMenu class running...")
 
@@ -49,25 +47,8 @@ class ChoiceMenu:
         main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
 
         # Label for the choice menu
-        name_label = toga.Label(f"Welcome, {self.app.user.first} {self.app.user.last}", style=Pack(color='black', font_size=12, padding=(5, 10)))
-        ml_label = toga.Label("Machine Learning Algorithm has no data", style=Pack(color='black', font_size=15, padding=(0, 10)))
-        
-        # Calculate prediction percentage -----------------------------------------
-        #input_data = [[1, 1, 100, 1, 1, 1, 1, 1, 1, 1, 1, 70]]  # Example input data
-        #prediction_percentage = perform_prediction(input_data)
-
-        # Update ML label text with prediction percentage
-        prediction_percentage = self.prediction_handler()
-        if(prediction_percentage == "Unknown"):
-            ml_label.text = f"Prediction: {prediction_percentage}"
-        else:
-            ml_label.text = f"Prediction: {prediction_percentage:.1f}%"
-
+        name_label = toga.Label(f"Welcome, {self.app.user.first} {self.app.user.last}", style=Pack(color='black', font_size=15, padding=(0, 10)))
         machine_learning_box.add(name_label)
-        machine_learning_box.add(ml_label)
-
-        machine_learning_box.add(name_label)
-        machine_learning_box.add(ml_label)
         #--------------------------------------------------------------------------
         # button for choices
         analyse_pose_button = toga.Button('Pose Analysis', on_press=self.pose_analysis_handler, style=Pack(color = 'black', background_color="#fbf5cc", padding=(-3)))
@@ -139,28 +120,3 @@ class ChoiceMenu:
         print("Nutrition button pressed!")
         from healthapp.windows.nutrition import Nutrition
         Nutrition(self.app)
-        
-    def get_input_data(self):
-       
-        # Construct the input data list using the user's attributes
-        input_data = [
-        [self.app.user.highbp, self.app.user.highcol, self.app.user.bmi, self.app.user.smoker, self.app.user.stroke, self.app.user.diabetes,
-         self.app.user.physact, self.app.user.alcohol, self.app.user.physhealth, self.app.user.diffwalking, self.app.user.sex, self.app.user.age]
-        ]
-        
-        return input_data
-    
-    def prediction_handler(self):
-        # Get the input data for prediction
-        input_data = self.get_input_data()
-
-        # Perform prediction using the input data
-        try:
-            prediction_result = perform_prediction(self.app, input_data)
-        except Exception as e:
-            print("Error:", e)
-            prediction_result = "Unknown"
-
-        # Display prediction result
-        print("Prediction:", prediction_result)
-        return prediction_result
