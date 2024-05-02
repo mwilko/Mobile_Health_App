@@ -4,36 +4,42 @@ Team Software Engineering project. This project is a mobile application built in
 
 ## How to install:
 
-Install Python 3.9. This version of language is needed for the modules to execute properly.
-```
+Install Python 3.8 (This version is needed to satisfy dependency requirements).
+```sh
 $ python3 --version
 ```
-If your Python version is stated as 3.9, we can continue, if not create a virual enviroment with that Python version and be sure to select the Python 3.9 interperator:
-```
-$ python3 -m venv env
-$ source env/bin/activate
+If your Python version is stated as 3.8, we can continue, if not create a virual enviroment with that Python version and be sure to select the Python 3.8 interperator:
+
+OSX/Linux:
+```sh
+$ python3 -m venv venv
+$ source venv/bin/activate
 ```
 
+Windows:
+```ps
+PS > python3 -m venv venv
+PS > ./venv/Scripts/activate
+```
+
+
+You should now have the `(venv)` prefix added to your terminal prompt as shown below.
+
 Next, install Briefcase and Toga which are BeeWare libaries:
-```
-$ python -m pip install briefcase
-$ python -m pip install toga
-```
-You may need to include the project dependencies:
-```
-$ pip install numpy, pandas, opencv-python,scikit-learn, matplotlib,
-  tflite-runtime
+```sh
+(venv) $ python -m pip install briefcase
+(venv) $ python -m pip install toga
 ```
 
 ## How to Run:
 
 For the first time when running the app, you may need to install the Android SDK:
-```
-$ briefcase create android
+```sh
+(venv) $ briefcase create android
 ```
 After this you should be able to run the application with the following:
-```
-$ briefcase run android -r -u
+```sh
+(venv) $ briefcase run android -r -u
 ```
 This would compile the application where the terminal will take you through the proccess of hosting the app via a virutal device which you select.
 
