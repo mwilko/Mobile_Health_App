@@ -16,3 +16,16 @@ PASSWORD_REQUIREMENTS = {
     "numbers_required": 0,     # Numbers required (0 for none required)
     "special_required": 0      # Special characters (any non a-Z 0-9 characters) required (0 for none required)
 }
+
+# The machine learning model files
+ML_MODEL_FILES = {
+    "heart_disease": "resources/machine_learning/HeartDisease-1.1.3.pkl",
+}
+
+# Pose detection type: (thunder = bigger slower accurate / lightning = smaller faster less-accurate)
+POSE_DETECTION_TYPE = "lightning"
+# Confidence score for pose detection, 1 = 100% confidence, 0 = 0% confidence
+POSE_DETECTION_CONFIDENCE = 0.4
+
+POSE_PHOTO_RESULTS_FILE = "pose-results.png"
+POSE_VIDEO_RESULTS_FILE = "pose-results.gif"
