@@ -91,9 +91,10 @@ class HeartRate():
             self.timer -= 1
             self.app.update_content(self.get_content())
 
-        self.timer = None
-        await asyncio.sleep(5)
-        self.app.update_content(self.get_content())
+        if self.timer == 0:
+            self.timer = None
+            await asyncio.sleep(5)
+            self.app.update_content(self.get_content())
 
     def submit_handler(self, widget):
         heart_rate = self.hr_text_input.value
@@ -114,4 +115,5 @@ class HeartRate():
         self.app.main_window.info_dialog('Success', 'Heart rate saved successfully')
 
     def back_handler(self, widget):
+        self.timer = None
         self.app.show_menu()
