@@ -1,4 +1,5 @@
 # -------------------------------------------------------------------------------------------------------#
+import asyncio
 import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN
@@ -11,6 +12,7 @@ from healthapp.app import HealthApp
 class HeartRate():
     def __init__(self, app: HealthApp):
         self.app = app
+        self.timer = None
         self.app.update_content(self.get_content())
 
     def get_content(self) -> toga.Box:
@@ -30,7 +32,7 @@ class HeartRate():
         hr_label1 = toga.Label("Feel your pulse until the timer reaches 0",
                                style=Pack(font_size=15, padding=(0, 2)))
         hr_label2 = toga.Label("Record the beats per minute",
-                               style=Pack(font_size=15, padding=(0, 2)))
+                               style=Pack(font_size=15, padding=(0, 10)))
 
         self.hr_text_input = toga.TextInput(
             placeholder='BPM', style=Pack(background_color="#fbf5cc"), value=self.app.user.heart_rate)
@@ -54,16 +56,21 @@ class HeartRate():
                 main_box.add(label)
                 main_box.add(hr_text_input_box)
 
-        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        # NEED TO ADD TIMER FUNCTIONALITY
-        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
         for button in [back_box, sumbit_box]:
             if button != back_box:
                 main_box.add(button)
                 main_box.add(toga.Label(""))
             else:
                 footer_box.add(button)
+        
+        main_box.add(toga.Label(""))
+        main_box.add(toga.Label(f"Timer: {self.timer if self.timer is not None else '60'}",
+                               style=Pack(font_size=15, padding=(0, 10))))
+        self.timer_button = toga.Button('Start Timer', on_press=self.start_timer, style=Pack(
+            background_color="#fbf5cc", padding=(-3)), enabled=self.timer is None)
+        self.timer_box = create_border(self.timer_button, inner_color="#fbf5cc")
+        main_box.add(self.timer_box)
+        main_box.add(toga.Label(""))
 
         main_black_box.add(main_box)
 
@@ -71,6 +78,22 @@ class HeartRate():
             content.add(box)
 
         return content
+
+    def start_timer(self, widget):
+        # start background task
+        self.app.loop.create_task(self.background_handler(self.app))
+        pass
+
+    async def background_handler(self, app, **kwargs):
+        self.timer = 60
+        while self.timer is not None and self.timer > 0:
+            await asyncio.sleep(1)
+            self.timer -= 1
+            self.app.update_content(self.get_content())
+
+        self.timer = None
+        await asyncio.sleep(5)
+        self.app.update_content(self.get_content())
 
     def submit_handler(self, widget):
         heart_rate = self.hr_text_input.value
