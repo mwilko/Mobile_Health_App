@@ -33,7 +33,7 @@ class HeartRate():
                                style=Pack(font_size=15, padding=(0, 2)))
 
         self.hr_text_input = toga.TextInput(
-            placeholder='BPM', style=Pack(background_color="#fbf5cc"))
+            placeholder='BPM', style=Pack(background_color="#fbf5cc"), value=self.app.user.heart_rate)
         hr_text_input_box = create_border(
             self.hr_text_input, inner_color="#fbf5cc")
 
@@ -73,11 +73,21 @@ class HeartRate():
         return content
 
     def submit_handler(self, widget):
-        #TODO: add logic?
         heart_rate = self.hr_text_input.value
-        print(f"Heart rate: {heart_rate}")
-        # self.app.user.heart_rate = heart_rate
-        # self.app.user.save()
+        if heart_rate is None:
+            self.app.main_window.error_dialog('Error', 'Please enter a valid heart rate')
+            return
+        if not heart_rate.isdigit():
+            self.app.main_window.error_dialog('Error', 'Please enter a valid heart rate')
+            return
+        if int(heart_rate) <= 0:
+            self.app.main_window.error_dialog('Error', 'Please enter a valid heart rate')
+            return
+        if int(heart_rate) > 200:
+            self.app.main_window.error_dialog('Error', 'Please enter a valid heart rate')
+            return
+        self.app.user.heart_rate = heart_rate
+        self.app.user.save()
         self.app.main_window.info_dialog('Success', 'Heart rate saved successfully')
 
     def back_handler(self, widget):
