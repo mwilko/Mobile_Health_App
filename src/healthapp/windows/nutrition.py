@@ -32,6 +32,8 @@ class Nutrition():
                              style=Pack(font_size=15, padding=(5, 15)))
         
         self.cal_input = toga.TextInput(placeholder='1500 Calories', style=Pack(background_color="#fbf5cc", padding=(0, 0)))
+        if self.app.user.calories is not None:
+            self.cal_input.value = str(self.app.user.calories)
         cal_input_box = create_border(self.cal_input, inner_color="#fbf5cc", padding=(0, 13, 0))
 
         submit_button = toga.Button('Submit', on_press=self.submit_handler, style=Pack(
