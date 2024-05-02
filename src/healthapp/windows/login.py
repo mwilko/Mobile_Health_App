@@ -41,10 +41,10 @@ class _LoginPage:
         header_box.add(title_label)
 
         # entry inputs
-        self.username_entry = toga.TextInput("username", placeholder="Username", style=Pack(background_color="#fbf5cc"), validators=[MinLength(USERNAME_REQUIREMENTS["min_length"], allow_empty=False)])
+        self.username_entry = toga.TextInput("username", placeholder="Username", style=Pack(background_color="#fbf5cc"), validators=[MinLength(1, allow_empty=False)])
         username_box = create_border(self.username_entry, inner_color="#fbf5cc")
         
-        self.password_entry = toga.PasswordInput("password", placeholder="Password", style=Pack(background_color="#fbf5cc"), validators=[MinLength(PASSWORD_REQUIREMENTS["min_length"], allow_empty=False)])
+        self.password_entry = toga.PasswordInput("password", placeholder="Password", style=Pack(background_color="#fbf5cc"), validators=[MinLength(1, allow_empty=False)])
         password_box = create_border(self.password_entry, inner_color="#fbf5cc")
 
         # login button.
