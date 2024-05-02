@@ -13,12 +13,6 @@ from healthapp.style import create_border
 #-------------------------------------------------------------------------------------------------------#
 
 def showAuthPage(app: HealthApp):
-    # uncomment this to skip login:
-    user = User(app)
-    user.load()
-    app.login_handler(user)
-    return
-    
     # If the user login file exists, we need to login not signup.
     if app.paths.data.joinpath(LOGIN_FILE).resolve().exists() and app.paths.data.joinpath(USER_DATA_FILE).resolve().exists():
         _LoginPage(app)
