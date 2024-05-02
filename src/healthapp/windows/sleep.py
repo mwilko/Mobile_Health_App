@@ -62,7 +62,7 @@ class Sleep():
         if sleep_duration.isnumeric() and int(sleep_duration) > 0:
             self.app.user.sleep = int(sleep_duration)
             self.app.user.save()
-            self.app.show_menu()
+            self.app.main_window.info_dialog('Success', 'Sleep saved successfully')
         else:
             self.app.main_window.error_dialog("Error!", "Input must be a positive integer.\nPlease try again.")
 

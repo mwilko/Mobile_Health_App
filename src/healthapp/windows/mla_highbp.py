@@ -66,6 +66,7 @@ class HighBP():
         # Update the high blood pressure variable based on the user's selection
         self.app.user.highbp = (1 if widget.text == 'Yes' else 0)
         self.app.user.save()
+        self.app.main_window.info_dialog('Success', 'High blood pressure saved successfully')
 
     def back_handler(self, widget):
         self.app.show_lifestyle()

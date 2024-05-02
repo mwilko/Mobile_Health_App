@@ -66,6 +66,7 @@ class Alcohol():
         # Update the alcohol variable based on the user's selection
         self.app.user.alcohol = (1 if widget.text == 'Yes' else 0)
         self.app.user.save()
+        self.app.main_window.info_dialog('Success', 'Alcohol saved successfully')
 
     def back_handler(self, widget):
         self.app.show_lifestyle()

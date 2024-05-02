@@ -157,8 +157,7 @@ class PersonalDetails():
 
         # Update the BMI label
         self.bmi_label.text = format(self.app.user.bmi)
-        self.app.main_window.info_dialog(
-            "Success!", "Details saved! Your BMI has been updated.")
+        self.app.main_window.info_dialog("Success!", "Details saved! Your BMI has been updated.")
 
     def back_handler(self, widget):
         self.app.show_menu()

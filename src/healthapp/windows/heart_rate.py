@@ -76,6 +76,9 @@ class HeartRate():
         #TODO: add logic?
         heart_rate = self.hr_text_input.value
         print(f"Heart rate: {heart_rate}")
+        # self.app.user.heart_rate = heart_rate
+        # self.app.user.save()
+        self.app.main_window.info_dialog('Success', 'Heart rate saved successfully')
 
     def back_handler(self, widget):
         self.app.show_menu()

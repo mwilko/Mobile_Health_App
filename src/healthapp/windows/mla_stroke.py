@@ -74,6 +74,7 @@ class Stroke():
         # Update the stroke variable based on the user's selection
         self.app.user.stroke = (1 if widget.text == 'Yes' else 0)
         self.app.user.save()
+        self.app.main_window.info_dialog('Success', 'Stroke saved successfully')
 
     def back_handler(self, widget):
         self.app.show_lifestyle()
