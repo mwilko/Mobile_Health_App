@@ -71,12 +71,9 @@ class Exercise():
         return content
 
     def lifestyle_handler(self, widget):
-        # add logic
-        print("Exercise Handler ran!")
+        #TODO: add logic
         # Access the label attribute of the button widget to get the user's selection
         self.exercise_selection = widget.text
-        print(f"Exercise duration: {self.exercise_selection}")
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_lifestyle()

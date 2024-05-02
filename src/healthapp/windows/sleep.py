@@ -37,14 +37,9 @@ class Sleep():
 
         header_box.add(header_label)
 
-        # for loop added incase of future expansion
-        for label in [s_label]:
-            if label == s_label:
-                main_box.add(toga.Label(""))
-                main_box.add(label)
-                main_box.add(s_text_input_box)
-            else:    
-                print("Error: Object not found")
+        main_box.add(toga.Label(""))
+        main_box.add(s_label)
+        main_box.add(s_text_input_box)
 
         # add buttons to the main box
         for button in [submit_box, back_box]:
@@ -63,18 +58,13 @@ class Sleep():
         return content
 
     def sleep_handler(self, widget):
-        print("Sleep button pressed!")
-
         sleep_duration = self.s_text_input.value
         if sleep_duration.isnumeric() and int(sleep_duration) > 0:
-            print(f"Sleep duration: {sleep_duration}")
             self.app.user.sleep = int(sleep_duration)
             self.app.user.save()
             self.app.show_menu()
         else:
-            print("Invalid input. Please enter a number.")
-            self.app.main_window.info_dialog("Error!", "Input must be a positive integer.\nPlease try again.")
+            self.app.main_window.error_dialog("Error!", "Input must be a positive integer.\nPlease try again.")
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_menu()

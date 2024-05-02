@@ -33,8 +33,6 @@ class ChoiceMenu:
         # Without menu bar:
         # self.app.update_content(self.get_content())
 
-        print("ChoiceMenu class running...")
-
     def get_content(self) -> toga.Box:
 
         content = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
@@ -87,36 +85,29 @@ class ChoiceMenu:
 
     # buttons to select the choice, takes the user to the respective page
     def pose_analysis_handler(self, widget):
-        print("Pose Analysis button pressed!")
         from healthapp.windows.analyse_pose import AnalysePose
         AnalysePose(self.app)
 
     def personal_details_handler(self, widget):
-        print("Personal Details button pressed!")
         from healthapp.windows.personal_details import PersonalDetails
         PersonalDetails(self.app) 
 
     def sleep_handler(self, widget):
-        print("Sleep button pressed!")
         from healthapp.windows.sleep import Sleep
         Sleep(self.app)
 
     def lifestyle_handler(self, widget):
-        print("Lifestyle button pressed!")
         from healthapp.windows.lifestyle import Lifestyle
         Lifestyle(self.app)
 
     def cognition_handler(self, widget):
-        print("Cognition button pressed!")
         from healthapp.windows.cognitive import Cognition
         Cognition(self.app)
 
     def heart_rate_handler(self, widget):
-        print("Heart Rate button pressed!")
         from healthapp.windows.heart_rate import HeartRate
         HeartRate(self.app)
 
     def nutrition_handler(self, widget):
-        print("Nutrition button pressed!")
         from healthapp.windows.nutrition import Nutrition
         Nutrition(self.app)

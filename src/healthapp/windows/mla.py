@@ -82,9 +82,7 @@ class MLA():
         try:
             prediction_result = perform_prediction(self.app, input_data)
         except Exception as e:
-            print("Error:", e)
+            print("MLA Error:", e)
             prediction_result = "Unknown"
 
-        # Display prediction result
-        print("Prediction:", prediction_result)
         return prediction_result

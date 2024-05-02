@@ -26,7 +26,6 @@ from java import jarray, jbyte # type: ignore
 
 class AnalysePose():
     def __init__(self, app: HealthApp):
-        print("Analyse Gait page loaded!")
         self.app = app 
         self.app.update_content(self.get_content())
         self.image_path = None
@@ -92,8 +91,6 @@ class AnalysePose():
         return content
 
     async def analyse_pose_handler(self, widget):
-        print("Analyse Pose button pressed!")
-
         if await self.app.camera.request_permission():
             photo = await self.app.camera.take_photo()
             if photo is None:
@@ -109,8 +106,6 @@ class AnalysePose():
             self.app.main_window.info_dialog("Oh no!", "You have not granted permission to use the camera!")
     
     async def analyse_pose_handler_2(self, widget):
-        print("Analyse Pose button pressed! (Gallery)")
-
         def run(pic_path):
             if(pic_path is None):
                 return
@@ -122,8 +117,6 @@ class AnalysePose():
         self.choose_picture(lambda pic_path: run(pic_path))
         
     async def analyse_pose_handler_3(self, widget):
-        print("Analyse Pose button pressed! (Video)")
-
         if await self.app.camera.request_permission():
             def run(video_path):
                 if(video_path is None):
@@ -138,8 +131,6 @@ class AnalysePose():
             self.app.main_window.info_dialog("Oh no!", "You have not granted permission to use the camera!")
     
     async def analyse_pose_handler_4(self, widget):
-        print("Analyse Pose button pressed! (Video Gallery)")
-
         def run(video_path):
             if(video_path is None):
                 return
@@ -151,7 +142,6 @@ class AnalysePose():
         self.choose_video(lambda video_path: run(video_path))
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_menu()
     
     async def run_video_analysis(self, app, **kwargs):
@@ -223,9 +213,7 @@ class AnalysePose():
 
         interpreter.set_tensor(input_details[0]['index'], input_data)
 
-        start_time = time.time()
         interpreter.invoke()
-        stop_time = time.time()
 
         output_data = interpreter.get_tensor(output_details[0]['index'])
 
@@ -264,8 +252,6 @@ class AnalysePose():
 
         img.save(str(self.app.paths.data / output_file), "PNG")
         img.close()
-
-        #print('Time taken to analyse pose: {:.3f}ms'.format((stop_time - start_time) * 1000))
 
         return True
     

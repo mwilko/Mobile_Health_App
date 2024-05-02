@@ -73,12 +73,10 @@ class Nutrition():
         return content
 
     def n_handler(self, widget):
-        # add logic
-        print("Nutrition button pressed!")
+        # TODO: add logic
         # Access the label attribute of the button widget to get the user's selection
         nutrition = widget.text
         print(f"Nutrition: {nutrition}")
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_menu()

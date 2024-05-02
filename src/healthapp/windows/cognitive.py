@@ -82,29 +82,21 @@ class Cognition():
         self.app.update_content(main_container)
 
     def spelling_handler(self, widget):
-        # add logic
-        print("Spelling button pressed!")
         self.app.show_cognitive_spell()
 
     def memory_handler(self, widget):
-        # add logic
-        print("Memory button pressed!")
         self.app.show_cognitive_memory()
 
     def maths_handler(self, widget):
-        # add logic
-        print("Maths button pressed!")
         self.app.show_cognitive_math()
 
     def c_class_handler(self, widget):
-        # add logic
-        print("Submit button pressed!")
+        #TODO: add logic?
+        print("Submit button pressed!?")
 
     def reset_score_handler(self, widget):
-        print("Reset Cognitive Score button pressed!")
         cm.reset_score()
         self.app.show_cognitive()
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_menu()

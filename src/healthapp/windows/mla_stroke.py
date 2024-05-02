@@ -71,13 +71,9 @@ class Stroke():
       #   main_box.add(toga.Label(""))
 
     def stroke_handler(self, widget):
-        # Update the high blood pressure variable based on the user's selection
-        if widget.text == 'Yes':
-            self.app.user.stroke = 1
-        elif widget.text == 'No':
-            self.app.user.stroke = 0
-        print(f"Stroke: {self.app.user.stroke}")
+        # Update the stroke variable based on the user's selection
+        self.app.user.stroke = (1 if widget.text == 'Yes' else 0)
+        self.app.user.save()
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_lifestyle()

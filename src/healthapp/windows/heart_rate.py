@@ -41,7 +41,7 @@ class HeartRate():
             background_color="#fbf5cc", padding=(-3)))
         back_box = create_border(back_button, inner_color="#fbf5cc")
 
-        submit_button = toga.Button('Submit', on_press=self.hr_handler, style=Pack(
+        submit_button = toga.Button('Submit', on_press=self.submit_handler, style=Pack(
             background_color="#fbf5cc", padding=(-3)))
         sumbit_box = create_border(submit_button, inner_color="#fbf5cc")
 
@@ -72,12 +72,10 @@ class HeartRate():
 
         return content
 
-    def hr_handler(self, widget):
-        # add logic
-        print("Heart Rate button pressed!")
+    def submit_handler(self, widget):
+        #TODO: add logic?
         heart_rate = self.hr_text_input.value
         print(f"Heart rate: {heart_rate}")
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_menu()

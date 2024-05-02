@@ -117,8 +117,6 @@ class PersonalDetails():
         return content
 
     def submit_handler(self, widget):
-        # add logic
-        print("Submit button pressed!")
         # Access the value attribute of the TextInput widgets to get the user's input
         age = self.age_input.value
         if age == "":
@@ -127,8 +125,7 @@ class PersonalDetails():
             if age.isnumeric() and int(age) > 0:
                 age = int(age)
             else:
-                print("Invalid age input")
-                self.app.main_window.info_dialog(
+                self.app.main_window.error_dialog(
                     "Error!", "Invalid age input,\nPlease enter a valid age.")
                 return
         height = self.height_input.value
@@ -138,8 +135,7 @@ class PersonalDetails():
             if height.isdecimal() and float(height) > 0:
                 height = float(height)
             else:
-                print("Invalid height input")
-                self.app.main_window.info_dialog(
+                self.app.main_window.error_dialog(
                     "Error!", "Invalid height input,\nPlease enter a valid height.")
                 return
         weight = self.weight_input.value
@@ -149,8 +145,7 @@ class PersonalDetails():
             if weight.isdecimal() and float(weight) > 0:
                 weight = float(weight)
             else:
-                print("Invalid weight input")
-                self.app.main_window.info_dialog(
+                self.app.main_window.error_dialog(
                     "Error!", "Invalid weight input,\nPlease enter a valid weight. (Use full numbers, no decimals)")
                 return
 
@@ -158,15 +153,12 @@ class PersonalDetails():
         self.app.user.height = height
         self.app.user.weight = weight
         self.app.user.update_bmi()
+        self.app.user.save()
 
         # Update the BMI label
         self.bmi_label.text = format(self.app.user.bmi)
-
-        self.app.user.save()
-        print("User details saved!")
         self.app.main_window.info_dialog(
             "Success!", "Details saved! Your BMI has been updated.")
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_menu()
