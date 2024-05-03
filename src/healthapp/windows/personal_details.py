@@ -148,8 +148,8 @@ class PersonalDetails():
                 self.app.main_window.error_dialog(
                     "Error!", "Invalid height input,\nPlease enter a valid height.")
                 return
-            elif height.isdecimal() and float(height) > 0:  # Check for valid height
-                height = float(height)
+            elif height.isdecimal() and int(height) > 0:  # Check for valid height
+                height = int(height)
             else:  # Check for non-numeric height
                 self.app.main_window.error_dialog(
                     "Error!", "Invalid height input,\nPlease enter a valid height.")
@@ -166,8 +166,8 @@ class PersonalDetails():
                 self.app.main_window.error_dialog(
                     "Error!", "Invalid weight input,\nPlease enter a valid weight. (Use full numbers, no decimals)")
                 return
-            elif weight.isdecimal() and float(weight) > 0:  # Check for valid weight
-                weight = float(weight)
+            elif weight.isdecimal() and int(weight) > 0:  # Check for valid weight
+                weight = int(weight)
             else:  # Check for non-numeric weight
                 self.app.main_window.error_dialog(
                     "Error!", "Invalid weight input,\nPlease enter a valid weight. (Use full numbers, no decimals)")

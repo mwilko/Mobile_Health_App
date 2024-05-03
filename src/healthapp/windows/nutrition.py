@@ -25,21 +25,23 @@ class Nutrition():
             direction=COLUMN, padding=(0, 18, 18), background_color="black"))
         footer_box = toga.Box(style=Pack(padding=5))
 
-        h_label = toga.Label("Nutrition", style=Pack(font_size=20, padding=(0, 10)))
+        h_label = toga.Label("Nutrition", style=Pack(
+            font_size=20, padding=(0, 10)))
         header_box.add(h_label)
 
         n_label = toga.Label("How many calories do you consume\nroughly, per day (eg 1500): ",
                              style=Pack(font_size=15, padding=(5, 15)))
-        
-        self.cal_input = toga.TextInput(placeholder='1500 Calories', style=Pack(background_color="#fbf5cc", padding=(0, 0)))
+
+        self.cal_input = toga.TextInput(placeholder='1500 Calories', style=Pack(
+            background_color="#fbf5cc", padding=(0, 0)))
         if self.app.user.calories is not None:
             self.cal_input.value = str(self.app.user.calories)
-        cal_input_box = create_border(self.cal_input, inner_color="#fbf5cc", padding=(0, 13, 0))
+        cal_input_box = create_border(
+            self.cal_input, inner_color="#fbf5cc", padding=(0, 13, 0))
 
         submit_button = toga.Button('Submit', on_press=self.submit_handler, style=Pack(
             background_color="#fbf5cc", padding=(-3)))
         submit_box = create_border(submit_button, inner_color="#fbf5cc")
-
 
         back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(
             background_color="#fbf5cc", padding=(-3)))
@@ -62,18 +64,26 @@ class Nutrition():
 
     def submit_handler(self, widget):
         calories = self.cal_input.value
-        if calories == "":
-            self.app.main_window.error_dialog('Error', 'Please enter the number of calories you consume daily.')
+        if calories == "":  # Check if the input is empty
+            self.app.main_window.error_dialog(
+                'Error', 'Please enter the number of calories you consume daily.')
             return
-        if not calories.isdigit():
-            self.app.main_window.error_dialog('Error', 'Please enter a valid number of calories.')
+        if not calories.isdigit():  # Check if the input is a number
+            self.app.main_window.error_dialog(
+                'Error', 'Please enter a valid number of calories.')
             return
-        if int(calories) <= 0:
-            self.app.main_window.error_dialog('Error', 'Please enter a valid number of calories.')
+        if int(calories) <= 0:  # Arbitrary limit
+            self.app.main_window.error_dialog(
+                'Error', 'Please enter a valid number of calories.')
+            return
+        if int(calories) > 10000:  # Arbitrary limit
+            self.app.main_window.error_dialog(
+                'Error', 'Please enter a valid number of calories.')
             return
         self.app.user.calories = int(calories)
         self.app.user.save()
-        self.app.main_window.info_dialog('Success', 'Calories saved successfully')
+        self.app.main_window.info_dialog(
+            'Success', 'Calories saved successfully')
 
     def back_handler(self, widget):
         self.app.show_menu()
