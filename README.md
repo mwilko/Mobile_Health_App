@@ -29,6 +29,10 @@ You may need to include the project dependencies:
 $ pip install numpy, pandas, opencv-python,scikit-learn, matplotlib,
   tflite-runtime
 ```
+If you get an error when trying to install TF Lite, try this:
+```
+pip3 install --extra-index-url https://google-coral.github.io/py-repo/ tflite_runtime
+```
 
 ## How to Run:
 
