@@ -122,9 +122,17 @@ class PersonalDetails():
         if age == "":
             age = None
         else:
-            if age.isnumeric() and int(age) > 0:
+            if age.isnumeric() and int(age) > 120:  # Check for age above 120
+                self.app.main_window.error_dialog(
+                    "Error!", "Invalid age input,\nPlease enter a valid age.")
+                return
+            elif age.isnumeric() and int(age) < 0:  # Check for negative age
+                self.app.main_window.error_dialog(
+                    "Error!", "Invalid age input,\nPlease enter a valid age.")
+                return
+            elif age.isnumeric() and int(age) > 0:  # Check for valid age
                 age = int(age)
-            else:
+            else:  # Check for non-numeric age
                 self.app.main_window.error_dialog(
                     "Error!", "Invalid age input,\nPlease enter a valid age.")
                 return
@@ -132,9 +140,17 @@ class PersonalDetails():
         if height == "":
             height = None
         else:
-            if height.isdecimal() and float(height) > 0:
+            if height.isnumeric() and int(height) > 304:  # Check for height above 304cm
+                self.app.main_window.error_dialog(
+                    "Error!", "Invalid height input,\nPlease enter a valid height.")
+                return
+            elif height.isnumeric() and int(height) < 0:  # Check for negative height
+                self.app.main_window.error_dialog(
+                    "Error!", "Invalid height input,\nPlease enter a valid height.")
+                return
+            elif height.isdecimal() and float(height) > 0:  # Check for valid height
                 height = float(height)
-            else:
+            else:  # Check for non-numeric height
                 self.app.main_window.error_dialog(
                     "Error!", "Invalid height input,\nPlease enter a valid height.")
                 return
@@ -142,9 +158,17 @@ class PersonalDetails():
         if weight == "":
             weight = None
         else:
-            if weight.isdecimal() and float(weight) > 0:
+            if weight.isnumeric() and int(weight) > 635:  # Check for weight above 635kg
+                self.app.main_window.error_dialog(
+                    "Error!", "Invalid weight input,\nPlease enter a valid weight. (Use full numbers, no decimals)")
+                return
+            elif weight.isnumeric() and int(weight) < 0:  # Check for negative weight
+                self.app.main_window.error_dialog(
+                    "Error!", "Invalid weight input,\nPlease enter a valid weight. (Use full numbers, no decimals)")
+                return
+            elif weight.isdecimal() and float(weight) > 0:  # Check for valid weight
                 weight = float(weight)
-            else:
+            else:  # Check for non-numeric weight
                 self.app.main_window.error_dialog(
                     "Error!", "Invalid weight input,\nPlease enter a valid weight. (Use full numbers, no decimals)")
                 return
@@ -157,7 +181,8 @@ class PersonalDetails():
 
         # Update the BMI label
         self.bmi_label.text = format(self.app.user.bmi)
-        self.app.main_window.info_dialog("Success!", "Details saved! Your BMI has been updated.")
+        self.app.main_window.info_dialog(
+            "Success!", "Details saved! Your BMI has been updated.")
 
     def back_handler(self, widget):
         self.app.show_menu()
