@@ -31,6 +31,7 @@ class User:
         self.bmi = None
         self.calories = None
         self.heart_rate = None
+        self.exercise = None
         # add other info from the user here.
     
     	# For heart-disease MLA
@@ -74,6 +75,7 @@ class User:
             "bmi": self.bmi,
             "calories": self.calories,
             "heart_rate": self.heart_rate,
+            "exercise": self.exercise,
 
             # For heart-disease MLA
             "highbp": self.highbp,
@@ -114,6 +116,7 @@ class User:
                 self.bmi = data.get("bmi", None)
                 self.calories = data.get("calories", None)
                 self.heart_rate = data.get("heart_rate", None)
+                self.exercise = data.get("exercise", None)
 
                 # For heart-disease MLA
                 self.highbp = data.get("highbp", 0)
@@ -129,4 +132,4 @@ class User:
             print(f"Error loading user data: {e}")
 
     def __str__(self) -> str:
-        return f"User[first: {self.first}, last: {self.last}, username: {self.username}, sex: {self.sex}, age: {self.age}, height: {self.height}, weight: {self.weight}, sleep: {self.sleep}, bmi: {self.bmi}, calories: {self.calories}, heart_rate: {self.heart_rate}, highbp: {self.highbp}, highcol: {self.highcol}, smoker: {self.smoker}, stroke: {self.stroke}, diabetes: {self.diabetes}, physact: {self.physact}, alcohol: {self.alcohol}, physhealth: {self.physhealth}, diffwalking: {self.diffwalking}]"
+        return f"User[first: {self.first}, last: {self.last}, username: {self.username}, sex: {self.sex}, age: {self.age}, height: {self.height}, weight: {self.weight}, sleep: {self.sleep}, bmi: {self.bmi}, calories: {self.calories}, heart_rate: {self.heart_rate}, exercise: {self.exercise}, highbp: {self.highbp}, highcol: {self.highcol}, smoker: {self.smoker}, stroke: {self.stroke}, diabetes: {self.diabetes}, physact: {self.physact}, alcohol: {self.alcohol}, physhealth: {self.physhealth}, diffwalking: {self.diffwalking}]"
