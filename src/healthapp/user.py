@@ -44,8 +44,8 @@ class User:
         self.alcohol = 0 #[1,0]
         self.physhealth = 0 #[Int]
         self.diffwalking = 0 #[1,0]
-    	
-    	
+
+
     # When user enters their height and weight this updates the BMI    
     def update_bmi(self):
         if self.height is not None and self.weight is not None:
@@ -56,10 +56,6 @@ class User:
             self.bmi = round(self.weight / (height_meters ** 2))
         else:
             self.bmi = None
-            
-        if hasattr(self.app, 'bmi_label'):
-            self.app.bmi_label.text = 'BMI: {}'.format(self.bmi)
-
 
 
     def save(self) -> None:

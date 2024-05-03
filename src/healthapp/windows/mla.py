@@ -60,6 +60,7 @@ class MLA():
             self.app.main_window.error_dialog("Data Missing", "BMI data is missing, please go to main menu and fill out 'personal details'.")
             self.hd_label.text = f"Heart Disease Prediction:  N/A"
         else:
+            self.app.main_window.info_dialog("Success!", "Predictions have been updated successfully.")
             self.hd_label.text = f"Heart Disease Prediction:  {prediction_percentage:.2f}%"
 
         #self.d_label.text = "Diabetes Prediction:  Coming Soon"
