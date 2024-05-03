@@ -62,13 +62,14 @@ class HeartRate():
                 main_box.add(toga.Label(""))
             else:
                 footer_box.add(button)
-        
+
         main_box.add(toga.Label(""))
         main_box.add(toga.Label(f"Timer: {self.timer if self.timer is not None else '60'}",
-                               style=Pack(font_size=15, padding=(0, 10))))
+                                style=Pack(font_size=15, padding=(0, 10))))
         self.timer_button = toga.Button('Start Timer', on_press=self.start_timer, style=Pack(
             background_color="#fbf5cc", padding=(-3)), enabled=self.timer is None)
-        self.timer_box = create_border(self.timer_button, inner_color="#fbf5cc")
+        self.timer_box = create_border(
+            self.timer_button, inner_color="#fbf5cc")
         main_box.add(self.timer_box)
         main_box.add(toga.Label(""))
 
@@ -98,21 +99,26 @@ class HeartRate():
 
     def submit_handler(self, widget):
         heart_rate = self.hr_text_input.value
-        if heart_rate is None:
-            self.app.main_window.error_dialog('Error', 'Please enter a valid heart rate')
+        if heart_rate is None:  # Check for empty input
+            self.app.main_window.error_dialog(
+                'Error', 'Please enter a valid heart rate')
             return
-        if not heart_rate.isdigit():
-            self.app.main_window.error_dialog('Error', 'Please enter a valid heart rate')
+        if not heart_rate.isdigit():  # Check for non-numeric input
+            self.app.main_window.error_dialog(
+                'Error', 'Please enter a valid heart rate')
             return
-        if int(heart_rate) <= 0:
-            self.app.main_window.error_dialog('Error', 'Please enter a valid heart rate')
+        if int(heart_rate) <= 0:  # Check for heart rate below 0
+            self.app.main_window.error_dialog(
+                'Error', 'Please enter a valid heart rate')
             return
-        if int(heart_rate) > 200:
-            self.app.main_window.error_dialog('Error', 'Please enter a valid heart rate')
+        if int(heart_rate) > 200:  # Check for heart rate above 200
+            self.app.main_window.error_dialog(
+                'Error', 'Please enter a valid heart rate')
             return
         self.app.user.heart_rate = heart_rate
         self.app.user.save()
-        self.app.main_window.info_dialog('Success', 'Heart rate saved successfully')
+        self.app.main_window.info_dialog(
+            'Success', 'Heart rate saved successfully')
 
     def back_handler(self, widget):
         self.timer = None
