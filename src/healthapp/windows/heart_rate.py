@@ -66,8 +66,10 @@ class HeartRate():
         main_box.add(toga.Label(""))
         main_box.add(toga.Label(f"Timer: {self.timer if self.timer is not None else '60'}",
                                style=Pack(font_size=15, padding=(0, 10))))
-        self.timer_button = toga.Button('Start Timer', on_press=self.start_timer, style=Pack(
-            background_color="#fbf5cc", padding=(-3)), enabled=self.timer is None)
+        bar = toga.ProgressBar(style=Pack(padding=10, width=300), running=False, max=60, value=(self.timer or 60))
+        main_box.add(bar)
+        self.timer_button = toga.Button('Start Timer' if self.timer is None else 'Reset Timer', on_press=self.timer_toggle, style=Pack(
+            background_color="#fbf5cc", padding=(-3)))
         self.timer_box = create_border(self.timer_button, inner_color="#fbf5cc")
         main_box.add(self.timer_box)
         main_box.add(toga.Label(""))
@@ -79,17 +81,20 @@ class HeartRate():
 
         return content
 
-    def start_timer(self, widget):
+    def timer_toggle(self, widget):
         # start background task
-        self.app.loop.create_task(self.background_handler(self.app))
-        pass
+        if self.timer == None:
+            self.app.loop.create_task(self.background_handler(self.app))
+        else:
+            self.timer = None
+            self.app.update_content(self.get_content())
 
     async def background_handler(self, app, **kwargs):
-        self.timer = 60
+        self.timer = 61
         while self.timer is not None and self.timer > 0:
-            await asyncio.sleep(1)
             self.timer -= 1
             self.app.update_content(self.get_content())
+            await asyncio.sleep(1)
 
         if self.timer == 0:
             self.timer = None
