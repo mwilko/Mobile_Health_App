@@ -34,7 +34,7 @@ class PersonalDetails():
             color='black', font_size=15, padding=(0, 15)))
         weight_label = toga.Label("Weight: ", style=Pack(
             color='black', font_size=15, padding=(0, 15)))
-        bmi_label = toga.Label("BMI: ", style=Pack(
+        self.bmi_label = toga.Label("BMI: " + str(self.app.user.bmi or "Unknown"), style=Pack(
             color='black', font_size=15, padding=(0, 15)))
 
         # text input + button for physical analysis
@@ -52,12 +52,6 @@ class PersonalDetails():
             color='black', background_color="#fbf5cc"), value=self.app.user.weight)
         weight_input_box = create_border(
             self.weight_input, inner_color="#fbf5cc", padding=(2, 13, 0))
-        # BMI -------------------------------------------------------------------------
-        self.app.user.update_bmi()
-        self.bmi_label = toga.Label(
-            format(self.app.user.bmi), style=Pack(color='black'))
-        bmi_box = create_border(
-            self.bmi_label, inner_color="#fbf5cc", padding=(2, 13, 0))
         # ------------------------------------------------------------------------------
 
         submit_button = toga.Button('Submit', on_press=self.submit_handler, style=Pack(
@@ -90,15 +84,9 @@ class PersonalDetails():
                 main_box.add(TextInput)
                 # Creates a space in background colour. ("Spacer")
                 main_box.add(toga.Label(""))
-            else:
-                main_box.add(bmi_label)
-                main_box.add(TextInput)
-                # Creates a space in background colour. ("Spacer")
-                main_box.add(toga.Label(""))
 
         # BMI------------------------------------
-        main_box.add(bmi_label)
-        main_box.add(bmi_box)
+        main_box.add(self.bmi_label)
         # BMI------------------------------------
 
         # add buttons to the main box
@@ -180,7 +168,7 @@ class PersonalDetails():
         self.app.user.save()
 
         # Update the BMI label
-        self.bmi_label.text = format(self.app.user.bmi)
+        self.bmi_label.text = "BMI: " + str(self.app.user.bmi or "Unknown")
         self.app.main_window.info_dialog(
             "Success!", "Details saved! Your BMI has been updated.")
 
