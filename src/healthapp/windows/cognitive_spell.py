@@ -104,5 +104,4 @@ class CognitiveSpell():
             self.app.update_content(container)
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_cognitive()

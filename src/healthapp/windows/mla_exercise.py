@@ -28,24 +28,13 @@ class Exercise():
         footer_box = toga.Box(style=Pack(padding=5))
 
         # label + button for behavioural analysis
-        exercise_label = toga.Label("How much exercise do you get per week?", style=Pack(
-            color='black', font_size=14, padding=(0, 5)))
+        exercise_label = toga.Label("How many minutes of exercise\ndo you do per week?", style=Pack(color='black', font_size=15, padding=(0, 10)))
 
-        e60_button = toga.Button('Less than 60 mins', on_press=self.lifestyle_handler, style=Pack(
-            color='black', background_color="#fbf5cc", padding=(-3)))
-        e60_box = create_border(e60_button, inner_color="#fbf5cc")
+        self.text_input = toga.TextInput(placeholder='30 Minutes', style=Pack(background_color="#fbf5cc"), value=self.app.user.exercise)
+        text_input_box = create_border(self.text_input, inner_color="#fbf5cc")
 
-        e60_119_button = toga.Button('60 - 119 mins', on_press=self.lifestyle_handler,
-                                     style=Pack(color='black', background_color="#fbf5cc", padding=(-3)))
-        e60_119_box = create_border(e60_119_button, inner_color="#fbf5cc")
-
-        e120_180_button = toga.Button('120 - 180 mins', on_press=self.lifestyle_handler,
-                                      style=Pack(color='black', background_color="#fbf5cc", padding=(-3)))
-        e120_180_box = create_border(e120_180_button, inner_color="#fbf5cc")
-
-        e180_plus_button = toga.Button('More than 180 mins', on_press=self.lifestyle_handler, style=Pack(
-            color='black', background_color="#fbf5cc", padding=(-3)))
-        e180_plus_box = create_border(e180_plus_button, inner_color="#fbf5cc")
+        submit_button = toga.Button('Submit', on_press=self.exercise_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
+        submit_box = create_border(submit_button, inner_color="#fbf5cc")
 
         back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(
             color='black', background_color="#fbf5cc", padding=(-3)))
@@ -55,8 +44,7 @@ class Exercise():
         header_box.add(exercise_label)
 
         main_box.add(toga.Label(""))
-        for button in [e60_119_box, e60_box, e120_180_box,
-                       e180_plus_box, back_box]:
+        for button in [text_input_box, submit_box, back_box]:
             if button != back_box:
                 main_box.add(button)
                 main_box.add(toga.Label(""))
@@ -70,13 +58,15 @@ class Exercise():
 
         return content
 
-    def lifestyle_handler(self, widget):
-        # add logic
-        print("Exercise Handler ran!")
-        # Access the label attribute of the button widget to get the user's selection
-        self.exercise_selection = widget.text
-        print(f"Exercise duration: {self.exercise_selection}")
+    def exercise_handler(self, widget):
+        exercise_duration = self.text_input.value
+        if exercise_duration.isnumeric() and int(exercise_duration) > 0:
+            self.app.user.exercise = int(exercise_duration)
+            self.app.user.save()
+            self.app.main_window.info_dialog('Success', 'Saved successfully')
+        else:
+            self.app.main_window.error_dialog("Error!", "Input must be a positive integer.\nPlease try again.")
+
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_lifestyle()

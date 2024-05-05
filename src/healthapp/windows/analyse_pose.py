@@ -11,6 +11,8 @@ from pathlib import Path
 
 from healthapp.style import create_border
 from healthapp.app import HealthApp
+from healthapp.config import POSE_DETECTION_TYPE, POSE_PHOTO_RESULTS_FILE, POSE_VIDEO_RESULTS_FILE
+from healthapp.config import POSE_DETECTION_CONFIDENCE as SCORE
 #-------------------------------------------------------------------------------------------------------#
 # Raw android imports for interacting directly with the camera (IDE probably wont know about these dont worry)
 from android.content import Intent # type: ignore
@@ -21,15 +23,9 @@ from java.io import File # type: ignore
 from java import jarray, jbyte # type: ignore
 #-------------------------------------------------------------------------------------------------------#
 
-# Confidence score for pose detection, 1 = 100% confidence, 0 = 0% confidence
-SCORE = 0.4
-RESULTS_FILE = "pose-results.png"
-
-MODEL_OPTION = "thunder"  # thunder or lightning (thunder is bigger, slightly slower but more accurate & lightning is smaller, faster but less accurate)
 
 class AnalysePose():
     def __init__(self, app: HealthApp):
-        print("Analyse Gait page loaded!")
         self.app = app 
         self.app.update_content(self.get_content())
         self.image_path = None
@@ -55,8 +51,8 @@ class AnalysePose():
         main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
         footer_box = toga.Box(style=Pack(padding=5))
 
-        if (self.app.paths.data / RESULTS_FILE).exists():
-            self.image = toga.ImageView(str(self.app.paths.data / RESULTS_FILE), style=Pack(width=256, height=256, direction=COLUMN, padding=20))
+        if (self.app.paths.data / POSE_PHOTO_RESULTS_FILE).exists():
+            self.image = toga.ImageView(str(self.app.paths.data / POSE_PHOTO_RESULTS_FILE), style=Pack(width=256, height=256, direction=COLUMN, padding=20))
         else:
             img = Image.new("RGB", (256, 256), (255, 0, 0))
             ImageDraw.Draw(img).text((10, 10), "No image found\nPress button to take a picture", fill=(255, 255, 255))
@@ -95,8 +91,6 @@ class AnalysePose():
         return content
 
     async def analyse_pose_handler(self, widget):
-        print("Analyse Pose button pressed!")
-
         if await self.app.camera.request_permission():
             photo = await self.app.camera.take_photo()
             if photo is None:
@@ -112,8 +106,6 @@ class AnalysePose():
             self.app.main_window.info_dialog("Oh no!", "You have not granted permission to use the camera!")
     
     async def analyse_pose_handler_2(self, widget):
-        print("Analyse Pose button pressed! (Gallery)")
-
         def run(pic_path):
             if(pic_path is None):
                 return
@@ -125,8 +117,6 @@ class AnalysePose():
         self.choose_picture(lambda pic_path: run(pic_path))
         
     async def analyse_pose_handler_3(self, widget):
-        print("Analyse Pose button pressed! (Video)")
-
         if await self.app.camera.request_permission():
             def run(video_path):
                 if(video_path is None):
@@ -141,8 +131,6 @@ class AnalysePose():
             self.app.main_window.info_dialog("Oh no!", "You have not granted permission to use the camera!")
     
     async def analyse_pose_handler_4(self, widget):
-        print("Analyse Pose button pressed! (Video Gallery)")
-
         def run(video_path):
             if(video_path is None):
                 return
@@ -154,7 +142,6 @@ class AnalysePose():
         self.choose_video(lambda video_path: run(video_path))
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_menu()
     
     async def run_video_analysis(self, app, **kwargs):
@@ -174,11 +161,11 @@ class AnalysePose():
             count += 1
         #compress to gif?
         self.run_analysis(str(self.app.paths.data / ("frame%d.jpg" % (count - 2))))
-        self.image.image = str(self.app.paths.data / RESULTS_FILE)
+        self.image.image = str(self.app.paths.data / POSE_PHOTO_RESULTS_FILE)
         time_end = time.time()
         print('Time taken to analyse whole video pose: {:.3f}s'.format(time_end - time_start))
 
-        images[0].save(str(self.app.paths.data / "results.gif"),
+        images[0].save(str(self.app.paths.data / POSE_VIDEO_RESULTS_FILE),
                save_all=True, append_images=images[1:], optimize=False, duration=33, loop=0)
 
         for image in images:
@@ -189,23 +176,23 @@ class AnalysePose():
             Path(str(self.app.paths.data / ("frame%d.jpg" % i))).unlink()
             Path(str(self.app.paths.data / ("frame%d-results.jpg" % i))).unlink()
 
-        self.app.main_window.info_dialog("Success!", "Pose analysis complete!\nResults saved as 'results.gif' in the data folder.")
+        self.app.main_window.info_dialog("Success!", "Pose analysis complete!\nResults saved as '" + POSE_VIDEO_RESULTS_FILE + "' in the data folder.")
         self.app.update_content(self.get_content())
         return True
     
     async def run_image_analysis(self, app, **kwargs):
         file = self.image_path
         self.run_analysis(file)
-        self.image.image = str(self.app.paths.data / RESULTS_FILE)
+        self.image.image = str(self.app.paths.data / POSE_PHOTO_RESULTS_FILE)
 
-        self.app.main_window.info_dialog("Success!", "Pose analysis complete!\nResults saved as '" + RESULTS_FILE + "' in the data folder.")
+        self.app.main_window.info_dialog("Success!", "Pose analysis complete!\nResults saved as '" + POSE_PHOTO_RESULTS_FILE + "' in the data folder.")
         self.app.update_content(self.get_content())
         return True
 
-    def run_analysis(self, file, output_file=RESULTS_FILE):
+    def run_analysis(self, file, output_file=POSE_PHOTO_RESULTS_FILE):
         import tflite_runtime.interpreter as tflite
 
-        model_file = str((self.app.paths.app / f"resources/machine_learning/singlepose-{MODEL_OPTION}-tflite-float16-v4.tflite"))
+        model_file = str((self.app.paths.app / f"resources/machine_learning/singlepose-{POSE_DETECTION_TYPE}-tflite-float16-v4.tflite"))
 
         #print(f"Running pose analysis model '{model_file}' on file '{file}'")
         
@@ -226,9 +213,7 @@ class AnalysePose():
 
         interpreter.set_tensor(input_details[0]['index'], input_data)
 
-        start_time = time.time()
         interpreter.invoke()
-        stop_time = time.time()
 
         output_data = interpreter.get_tensor(output_details[0]['index'])
 
@@ -267,8 +252,6 @@ class AnalysePose():
 
         img.save(str(self.app.paths.data / output_file), "PNG")
         img.close()
-
-        #print('Time taken to analyse pose: {:.3f}ms'.format((stop_time - start_time) * 1000))
 
         return True
     

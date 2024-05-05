@@ -11,8 +11,6 @@ from healthapp.windows.choice_menu import ChoiceMenu as cm
 
 
 class CognitiveMemory():
-    print("CognitiveMemory class")
-
     def __init__(self, app: HealthApp):
         self.app = app
         main_container = toga.Box(style=Pack(
@@ -66,31 +64,24 @@ class CognitiveMemory():
         self.app.update_content(main_container)
 
     def choice1_handler(self, widget):
-        print("Choice 1 button pressed! (Incorrect)")
-        print(f"Cognitive Score: {cm.cognitive_score}")
         self.app.main_window.info_dialog(
             "Incorrect Answer!", "You have answered incorrectly! \nYou have been returned to the Cognitive Test Menu.")
         self.app.show_cognitive()
 
     def choice2_handler(self, widget):
-        print("Choice 2 button pressed! (Correct)")
         cm.increment_score()
-        print(f"Cognitive Score: {cm.cognitive_score}")
         self.app.main_window.info_dialog(
             "Correct Answer!", "You have answered correctly! \nYou have been returned to the Cognitive Test Menu.")
         self.app.show_cognitive()
 
     def choice3_handler(self, widget):
-        print("Choice 3 button pressed! (Incorrect)")
-        print(f"Cognitive Score: {cm.cognitive_score}")
         self.app.main_window.info_dialog(
             "Incorrect Answer!", "You have answered incorrectly! \nYou have been returned to the Cognitive Test Menu.")
         self.app.show_cognitive()
 
     def cs_class_handler(self, widget):
-        # add logic
-        print("Submit button pressed!")
+        #TODO: add logic?
+        print("Submit button pressed!?")
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_cognitive()
