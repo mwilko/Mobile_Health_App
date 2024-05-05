@@ -87,37 +87,28 @@ class Lifestyle():
         return content
 
     def exercise_handler(self, widget):
-        print("Exercise button pressed!")
         self.app.show_mla_exercise()
 
     def highbp_handler(self, widget):
-        print("High blood pressure button pressed!")
         self.app.show_mla_highbp()
 
     def highcol_handler(self, widget):
-        print("High cholesterol button pressed!")
         self.app.show_mla_highcol()
 
     def smoker_handler(self, widget):
-        print("Smoker button pressed!")
         self.app.show_mla_smoker()
 
     def stroke_handler(self, widget):
-        print("Stroke button pressed!")
         self.app.show_mla_stroke()
 
     def diabetes_handler(self, widget):
-        print("Diabetes button pressed!")
         self.app.show_mla_diabetes()
 
     def alcohol_handler(self, widget):
-        print("Alcohol button pressed!")
         self.app.show_mla_alcohol()
 
     def walking_handler(self, widget):
-        print("Walking button pressed!")
         self.app.show_mla_walking()
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_menu()

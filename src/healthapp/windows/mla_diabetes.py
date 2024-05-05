@@ -37,21 +37,21 @@ class Diabetes():
         diabetes_label = toga.Label("Do you have diabetes?", style=Pack(
             color='black', font_size=15, padding=(0, 5)))
 
-        yesdiabetes_button = toga.Button('Yes', on_press=self.diabetes_handler, style=Pack(
+        yes_button = toga.Button('Yes', on_press=self.diabetes_handler, style=Pack(
             color='black', background_color="#fbf5cc", padding=(-3)))
-        yesdiabetes_box = create_border(
-            yesdiabetes_button, inner_color="#fbf5cc")
+        yes_box = create_border(
+            yes_button, inner_color="#fbf5cc")
 
-        nodiabetes_button = toga.Button('No', on_press=self.diabetes_handler, style=Pack(
+        no_button = toga.Button('No', on_press=self.diabetes_handler, style=Pack(
             color='black', background_color="#fbf5cc", padding=(-3)))
-        nodiabetes_box = create_border(
-            nodiabetes_button, inner_color="#fbf5cc")
+        no_box = create_border(
+            no_button, inner_color="#fbf5cc")
 
         # adding labels to page
         header_box.add(diabetes_label)
 
         main_box.add(toga.Label(""))
-        for button in [yesdiabetes_box, nodiabetes_box, back_box]:
+        for button in [yes_box, no_box, back_box]:
             if button != back_box:
                 main_box.add(button)
                 main_box.add(toga.Label(""))
@@ -65,21 +65,11 @@ class Diabetes():
 
         return content
 
-      #   # Diabetes labels
-      #   main_box.add(toga.Label(""))
-      #   main_box.add(stroke_label)
-      #   main_box.add(yesdiabetes_box)
-      #   main_box.add(nodiabetes_box)
-      #   main_box.add(toga.Label(""))
-
     def diabetes_handler(self, widget):
-        # Update the high blood pressure variable based on the user's selection
-        if widget.text == 'Yes':
-            self.app.user.stroke = 1
-        elif widget.text == 'No':
-            self.app.user.stroke = 0
-        print(f"Diabetes: {self.app.user.diabetes}")
+        # Update the diabetes variable based on the user's selection
+        self.app.user.diabetes = (1 if widget.text == 'Yes' else 0)
+        self.app.user.save()
+        self.app.main_window.info_dialog('Success', 'Diabetes saved successfully')
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_lifestyle()

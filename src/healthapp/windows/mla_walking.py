@@ -61,21 +61,12 @@ class Walking():
 
         return content
 
-        # # Walking labels
-        # main_box.add(toga.Label(""))
-        # main_box.add(walking_label)
-        # main_box.add(yeswalk_box)
-        # main_box.add(nowalk_box)
-        # main_box.add(toga.Label(""))
 
     def walking_handler(self, widget):
-        # Update the high blood pressure variable based on the user's selection
-        if widget.text == 'Yes':
-            self.app.user.diffwalking = 1
-        elif widget.text == 'No':
-            self.app.user.diffwalking = 0
-        print(f"Walking: {self.app.user.diffwalking}")
+        # Update the difficulty walking variable based on the user's selection
+        self.app.user.diffwalking = (1 if widget.text == 'Yes' else 0)
+        self.app.user.save()
+        self.app.main_window.info_dialog('Success', 'Difficulty walking saved successfully')
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_lifestyle()
