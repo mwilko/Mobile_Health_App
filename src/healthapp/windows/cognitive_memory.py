@@ -36,10 +36,6 @@ class CognitiveMemory():
             background_color="#fbf5cc", padding=(-3)))
         choice3_box = create_border(choice3_button, inner_color="#fbf5cc")
 
-        submit_button = toga.Button('Submit', on_press=self.cs_class_handler, style=Pack(
-            background_color="#fbf5cc", padding=(-3)))
-        submit_box = create_border(submit_button, inner_color="#fbf5cc")
-
         back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(
             background_color="#fbf5cc", padding=(-3)))
         back_box = create_border(back_button, inner_color="#fbf5cc")
@@ -53,8 +49,7 @@ class CognitiveMemory():
 
         main_black_box.add(main_box)
 
-        for button in [submit_box, back_box]:
-            footer_box.add(button)
+        footer_box.add(back_box)
 
         for box in [header_box, main_black_box, footer_box]:
             main_container.add(box)
@@ -77,10 +72,6 @@ class CognitiveMemory():
         self.app.main_window.info_dialog(
             "Incorrect Answer!", "You have answered incorrectly! \nYou have been returned to the Cognitive Test Menu.")
         self.app.show_cognitive()
-
-    def cs_class_handler(self, widget):
-        #TODO: add logic?
-        print("Submit button pressed!?")
 
     def back_handler(self, widget):
         self.app.show_cognitive()

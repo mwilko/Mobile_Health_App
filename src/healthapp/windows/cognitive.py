@@ -45,10 +45,6 @@ class Cognition():
             background_color="#fbf5cc", padding=(-3)))
         maths_box = create_border(maths_button, inner_color="#fbf5cc")
 
-        submit_button = toga.Button('Submit', on_press=self.c_class_handler, style=Pack(
-            background_color="#fbf5cc", padding=(-3)))
-        submit_box = create_border(submit_button, inner_color="#fbf5cc")
-
         back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(
             background_color="#fbf5cc", padding=(-3)))
         back_box = create_border(back_button, inner_color="#fbf5cc")
@@ -68,8 +64,8 @@ class Cognition():
 
         main_black_box.add(main_box)
 
-        for button in [submit_box, reset_score_box, back_box]:
-            # add the submit and back buttons to the footer_box
+        for button in [reset_score_box, back_box]:
+            # add the reset score and back buttons to the footer_box
             footer_box.add(button)
 
         # add boxes to the main container
@@ -87,10 +83,6 @@ class Cognition():
 
     def maths_handler(self, widget):
         self.app.show_cognitive_math()
-
-    def c_class_handler(self, widget):
-        #TODO: add logic?
-        print("Submit button pressed!?")
 
     def reset_score_handler(self, widget):
         self.app.user.cognitive = 0
