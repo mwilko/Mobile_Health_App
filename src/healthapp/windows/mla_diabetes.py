@@ -34,7 +34,7 @@ class Diabetes():
         back_box = create_border(back_button, inner_color="#fbf5cc")
 
         # label + button for diabetes
-        diabetes_label = toga.Label("Have you had a stroke?", style=Pack(
+        diabetes_label = toga.Label("Do you have diabetes?", style=Pack(
             color='black', font_size=15, padding=(0, 5)))
 
         yesdiabetes_button = toga.Button('Yes', on_press=self.diabetes_handler, style=Pack(

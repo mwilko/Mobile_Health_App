@@ -33,7 +33,7 @@ class Cognition():
 
         # button for behavioural analysis
         cognitive_score_label = toga.Label(
-            f"Your Cognitive Score is Currently: {cm.cognitive_score}", color="black", style=Pack(font_size=15, padding=(0, 10)))
+            f"Your Cognitive Score is Currently: {cm.cognitive_score}", style=Pack(font_size=15, padding=(0, 10)))
 
         spelling_button = toga.Button('Spelling', on_press=self.spelling_handler, style=Pack(
             background_color="#fbf5cc", padding=(-3)))
