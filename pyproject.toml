@@ -39,7 +39,6 @@ requires = [
 
     "tflite_runtime==2.5.0"
 ]
-# splash = "resources/android/healthapp-splash" TODO, different splash screens for android
 permission.camera = true
 build_gradle_dependencies = [
     "androidx.appcompat:appcompat:1.6.1",
