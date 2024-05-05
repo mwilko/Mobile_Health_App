@@ -5,11 +5,11 @@ from toga.style.pack import COLUMN
 
 from healthapp.app import HealthApp
 from healthapp.style import create_border
+from healthapp.config import COGNITIVE_SPELLING_FILE
 
 from healthapp.windows.choice_menu import ChoiceMenu as cm
 
 import random
-import os
 #-------------------------------------------------------------------------------------------------------#
 class CognitiveSpell():
     def __init__(self, app: HealthApp):  
@@ -19,7 +19,7 @@ class CognitiveSpell():
         self.correct_answers = 0
         self.max_questions = 10
         # load questions from file
-        filename = os.path.join(os.path.dirname(__file__), '..', 'resources', 'questions.txt')
+        filename = str((app.paths.app / COGNITIVE_SPELLING_FILE))
         self.questions = self.load_questions(filename)
         self.choice1_button = toga.Button('', on_press=self.choice_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
         self.choice2_button = toga.Button('', on_press=self.choice_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))

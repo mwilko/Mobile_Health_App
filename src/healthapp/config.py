@@ -17,6 +17,9 @@ PASSWORD_REQUIREMENTS = {
     "special_required": 0      # Special characters (any non a-Z 0-9 characters) required (0 for none required)
 }
 
+# Cognitive spelling file
+COGNITIVE_SPELLING_FILE = "resources/questions.txt"
+
 # The machine learning model files
 ML_MODEL_FILES = {
     "heart_disease": "resources/machine_learning/HeartDisease-1.1.3.pkl",
