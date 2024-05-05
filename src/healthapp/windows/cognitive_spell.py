@@ -1,6 +1,4 @@
 #-------------------------------------------------------------------------------------------------------#
-from re import S
-from tkinter import SE
 import toga
 from toga.style import Pack
 from toga.style.pack import COLUMN
