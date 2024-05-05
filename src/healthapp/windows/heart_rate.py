@@ -97,7 +97,7 @@ class HeartRate():
 
         if self.timer == 0:
             self.timer = None
-            await asyncio.sleep(5)
+            self.app.main_window.error_dialog("Time's up!", "Please submit your heart rate.")
             self.app.update_content(self.get_content())
 
     def submit_handler(self, widget):
