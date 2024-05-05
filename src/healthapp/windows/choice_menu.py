@@ -10,15 +10,6 @@ from healthapp.style import create_border
 
 # ChoiceMenu class for the choice menu
 class ChoiceMenu:
-
-    cognitive_score = 0 # to store the score of the user's cognitive analysis
-
-    def increment_score():
-        ChoiceMenu.cognitive_score += 1
-    
-    def reset_score():
-        ChoiceMenu.cognitive_score = 0
-
     def __init__(self, app: HealthApp):
         # store app in a variable
         self.app = app

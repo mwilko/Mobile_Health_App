@@ -5,8 +5,6 @@ from toga.style.pack import COLUMN
 
 from healthapp.app import HealthApp
 from healthapp.style import create_border
-
-from healthapp.windows.choice_menu import ChoiceMenu as cm
 #-------------------------------------------------------------------------------------------------------#
 
 class CognitiveMath():
@@ -62,7 +60,8 @@ class CognitiveMath():
         self.app.show_cognitive()
 
     def choice3_handler(self, widget):
-        cm.increment_score()
+        self.app.user.cognitive += 1
+        self.app.user.save()
         self.app.main_window.info_dialog("Correct Answer!", "You have answered correctly! \nYou have been returned to the Cognitive Test Menu.")
         self.app.show_cognitive()
 

@@ -5,8 +5,6 @@ from toga.style.pack import COLUMN
 
 from healthapp.app import HealthApp
 from healthapp.style import create_border
-
-from healthapp.windows.choice_menu import ChoiceMenu as cm
 # -------------------------------------------------------------------------------------------------------#
 
 
@@ -33,7 +31,7 @@ class Cognition():
 
         # button for behavioural analysis
         cognitive_score_label = toga.Label(
-            f"Your Cognitive Score is Currently: {cm.cognitive_score}", style=Pack(font_size=15, padding=(0, 10)))
+            f"Your Cognitive Score is Currently: {self.app.user.cognitive}", style=Pack(font_size=15, padding=(0, 10)))
 
         spelling_button = toga.Button('Spelling', on_press=self.spelling_handler, style=Pack(
             background_color="#fbf5cc", padding=(-3)))
@@ -95,7 +93,8 @@ class Cognition():
         print("Submit button pressed!?")
 
     def reset_score_handler(self, widget):
-        cm.reset_score()
+        self.app.user.cognitive = 0
+        self.app.user.save()
         self.app.show_cognitive()
 
     def back_handler(self, widget):

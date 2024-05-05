@@ -7,8 +7,6 @@ from healthapp.app import HealthApp
 from healthapp.style import create_border
 from healthapp.config import COGNITIVE_SPELLING_FILE
 
-from healthapp.windows.choice_menu import ChoiceMenu as cm
-
 import random
 #-------------------------------------------------------------------------------------------------------#
 class CognitiveSpell():
@@ -66,7 +64,8 @@ class CognitiveSpell():
         if not self.end:
             if selected_spelling == self.correct_spelling:
                 self.correct_answers += 1
-                cm.increment_score()
+                self.app.user.cognitive += 1
+                self.app.user.save()
             self.load_new_question()
             self.setup_ui()
         
