@@ -1,6 +1,7 @@
 #-------------------------------------------------------------------------------------------------------#
 import asyncio
 import time
+import os
 import toga
 import numpy as np
 import warnings
@@ -46,17 +47,17 @@ class AnalysePose():
     def get_content(self) -> toga.Box:
         content = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
 
-        header_box = toga.Box(style=Pack(direction=COLUMN, padding=(20, 20, 0)))
+        header_box = toga.Box(style=Pack(direction=COLUMN, padding=(10, 20, 0)))
         main_box = toga.Box(style=Pack(direction=COLUMN, padding=(2, 2), background_color="#fbf5cc"))
-        main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 18), background_color="black"))
+        main_black_box = toga.Box(style=Pack(direction=COLUMN, padding=(0, 18, 5), background_color="black"))
         footer_box = toga.Box(style=Pack(padding=5))
 
         if (self.app.paths.data / POSE_PHOTO_RESULTS_FILE).exists():
-            self.image = toga.ImageView(str(self.app.paths.data / POSE_PHOTO_RESULTS_FILE), style=Pack(width=256, height=256, direction=COLUMN, padding=20))
+            self.image = toga.ImageView(str(self.app.paths.data / POSE_PHOTO_RESULTS_FILE), style=Pack(width=256, height=256, direction=COLUMN, padding=12))
         else:
             img = Image.new("RGB", (256, 256), (255, 0, 0))
             ImageDraw.Draw(img).text((10, 10), "No image found\nPress button to take a picture", fill=(255, 255, 255))
-            self.image = toga.ImageView(img, style=Pack(width=256, height=256, direction=COLUMN, padding=20))
+            self.image = toga.ImageView(img, style=Pack(width=256, height=256, direction=COLUMN, padding=12))
             img.close()
 
         # button for pose analysis
@@ -75,7 +76,7 @@ class AnalysePose():
         back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
         back_box = create_border(back_button, inner_color="#fbf5cc")
 
-        header_box.add(toga.Label("Pose Analysis", style=Pack(font_size=20, padding=(5, 10))))
+        header_box.add(toga.Label("Pose Analysis", style=Pack(font_size=20, padding=(2, 2))))
         main_box.add(self.image)
         main_box.add(analyse_gait_box)
         main_box.add(analyse_gait_2_box)
@@ -256,6 +257,11 @@ class AnalysePose():
         return True
     
     def choose_picture(self, callable):
+        if(not hasattr(MediaStore, 'ACTION_PICK_IMAGES')):
+            self.app.main_window.error_dialog("Unsupported Device", "Unfortunately this device does not allow access to gallery.\nTo test this functionality use the default emulator that comes as standard.")
+            callable(None)
+            return
+
         context = self.app._impl.native.getApplicationContext()
 
         shared_folder = File(context.getCacheDir(), "shared")
@@ -302,6 +308,11 @@ class AnalysePose():
         self.app._impl.start_activity(intent, on_complete=file_chosen)
     
     def choose_video(self, callable):
+        if(not hasattr(MediaStore, 'ACTION_PICK_IMAGES')):
+            self.app.main_window.error_dialog("Unsupported Device", "Unfortunately this device does not allow access to gallery.\nTo test this functionality use the default emulator that comes as standard.")
+            callable(None)
+            return
+
         context = self.app._impl.native.getApplicationContext()
 
         shared_folder = File(context.getCacheDir(), "shared")
@@ -348,6 +359,8 @@ class AnalysePose():
         self.app._impl.start_activity(intent, on_complete=file_chosen)
     
     def take_video(self, callable):
+        #self.app.main_window.info_dialog("IMPORTANT", "Please keep videos to <= 10s for processing on emulators.\nNote: emulators will also turn videos 90deg for some reason.")
+
         context = self.app._impl.native.getApplicationContext()
         has_camera = context.getPackageManager().hasSystemFeature(
             PackageManager.FEATURE_CAMERA
@@ -372,14 +385,34 @@ class AnalysePose():
         )
 
         def video_taken(code, data):
-            # Completed == 0
-            if code == 0:
+            
+            if hasattr(MediaStore, 'ACTION_PICK_IMAGES') and code == 0:
+                # Some emulators DO have ^ but provide wrong code of 0
+                callable(Path(mp4_file.getAbsolutePath()))
+            elif (not hasattr(MediaStore, 'ACTION_PICK_IMAGES')) and code == -1:
+                # Some emulators do not have ^ but provide right code of -1
                 callable(Path(mp4_file.getAbsolutePath()))
             else:
                 callable(None)
+            
+            # Cant use below as android still stores video here if cancelled after taking vid.
+            # filesize = os.stat(Path(mp4_file.getAbsolutePath())).st_size
+            # print(filesize)
+            # print("-------------------------------------------------------")
+            # if filesize > 5000:
+            #     self.app.main_window.info_dialog("IMPORTANT", "Emulators will turn videos 90deg for some reason apologies.\n\nTo review pose analysis on a video you must view the phones files via android studio.")
+            #     callable(Path(mp4_file.getAbsolutePath()))
+            # else:
+            #     callable(None)
+
+            # Completed == 0 but for 'later?' emulators its -1 so cant use it reliably...
+            # if code == 0:
+            #     callable(Path(mp4_file.getAbsolutePath()))
+            # else:
+            #     callable(None)
 
         intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
-        #intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 10) # 10 seconds (doesnt work?)
+        #intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 10) # 10 seconds (doesnt work.)
         intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0) # 0 = low quality, 1 = high quality
         intent.putExtra(MediaStore.EXTRA_OUTPUT, mp4_uri)
         self.app._impl.start_activity(intent, on_complete=video_taken)
