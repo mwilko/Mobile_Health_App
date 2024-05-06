@@ -41,11 +41,9 @@ pip3 install --extra-index-url https://google-coral.github.io/py-repo/ tflite_ru
 
 ## How to Run:
 
-For the first time when running the app, you may need to install the Android SDK:
-```sh
-(venv) $ briefcase create android
-```
-After this you should be able to run the application with the following:
+(Tested on INB1102 PC's, Win11 and Macbook Air/Pro M1, other platforms may behave differently)
+
+You should be able to run the application with the following (you will need to accept android SDK license agreements on auto-setup):
 ```sh
 (venv) $ briefcase run android -r -u
 ```
