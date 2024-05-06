@@ -5,7 +5,6 @@ from toga.style.pack import COLUMN
 
 from healthapp.app import HealthApp
 from healthapp.style import create_border
-
 from healthapp.windows.choice_menu import ChoiceMenu as cm
 import random
 #-------------------------------------------------------------------------------------------------------#
@@ -64,7 +63,8 @@ class CognitiveMath():
                 correct_rounded = round(self.correct_answer, 3)
                 if user_answer == correct_rounded:
                     self.correct_answers += 1
-                    cm.cognitive_score += 1
+                    self.app.user.cognitive += 1
+                    self.app.user.save()
             except ValueError:
                 pass
 

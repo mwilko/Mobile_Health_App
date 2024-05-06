@@ -18,10 +18,8 @@ def run_tests():
 
     returncode = pytest.main(
         [
-            # Turn up verbosity
-            "-vv",
-            # Disable color
-            "--color=no",
+            # Show detailed test summary info
+            "-rA",
             # Overwrite the cache directory to somewhere writable
             "-o",
             f"cache_dir={tempfile.gettempdir()}/.pytest_cache",

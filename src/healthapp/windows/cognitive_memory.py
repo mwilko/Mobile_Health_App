@@ -5,7 +5,6 @@ from toga.style.pack import COLUMN, CENTER, ROW
 
 from healthapp.app import HealthApp
 from healthapp.style import create_border
-
 from healthapp.windows.choice_menu import ChoiceMenu as cm
 import random
 import math
@@ -13,8 +12,6 @@ import math
 
 
 class CognitiveMemory():
-    print("CognitiveMemory class")
-
     def __init__(self, app: HealthApp):
         self.app = app
         self.selected_tiles = []
@@ -44,6 +41,7 @@ class CognitiveMemory():
         play_box = create_border(play_button, inner_color="#fbf5cc")
         
         back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
+
         back_box = create_border(back_button, inner_color="#fbf5cc")
 
         header_box.add(self.memory_label)
@@ -53,7 +51,6 @@ class CognitiveMemory():
         main_box.add(toga.Label(""))
         
         main_black_box.add(main_box)
-        
         for button in [back_box]:
             footer_box.add(button)
 
@@ -62,6 +59,7 @@ class CognitiveMemory():
 
         # update the app content with the main container
         self.app.update_content(main_container)
+
 
     def play_game(self, widget):
         # game setup - generate a new board and update the ui
