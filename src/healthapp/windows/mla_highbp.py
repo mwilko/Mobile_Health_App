@@ -62,21 +62,11 @@ class HighBP():
 
         return content
 
-      #   # HighBP labels
-      #   main_box.add(toga.Label(""))
-      #   main_box.add(highbp_label)
-      #   main_box.add(yesbp_box)
-      #   main_box.add(nobp_box)
-      #   main_box.add(toga.Label(""))
-
     def highbp_handler(self, widget):
         # Update the high blood pressure variable based on the user's selection
-        if widget.text == 'Yes':
-            self.app.user.highbp = 1
-        elif widget.text == 'No':
-            self.app.user.highbp = 0
-        print(f"High blood pressure: {self.app.user.highbp}")
+        self.app.user.highbp = (1 if widget.text == 'Yes' else 0)
+        self.app.user.save()
+        self.app.main_window.info_dialog('Success', 'High blood pressure saved successfully')
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_lifestyle()
