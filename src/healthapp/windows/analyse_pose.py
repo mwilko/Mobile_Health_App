@@ -35,9 +35,9 @@ class AnalysePose():
         content = toga.Box(style=Pack(direction=COLUMN, background_color="#e0965e"))
         header_box = toga.Box(style=Pack(direction=COLUMN, padding=(20, 20, 0)))
         footer_box = toga.Box(style=Pack(padding=5))
-        text = toga.Label("Analyzing pose, please wait...", style=Pack(font_size=20, padding=(5, 10)))
+        text = toga.Label("Analyzing pose, please wait.", style=Pack(font_size=20, padding=(5, 10)))
         header_box.add(text)
-        bar = toga.ProgressBar(style=Pack(padding=10, width=300), running=True, max=None)
+        bar = toga.ProgressBar(style=Pack(padding=10, width=self.app.main_window.size[0]-30), running=True, max=None)
         footer_box.add(bar)
         for box in [header_box, footer_box]:
             content.add(box)
