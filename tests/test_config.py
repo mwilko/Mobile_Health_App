@@ -32,8 +32,59 @@ def test_values():
     assert isinstance(config.LOGIN_FILE, str)
     assert len(config.LOGIN_FILE) > 0
 
+
     assert isinstance(config.USER_DATA_FILE, str)
     assert len(config.USER_DATA_FILE) > 0
 
-    assert isinstance(config.USERNAME_REQUIREMENTS['min_length'], str)
-    assert len(config.LOGIN_FILE) > 0
+
+    assert isinstance(config.USERNAME_REQUIREMENTS['min_length'], int)
+    assert config.USERNAME_REQUIREMENTS['min_length'] > 0
+
+    assert isinstance(config.USERNAME_REQUIREMENTS['max_length'], int)
+    assert config.USERNAME_REQUIREMENTS['max_length'] > 0
+    assert config.USERNAME_REQUIREMENTS['max_length'] >= config.USERNAME_REQUIREMENTS['min_length']
+
+    assert isinstance(config.USERNAME_REQUIREMENTS['spaces_allowed'], bool)
+
+
+    assert isinstance(config.PASSWORD_REQUIREMENTS['min_length'], int)
+    assert config.PASSWORD_REQUIREMENTS['min_length'] > 0
+
+    assert isinstance(config.PASSWORD_REQUIREMENTS['max_length'], int)
+    assert config.PASSWORD_REQUIREMENTS['max_length'] > 0
+    assert config.PASSWORD_REQUIREMENTS['max_length'] >= config.PASSWORD_REQUIREMENTS['min_length']
+
+    assert isinstance(config.PASSWORD_REQUIREMENTS['spaces_allowed'], bool)
+
+    assert isinstance(config.PASSWORD_REQUIREMENTS['numbers_required'], int)
+    assert config.PASSWORD_REQUIREMENTS['numbers_required'] >= 0
+
+    assert isinstance(config.PASSWORD_REQUIREMENTS['special_required'], int)
+    assert config.PASSWORD_REQUIREMENTS['special_required'] >= 0
+
+
+    assert isinstance(config.COGNITIVE_SPELLING_FILE, str)
+    assert len(config.COGNITIVE_SPELLING_FILE) > 0
+    assert Path.exists(app_path / config.COGNITIVE_SPELLING_FILE)
+
+
+    assert isinstance(config.ML_MODEL_FILES['heart_disease'], str)
+    assert len(config.ML_MODEL_FILES['heart_disease']) > 0
+    assert Path.exists(app_path / config.ML_MODEL_FILES['heart_disease'])
+
+
+    assert isinstance(config.POSE_DETECTION_TYPE, str)
+    assert config.POSE_DETECTION_TYPE in ['lightning', 'thunder']
+
+
+    assert isinstance(config.POSE_DETECTION_CONFIDENCE, float)
+    assert config.POSE_DETECTION_CONFIDENCE > 0.0
+    assert config.POSE_DETECTION_CONFIDENCE < 1.0
+
+
+    assert isinstance(config.POSE_PHOTO_RESULTS_FILE, str)
+    assert len(config.POSE_PHOTO_RESULTS_FILE) > 0
+
+
+    assert isinstance(config.POSE_VIDEO_RESULTS_FILE, str)
+    assert len(config.POSE_VIDEO_RESULTS_FILE) > 0
