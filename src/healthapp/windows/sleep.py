@@ -71,13 +71,15 @@ class Sleep():
         sleep_duration = self.s_text_input.value
         if sleep_duration.isnumeric() and int(sleep_duration) > 24:  # 24 hours sleep in a day
             self.app.main_window.error_dialog(
-                "Error!", "Input must be a positive integer.\nPlease try again.")
+                "Error!", "Input must be a positive integer. Hours: '{sleep_duration}' is above the range.\nPlease try again.")
         elif sleep_duration.isnumeric() and int(sleep_duration) <= 0:  # 0 hours sleep
             self.app.main_window.error_dialog(
-                "Error!", "Input must be a positive integer.\nPlease try again.")
+                "Error!", "Input must be a positive integer. Hours: '{sleep_duration}' is below the range. \nPlease try again.")
         elif sleep_duration.isnumeric() and int(sleep_duration) > 0:  # Check if the input is a number
             self.app.user.sleep = int(sleep_duration)
             self.app.user.save()
+            self.app.main_window.info_dialog(
+                'Success', 'Hourly sleep saved successfully')
         else:  # Check if the input is a number, if not:
             self.app.main_window.error_dialog(
                 "Error!", "Input must be an integer.\nPlease try again.")
