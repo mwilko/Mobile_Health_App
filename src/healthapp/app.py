@@ -31,7 +31,6 @@ class HealthApp(toga.App):
 
     def login_handler(self, user: User):
         self.user = user  # Holds all user info. (see User class for details)
-        print("User logged in: " + str(user))
         self.show_menu()
 
     def show_menu(self):

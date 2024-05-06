@@ -62,21 +62,11 @@ class Alcohol():
 
         return content
 
-        # # Alcohol labels
-        # main_box.add(toga.Label(""))
-        # main_box.add(alcohol_label)
-        # main_box.add(yesalco_box)
-        # main_box.add(noalco_box)
-        # main_box.add(toga.Label(""))
-
     def alcohol_handler(self, widget):
-        # Update the high blood pressure variable based on the user's selection
-        if widget.text == 'Yes':
-            self.app.user.alcohol = 1
-        elif widget.text == 'No':
-            self.app.user.alcohol = 0
-        print(f"Alcohol: {self.app.user.alcohol}")
+        # Update the alcohol variable based on the user's selection
+        self.app.user.alcohol = (1 if widget.text == 'Yes' else 0)
+        self.app.user.save()
+        self.app.main_window.info_dialog('Success', 'Alcohol saved successfully')
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_lifestyle()

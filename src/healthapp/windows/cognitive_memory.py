@@ -5,14 +5,10 @@ from toga.style.pack import COLUMN
 
 from healthapp.app import HealthApp
 from healthapp.style import create_border
-
-from healthapp.windows.choice_menu import ChoiceMenu as cm
 # -------------------------------------------------------------------------------------------------------#
 
 
 class CognitiveMemory():
-    print("CognitiveMemory class")
-
     def __init__(self, app: HealthApp):
         self.app = app
         main_container = toga.Box(style=Pack(
@@ -40,10 +36,6 @@ class CognitiveMemory():
             background_color="#fbf5cc", padding=(-3)))
         choice3_box = create_border(choice3_button, inner_color="#fbf5cc")
 
-        submit_button = toga.Button('Submit', on_press=self.cs_class_handler, style=Pack(
-            background_color="#fbf5cc", padding=(-3)))
-        submit_box = create_border(submit_button, inner_color="#fbf5cc")
-
         back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(
             background_color="#fbf5cc", padding=(-3)))
         back_box = create_border(back_button, inner_color="#fbf5cc")
@@ -57,8 +49,7 @@ class CognitiveMemory():
 
         main_black_box.add(main_box)
 
-        for button in [submit_box, back_box]:
-            footer_box.add(button)
+        footer_box.add(back_box)
 
         for box in [header_box, main_black_box, footer_box]:
             main_container.add(box)
@@ -66,31 +57,21 @@ class CognitiveMemory():
         self.app.update_content(main_container)
 
     def choice1_handler(self, widget):
-        print("Choice 1 button pressed! (Incorrect)")
-        print(f"Cognitive Score: {cm.cognitive_score}")
         self.app.main_window.info_dialog(
             "Incorrect Answer!", "You have answered incorrectly! \nYou have been returned to the Cognitive Test Menu.")
         self.app.show_cognitive()
 
     def choice2_handler(self, widget):
-        print("Choice 2 button pressed! (Correct)")
-        cm.increment_score()
-        print(f"Cognitive Score: {cm.cognitive_score}")
+        self.app.user.cognitive += 1
+        self.app.user.save()
         self.app.main_window.info_dialog(
             "Correct Answer!", "You have answered correctly! \nYou have been returned to the Cognitive Test Menu.")
         self.app.show_cognitive()
 
     def choice3_handler(self, widget):
-        print("Choice 3 button pressed! (Incorrect)")
-        print(f"Cognitive Score: {cm.cognitive_score}")
         self.app.main_window.info_dialog(
             "Incorrect Answer!", "You have answered incorrectly! \nYou have been returned to the Cognitive Test Menu.")
         self.app.show_cognitive()
 
-    def cs_class_handler(self, widget):
-        # add logic
-        print("Submit button pressed!")
-
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_cognitive()

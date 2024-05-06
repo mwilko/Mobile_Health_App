@@ -5,8 +5,6 @@ from toga.style.pack import COLUMN
 
 from healthapp.app import HealthApp
 from healthapp.style import create_border
-
-from healthapp.windows.choice_menu import ChoiceMenu as cm
 # -------------------------------------------------------------------------------------------------------#
 
 
@@ -33,7 +31,7 @@ class Cognition():
 
         # button for behavioural analysis
         cognitive_score_label = toga.Label(
-            f"Your Cognitive Score is Currently: {cm.cognitive_score}", style=Pack(font_size=15, padding=(0, 10)))
+            f"Your Cognitive Score is Currently: {self.app.user.cognitive}", style=Pack(font_size=15, padding=(0, 10)))
 
         spelling_button = toga.Button('Spelling', on_press=self.spelling_handler, style=Pack(
             background_color="#fbf5cc", padding=(-3)))
@@ -46,10 +44,6 @@ class Cognition():
         maths_button = toga.Button('Maths', on_press=self.maths_handler, style=Pack(
             background_color="#fbf5cc", padding=(-3)))
         maths_box = create_border(maths_button, inner_color="#fbf5cc")
-
-        submit_button = toga.Button('Submit', on_press=self.c_class_handler, style=Pack(
-            background_color="#fbf5cc", padding=(-3)))
-        submit_box = create_border(submit_button, inner_color="#fbf5cc")
 
         back_button = toga.Button('Back', on_press=self.back_handler, style=Pack(
             background_color="#fbf5cc", padding=(-3)))
@@ -70,8 +64,8 @@ class Cognition():
 
         main_black_box.add(main_box)
 
-        for button in [submit_box, reset_score_box, back_box]:
-            # add the submit and back buttons to the footer_box
+        for button in [reset_score_box, back_box]:
+            # add the reset score and back buttons to the footer_box
             footer_box.add(button)
 
         # add boxes to the main container
@@ -82,29 +76,18 @@ class Cognition():
         self.app.update_content(main_container)
 
     def spelling_handler(self, widget):
-        # add logic
-        print("Spelling button pressed!")
         self.app.show_cognitive_spell()
 
     def memory_handler(self, widget):
-        # add logic
-        print("Memory button pressed!")
         self.app.show_cognitive_memory()
 
     def maths_handler(self, widget):
-        # add logic
-        print("Maths button pressed!")
         self.app.show_cognitive_math()
 
-    def c_class_handler(self, widget):
-        # add logic
-        print("Submit button pressed!")
-
     def reset_score_handler(self, widget):
-        print("Reset Cognitive Score button pressed!")
-        cm.reset_score()
+        self.app.user.cognitive = 0
+        self.app.user.save()
         self.app.show_cognitive()
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_menu()

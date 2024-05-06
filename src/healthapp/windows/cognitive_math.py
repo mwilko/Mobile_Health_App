@@ -5,7 +5,6 @@ from toga.style.pack import COLUMN
 
 from healthapp.app import HealthApp
 from healthapp.style import create_border
-
 from healthapp.windows.choice_menu import ChoiceMenu as cm
 import random
 #-------------------------------------------------------------------------------------------------------#

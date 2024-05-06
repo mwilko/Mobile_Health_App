@@ -1,0 +1,14 @@
+Newmonia,Pneumonia,Pnumonia,Pneumonia
+Brillant,Briliant,Brilliant,Brilliant
+Sophisticated,Sofisticated,Sophistecated,Sophisticated
+Ambigous,Ambigious,Ambiguous,Ambiguous
+Exhilarating,Exhilerating,Exhilirating,Exhilarating
+Intricate,Intracate,Intracatte,Intricate
+Excentrik,Eccentric,Eccentrik,Eccentric
+Perserverance,Perseverence,Perseverance,Perseverance
+Endever,Endevor,Endeavor,Endeavor
+Accommodate,Accomodate,Acommodate,Accommodate
+Labrinth,Labyrinth,Labirynth,Labyrinth
+Jubilent,Jubillant,Jubilant,Jubilant
+Epiphany,Epiphanye,Epiphannie,Epiphany
+Neccessary,Necessary,Necesary,Necessary

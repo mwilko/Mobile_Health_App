@@ -13,12 +13,6 @@ from healthapp.style import create_border
 #-------------------------------------------------------------------------------------------------------#
 
 def showAuthPage(app: HealthApp):
-    # uncomment this to skip login:
-    user = User(app)
-    user.load()
-    app.login_handler(user)
-    return
-    
     # If the user login file exists, we need to login not signup.
     if app.paths.data.joinpath(LOGIN_FILE).resolve().exists() and app.paths.data.joinpath(USER_DATA_FILE).resolve().exists():
         _LoginPage(app)
@@ -46,11 +40,14 @@ class _LoginPage:
         title_label = toga.Label("Health App", style=Pack(font_size=28, font_weight="bold", padding=(10, 5), color="black"))
         header_box.add(title_label)
 
+        login_label = toga.Label("Login", style=Pack(font_size=20, padding=(2, 12), color="black"))
+        main_box.add(login_label)
+
         # entry inputs
-        self.username_entry = toga.TextInput("username", placeholder="Username", style=Pack(background_color="#fbf5cc"), validators=[MinLength(USERNAME_REQUIREMENTS["min_length"], allow_empty=False)])
+        self.username_entry = toga.TextInput("username", placeholder="Username", style=Pack(background_color="#fbf5cc"), validators=[MinLength(1, allow_empty=False)])
         username_box = create_border(self.username_entry, inner_color="#fbf5cc")
         
-        self.password_entry = toga.PasswordInput("password", placeholder="Password", style=Pack(background_color="#fbf5cc"), validators=[MinLength(PASSWORD_REQUIREMENTS["min_length"], allow_empty=False)])
+        self.password_entry = toga.PasswordInput("password", placeholder="Password", style=Pack(background_color="#fbf5cc"), validators=[MinLength(1, allow_empty=False)])
         password_box = create_border(self.password_entry, inner_color="#fbf5cc")
 
         # login button.
@@ -58,7 +55,7 @@ class _LoginPage:
         login_box = create_border(login_button, inner_color="#fbf5cc", padding=(5, 20, 20))
 
         # add components to the main box.
-        main_box.add(toga.Label(""))  # Creates a space in background color. ("Spacer")
+        #main_box.add(toga.Label(""))  # Creates a space in background color. ("Spacer")
         main_box.add(username_box)
         main_box.add(password_box)
         main_box.add(toga.Label(""))  # Creates a space in background color. ("Spacer")
@@ -107,6 +104,9 @@ class _RegisterPage:
         title_label = toga.Label("Health App", style=Pack(font_size=28, font_weight="bold", padding=(10, 5), color="black"))
         header_box.add(title_label)
 
+        login_label = toga.Label("Register", style=Pack(font_size=20, padding=(2, 12), color="black"))
+        main_box.add(login_label)
+
         # entry inputs, in a black box to make an illusion of border. (https://github.com/beeware/toga/issues/849)
         self.fname_entry = toga.TextInput("first_name", placeholder="First Name", style=Pack(background_color="#fbf5cc"), validators=[MinLength(2, allow_empty=False)])
         fname_box = create_border(self.fname_entry, inner_color="#fbf5cc")
@@ -130,7 +130,7 @@ class _RegisterPage:
         register_button = toga.Button('Register', on_press=self.register_button_handler, style=Pack(padding=(-3), background_color="#fbf5cc"))
         register_box = create_border(register_button, inner_color="#fbf5cc", padding=(50, 20, 20))
         # add components to the main box.
-        main_box.add(toga.Label(""))  # Creates a space in background color. ("Spacer")
+        #main_box.add(toga.Label(""))  # Creates a space in background color. ("Spacer")
         main_box.add(fname_box)
         main_box.add(lname_box)
         main_box.add(sex_box)
