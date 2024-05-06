@@ -66,8 +66,10 @@ class HeartRate():
         main_box.add(toga.Label(""))
         main_box.add(toga.Label(f"Timer: {self.timer if self.timer is not None else '60'}",
                                 style=Pack(font_size=15, padding=(0, 10))))
-        self.timer_button = toga.Button('Start Timer', on_press=self.timer_toggle, style=Pack(
-            background_color="#fbf5cc", padding=(-3)), enabled=self.timer is None)
+        bar = toga.ProgressBar(style=Pack(padding=10, width=self.app.main_window.size[0] - 60), running=False, max=60, value=(self.timer or 60))
+        main_box.add(bar)
+        self.timer_button = toga.Button('Start Timer' if self.timer is None else 'Reset Timer', on_press=self.timer_toggle, style=Pack(
+            background_color="#fbf5cc", padding=(-3)))
         self.timer_box = create_border(
             self.timer_button, inner_color="#fbf5cc")
         main_box.add(self.timer_box)
