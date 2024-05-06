@@ -24,12 +24,12 @@ def generate_random_data():
 
 def test_valid_random(app):
     "Test the MLA perform_prediction using random valid data"
-    # Test the MLA 10000x with random data each time.
+    # Test the MLA 10'000x with random data each time.
     for _ in range(10000):
         input_data = generate_random_data()
         prediction = perform_prediction(app, input_data)
         assert prediction is not None
-        assert prediction >= 0 and prediction <= 100
+        assert prediction > 0 and prediction < 100
 
 def test_valid_fixed(app):
     "Test the MLA perform_prediction using demo app"
