@@ -25,10 +25,9 @@ PS > ./venv/Scripts/activate
 
 You should now have the `(venv)` prefix added to your terminal prompt as shown below.
 
-Next, install Briefcase and Toga which are BeeWare libaries:
+Next, install Briefcase the library that manages the mobile deployment and development of the application:
 ```sh
-(venv) $ python -m pip install briefcase
-(venv) $ python -m pip install toga
+(venv) $ python -m pip install -r requirements.txt
 ```
 
 ## How to Run:
