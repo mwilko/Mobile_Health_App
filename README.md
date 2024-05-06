@@ -49,6 +49,21 @@ You should be able to run the application with the following (you will need to a
 ```
 This would compile the application where the terminal will take you through the proccess of hosting the app via a virutal device which you select.
 
+#### Windows Bug:
+You will find that when first starting the emulator it will hang on:
+```sh
+[healthapp] Starting emulator Pixel_3a_API_34_extension_level_7_x86_64...
+━━━━━━━━━━━━━━━━━━━━ Starting emulator...
+```
+
+You must ctr+C to cancel the process and then run the command again (this is a known bug with the emulator NOT US).:
+```sh
+(venv) $ briefcase run android
+```
+
+(Potentially repeating until the emulator starts, this is a known bug with the briefcase library and emulator.)
+
+
 Thanks for taking the time to visit our application.
 
 Regards,
