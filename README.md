@@ -1,3 +1,8 @@
+![Static Badge](https://img.shields.io/badge/build-android-green) ![Static Badge](https://img.shields.io/badge/build-ios-red) 
+
+![GitHub last commit](https://img.shields.io/github/last-commit/mwilko/Mobile_Health_App) ![Static Badge](https://img.shields.io/badge/status-development-yellow)
+
+
 # Mobile Health App to Detect Chronic Conditions
 
 Team Software Engineering project. This project is a mobile application built in BeeWare, which utilies machine learning algorithms and a pose detection module to detect chronic conditions in users.
@@ -28,6 +33,10 @@ You should now have the `(venv)` prefix added to your terminal prompt as shown b
 Next, install Briefcase the library that manages the mobile deployment and development of the application:
 ```sh
 (venv) $ python -m pip install -r requirements.txt
+```
+If you get an error when trying to install TF Lite, try this:
+```
+pip3 install --extra-index-url https://google-coral.github.io/py-repo/ tflite_runtime
 ```
 
 ## How to Run:
