@@ -61,21 +61,12 @@ class Smoker():
 
         return content
 
-      #   # Smoker labels
-      #   main_box.add(toga.Label(""))
-      #   main_box.add(smoker_label)
-      #   main_box.add(yessmoke_box)
-      #   main_box.add(nosmoke_box)
-      #   main_box.add(toga.Label(""))
 
     def smoker_handler(self, widget):
-        # Update the high blood pressure variable based on the user's selection
-        if widget.text == 'Yes':
-            self.app.user.smoker = 1
-        elif widget.text == 'No':
-            self.app.user.smoker = 0
-        print(f"Smoker: {self.app.user.smoker}")
+        # Update the smoker variable based on the user's selection
+        self.app.user.smoker = (1 if widget.text == 'Yes' else 0)
+        self.app.user.save()
+        self.app.main_window.info_dialog('Success', 'Smoker saved successfully')
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_lifestyle()

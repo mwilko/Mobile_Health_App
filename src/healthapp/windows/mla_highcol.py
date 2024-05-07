@@ -62,21 +62,12 @@ class HighCol():
 
         return content
 
-      #   # HighBP labels
-      #   main_box.add(toga.Label(""))
-      #   main_box.add(highcol_label)
-      #   main_box.add(yescol_box)
-      #   main_box.add(nocol_box)
-      #   main_box.add(toga.Label(""))
 
     def highcol_handler(self, widget):
-        # Update the high blood pressure variable based on the user's selection
-        if widget.text == 'Yes':
-            self.app.user.highcol = 1
-        elif widget.text == 'No':
-            self.app.user.highcol = 0
-        print(f"High cholesterol: {self.app.user.highcol}")
+        # Update the high cholesterol variable based on the user's selection
+        self.app.user.highcol = (1 if widget.text == 'Yes' else 0)
+        self.app.user.save()
+        self.app.main_window.info_dialog('Success', 'High Cholesterol saved successfully')
 
     def back_handler(self, widget):
-        print("Back button pressed!")
         self.app.show_lifestyle()
