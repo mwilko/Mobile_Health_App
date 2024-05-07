@@ -2,8 +2,7 @@
 [tool.briefcase]
 project_name = "Health App"
 bundle = "org.lincoln"
-version = "0.0.6"
-url = "https://example.com/healthapp"
+version = "1.0.0"
 license = "BSD license"
 author = "Max Wilkinson"
 author_email = "mjswilkinson@outlook.com"
@@ -34,35 +33,12 @@ test_requires = [
     "pytest",
 ]
 
-[tool.briefcase.app.healthapp.macOS]
-universal_build = false
-requires = [
-    "toga-cocoa~=0.4.2",
-    "std-nslog~=1.0.0",
-
-    "tflite_runtime"
-]
-entitlement."com.apple.security.device.camera" = true
-info."NSCameraUsageDescription" = "You can use the camera to take a photo of yourself for gait/pose analysis."
-
-[tool.briefcase.app.healthapp.windows]
-requires = [
-    "toga-winforms~=0.4.2",
-
-    "tflite_runtime"
-]
-
-# Mobile deployments
-[tool.briefcase.app.healthapp.iOS]
-supported=false
-
 [tool.briefcase.app.healthapp.android]
 requires = [
-    "toga-android~=0.4.2",
+    "toga-android~=0.4.3",
 
     "tflite_runtime==2.5.0"
 ]
-# splash = "resources/android/healthapp-splash" TODO, different splash screens for android
 permission.camera = true
 build_gradle_dependencies = [
     "androidx.appcompat:appcompat:1.6.1",
@@ -70,6 +46,16 @@ build_gradle_dependencies = [
     "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0",
 ]
 base_theme = "Theme.MaterialComponents.Light.DarkActionBar"
+
+[tool.briefcase.app.healthapp.macOS]
+supported=false
+
+[tool.briefcase.app.healthapp.windows]
+supported=false
+
+# Mobile deployments
+[tool.briefcase.app.healthapp.iOS]
+supported=false
 
 # Unsupported deployments
 [tool.briefcase.app.healthapp.web]
