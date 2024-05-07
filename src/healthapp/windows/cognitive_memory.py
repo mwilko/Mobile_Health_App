@@ -9,6 +9,7 @@ from healthapp.style import create_border
 from healthapp.windows.choice_menu import ChoiceMenu as cm
 import random
 import math
+import asyncio
 # -------------------------------------------------------------------------------------------------------#
 
 
@@ -63,13 +64,17 @@ class CognitiveMemory():
         # update the app content with the main container
         self.app.update_content(main_container)
 
-    def play_game(self, widget):
+    async def play_game(self, widget):
         # game setup - generate a new board and update the ui
         tiles = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
         self.board = self.generate_board(tiles)
+        
+        # shows the full board before hiding it after 5 seconds
+        self.update_ui(show_full_board=True)
+        await asyncio.sleep(5)
         self.update_ui()
     
-    def update_ui(self):
+    def update_ui(self, show_full_board=False):
         # update the ui with the game board and status label
         main_container = toga.Box(style=Pack(
             direction=COLUMN, background_color="#e0965e"))
@@ -78,7 +83,10 @@ class CognitiveMemory():
         
         exit_button = toga.Button('Exit', on_press=self.back_handler, style=Pack(background_color="#fbf5cc", padding=(-3)))
         exit_box = create_border(exit_button, inner_color="#fbf5cc")
-        self.game_board = self.create_board_ui(self.board)
+        if show_full_board:
+            self.game_board = self.create_board_ui(self.board, show_full_board=True)
+        else:
+            self.game_board = self.create_board_ui(self.board)
         
         # add components to the main box
         main_box = toga.Box(style=Pack(background_color="#e0965e", direction=COLUMN, alignment=CENTER))
@@ -100,26 +108,35 @@ class CognitiveMemory():
         random.shuffle(board)
         return board
     
-    def create_board_ui(self, board):
+    def create_board_ui(self, board, show_full_board=False):
         # calculate the number of rows and columns
         rows = int(math.sqrt(len(board)))
         cols = rows
 
         # create a grid layout for the game board
         game_board = toga.Box(style=Pack(background_color="#e0965e", direction=COLUMN, alignment=CENTER))
-        for i in range(rows):
-            row = toga.Box(style=Pack(direction=ROW, alignment=CENTER))
-            for j in range(cols):
-                index = i * cols + j
-                if index < len(board):
-                    if index in self.end_selected:
+        if show_full_board:
+            for i in range(rows):
+                row = toga.Box(style=Pack(direction=ROW, alignment=CENTER))
+                for j in range(cols):
+                    index = i * cols + j
+                    if index < len(board):
                         tile_button = toga.Button(f'{board[index]}', style=Pack(background_color="#fbf5cc", width=50, height=50, padding=5))
-                    else:
-                        tile_button = toga.Button('?', on_press=self.tile_clicked, style=Pack(background_color="#fbf5cc", width=50, height=50, padding=5))
-                        tile_button.tile_index = index # store the tile index
-                    row.add(tile_button)
-            game_board.add(row)
-            
+                        row.add(tile_button)
+                game_board.add(row)
+        else:
+            for i in range(rows):
+                row = toga.Box(style=Pack(direction=ROW, alignment=CENTER))
+                for j in range(cols):
+                    index = i * cols + j
+                    if index < len(board):
+                        if index in self.end_selected:
+                            tile_button = toga.Button(f'{board[index]}', style=Pack(background_color="#fbf5cc", width=50, height=50, padding=5))
+                        else:
+                            tile_button = toga.Button('?', on_press=self.tile_clicked, style=Pack(background_color="#fbf5cc", width=50, height=50, padding=5))
+                            tile_button.tile_index = index # store the tile index
+                        row.add(tile_button)
+                game_board.add(row)
         
         return game_board
     
