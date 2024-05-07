@@ -26,7 +26,7 @@
 | 21 | Testing Personal Details none weight text input. | "" | "Invalid weight input. Please enter a valid weight." | "Invalid weight input. Please enter a valid weight." | N/A | FALSE |
 | 22 | Testing Personal Details none age text input. | "" | "Invalid age input. Please enter a valid age." | "Invalid age input. Please enter a valid age." | N/A | FALSE |
 | 23 | Testing Personal Details none height text input. | "" | "Invalid height input. Please enter a valid height." | "Invalid height input. Please enter a valid height." | N/A | FALSE |
-| 24.0 | Testing Personal Details BMI label updating. | Age: 21, Height: 165, Weight: 80 | BMI label doesnt update. | Max Wilkinson | TRUE | Fix: Made the BMI label to update when pressing the submit handler. |
+| 24.0 | Testing Personal Details BMI label updating. | Age: 21, Height: 165, Weight: 80 | BMI label updates. | BMI label doesnt update. | Max Wilkinson | TRUE | Fix: Made the BMI label to update when pressing the submit handler. |
 | 24.1 | Testing Personal Details BMI label updating. | Age: 21, Height: 165, Weight: 80 | BMI label updates to: 29 | BMI label updates to: 29 | N/A | FALSE |
 | 25 | Testing Nutrition page's correct calorie text input. | "1500" | Program continues | Program continues | N/A | FALSE |
 | 26 | Testing Nutrition page's type calorie text input. | "sdsd" | "Error, please enter a valid number of calories" | "Error, please enter a valid number of calories" | N/A | FALSE |
@@ -121,14 +121,14 @@
 | 107 | Cognitive Spelling back button directs properly. | Click back button. | Directed properly. | Directed properly. | N/A | FALSE |
 | 108 | Check initialisation of memory game. | On memory button press, code is run. | Memory game UI is displayed with a label, play button and back button. | Memory game UI is displayed with a label, play button and back button. | N/A | FALSE |
 | 109 | Test playing the memory game. | Clicked on the “Play Memory Game” button. | A new game with hidden tiles is displayed. | A new game with hidden tiles is displayed. | N/A | FALSE |
-| 110 | Test tile clicking functionality. | Tiles are revealed upon clicking. | Tiles are selected but not revealed upon clicking. | N/A | FALSE |
+| 110 | Test tile clicking functionality. | Click tiles. | Tiles are revealed upon clicking. | Tiles are selected but not revealed upon clicking. | N/A | FALSE |
 | 111.0 | Test matching tiles functionality. | Clicked on two matching tiles. | Tiles remain revealed and status label shows “Match!” | Tiles remain revealed and status label shows “Match!” | Sumayyah Mohd Azmi | TRUE | After showing one pair, if another pair is chosen the UI is reset and the tiles, except the new pair, are shown as “?”. The issue was solved by a new list being added to have the total pairs (“end_selected”) that could then be shown in the updated UI. |
 | 111.1 | Test matching tiles functionality. | Clicked on two matching tiles. | Tiles remain revealed and status label shows “Match!” | Tiles remain revealed and status label shows “Match!” | N/A | FALSE |
 | 112 | Testing non-matching tiles functionality. | Clicked on two non-matching tiles. | Tiles are hidden again, and the status label shows “Try again!” | Tiles are hidden again, and the status label shows “Try again!” | N/A | FALSE |
 | 113 | Test ending the game with a score greater than 10. | Matched all tiles with less than 10 tries. | End game dialog displays, and cognitive score is 10. | End game dialog displays, and cognitive score is 10. | N/A | FALSE |
 | 114 | Test ending the game with a score less than or equal to 10. | Matched all tiles with 10 or more tries. | End game dialog displays, and cognitive score equals the score. | End game dialog displays, and cognitive score equals the score. | N/A| FALSE |
-| 115 | Exit button in memory game directs properly. | Directed properly. | Directed properly. | N/A | FALSE |
-| 116 | Cognitive Memory back button directs properly. | Directed properly. | Directed properly. | N/A | FALSE |
+| 115 | Exit button in memory game directs properly. | Click exit button. | Directed properly. | Directed properly. | N/A | FALSE |
+| 116 | Cognitive Memory back button directs properly. | Click back button. | Directed properly. | Directed properly. | N/A | FALSE |
 | 117 | Checking that a new maths question is generated upon initialisation. | Ran the code when Maths button is pressed in cognitive menu. | A new arithmetic question with the correct answer is displayed. | A new arithmetic question with the correct answer is displayed. | N/A | FALSE |
 | 118.0 | Maths correct integer input. | 9 | Program continues to the next question (UI updates), correct answers increase. | Program continues to the next question (UI updates), correct answers increase. | N/A | FALSE |
 | 118.1 | Maths incorrect integer input. | 14 | Program continues to the next question (UI updates). | Program continues to the next question (UI updates). | N/A | FALSE |
