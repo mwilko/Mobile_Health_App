@@ -139,4 +139,4 @@
 | 120 | Cognitive Maths back button directs properly. | Click back button. | Directed properly. | Directed properly. | N/A | FALSE |
 | 121 | Checking variations of MLA predictions | Enter details of a healthy person (Low BMI, >100 mins of exercise, no risk factors) | A low percentage estimate of heart disease | Heart Disease Estimate: 18.15% | N/A | FALSE |
 | 121.1 | Checking variations of MLA predictions | Enter details of a mid-health person (Low BMI, >100 mins of exercise, several risk factors) | A greater estimate of heart disease | Heart Disease Estimate: 29.03% | N/A | FALSE |
-| 121.2 | Checking variations of MLA predictions | Enter details of an unhealth person (High BMI, <100 mins of exercise, all the risk factors) | An even greater estimate of heart disease | Heart Disease Estimate: 48.52% | N/A | FALSE |
+| 121.2 | Checking variations of MLA predictions | Enter details of an unhealthy person (High BMI, <100 mins of exercise, all the risk factors) | An even greater estimate of heart disease | Heart Disease Estimate: 48.52% | N/A | FALSE |
