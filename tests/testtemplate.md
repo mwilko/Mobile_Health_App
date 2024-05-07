@@ -127,4 +127,13 @@
 | 112 | Testing non-matching tiles functionality. | Clicked on two non-matching tiles. | Tiles are hidden again, and the status label shows “Try again!” | Tiles are hidden again, and the status label shows “Try again!” | N/A | FALSE |
 | 113 | Test ending the game with a score greater than 10. | Matched all tiles with less than 10 tries. | End game dialog displays, and cognitive score is 10. | End game dialog displays, and cognitive score is 10. | N/A | FALSE |
 | 114 | Test ending the game with a score less than or equal to 10. | Matched all tiles with 10 or more tries. | End game dialog displays, and cognitive score equals the score. | End game dialog displays, and cognitive score equals the score. | N/A| FALSE |
-| 115 | Cognitive Memory back button directs properly. | Directed properly. | Directed properly. | N/A | FALSE |
+| 115 | Exit button in memory game directs properly. | Directed properly. | Directed properly. | N/A | FALSE |
+| 116 | Cognitive Memory back button directs properly. | Directed properly. | Directed properly. | N/A | FALSE |
+| 117 | Checking that a new maths question is generated upon initialisation. | Ran the code when Maths button is pressed in cognitive menu. | A new arithmetic question with the correct answer is displayed. | A new arithmetic question with the correct answer is displayed. | N/A | FALSE |
+| 118.0 | Maths correct integer input. | 9 | Program continues to the next question (UI updates), correct answers increase. | Program continues to the next question (UI updates), correct answers increase. | N/A | FALSE |
+| 118.1 | Maths incorrect integer input. | 14 | Program continues to the next question (UI updates). | Program continues to the next question (UI updates). | N/A | FALSE |
+| 118.2 | Maths float input when divide. | 0.23423 | Program continues to the next question (UI updates). | Program continues to the next question (UI updates). | N/A | FALSE |
+| 118.3 | Maths float input when not divide. | 1.43 | Program continues to the next question (UI updates). | Program continues to the next question (UI updates). | N/A | FALSE |
+| 118.4 | Maths text input. | “text” | Value Error, moves to the next question (UI updates). | Value Error, moves to the next question (UI updates). | N/A | FALSE |
+| 119 | Testing the end of the game. | Played until all questions were answered. | End game dialog appears with the correct number of answers. User is returned to cognitive menu. | End game dialog appears with the correct number of answers. User is returned to cognitive menu. | N/A | FALSE |
+| 120 | Cognitive Maths back button directs properly. | Click back button. | Directed properly. | Directed properly. | N/A | FALSE |
