@@ -1,4 +1,4 @@
-### What module you're testing e.g. main menu, lifestyle questions, congnition
+### What module you're testing e.g. main menu, lifestyle questions, cognition
 | \#  | OBJECTIVE | INPUT | EXPECTED RESULTS | ACTUAL RESULTS | ASSIGNED TO | DISCREPANCY | NOTES |
 | --- | --------- | ----- | ---------------- | -------------- | ----------- | ----------- | ----- |
 | 1 | Checking that the choice page is displayed when running the app. | Ran VSCode IDE. | Choice Page ran with expected buttons. | Choice Page ran with expected buttons.| N/A | FALSE |
@@ -119,3 +119,12 @@
 | 105 | Testing functionality of selecting a spelling choice.| Pressed one of the spelling choices. | If correct, the user’s correct answers are incremented and the UI updates with a new question. If incorrect, only the UI updates with a new question. | Functionality works as expected. | N/A | FALSE |
 | 106 | Testing the end of the game. | Played until all questions were answered. | End game dialog appears with the correct number of answers. User is returned to cognitive menu. | End game dialog appears with the correct number of answers. User is returned to cognitive menu. | N/A | FALSE |
 | 107 | Cognitive Spelling back button directs properly. | Click back button. | Directed properly. | Directed properly. | N/A | FALSE |
+| 108 | Check initialisation of memory game. | On memory button press, code is run. | Memory game UI is displayed with a label, play button and back button. | Memory game UI is displayed with a label, play button and back button. | N/A | FALSE |
+| 109 | Test playing the memory game. | Clicked on the “Play Memory Game” button. | A new game with hidden tiles is displayed. | A new game with hidden tiles is displayed. | N/A | FALSE |
+| 110 | Test tile clicking functionality. | Tiles are revealed upon clicking. | Tiles are selected but not revealed upon clicking. | N/A | FALSE |
+| 111.0 | Test matching tiles functionality. | Clicked on two matching tiles. | Tiles remain revealed and status label shows “Match!” | Tiles remain revealed and status label shows “Match!” | Sumayyah Mohd Azmi | TRUE | After showing one pair, if another pair is chosen the UI is reset and the tiles, except the new pair, are shown as “?”. The issue was solved by a new list being added to have the total pairs (“end_selected”) that could then be shown in the updated UI. |
+| 111.1 | Test matching tiles functionality. | Clicked on two matching tiles. | Tiles remain revealed and status label shows “Match!” | Tiles remain revealed and status label shows “Match!” | N/A | FALSE |
+| 112 | Testing non-matching tiles functionality. | Clicked on two non-matching tiles. | Tiles are hidden again, and the status label shows “Try again!” | Tiles are hidden again, and the status label shows “Try again!” | N/A | FALSE |
+| 113 | Test ending the game with a score greater than 10. | Matched all tiles with less than 10 tries. | End game dialog displays, and cognitive score is 10. | End game dialog displays, and cognitive score is 10. | N/A | FALSE |
+| 114 | Test ending the game with a score less than or equal to 10. | Matched all tiles with 10 or more tries. | End game dialog displays, and cognitive score equals the score. | End game dialog displays, and cognitive score equals the score. | N/A| FALSE |
+| 115 | Cognitive Memory back button directs properly. | Directed properly. | Directed properly. | N/A | FALSE |
