@@ -1,4 +1,4 @@
-### What module you're testing e.g. main menu, lifestyle questions, congnition
+### What module you're testing e.g. main menu, lifestyle questions, cognition
 | \#  | OBJECTIVE | INPUT | EXPECTED RESULTS | ACTUAL RESULTS | ASSIGNED TO | DISCREPANCY | NOTES |
 | --- | --------- | ----- | ---------------- | -------------- | ----------- | ----------- | ----- |
 | 1 | Checking that the choice page is displayed when running the app. | Ran VSCode IDE. | Choice Page ran with expected buttons. | Choice Page ran with expected buttons.| N/A | FALSE |
@@ -26,7 +26,7 @@
 | 21 | Testing Personal Details none weight text input. | "" | "Invalid weight input. Please enter a valid weight." | "Invalid weight input. Please enter a valid weight." | N/A | FALSE |
 | 22 | Testing Personal Details none age text input. | "" | "Invalid age input. Please enter a valid age." | "Invalid age input. Please enter a valid age." | N/A | FALSE |
 | 23 | Testing Personal Details none height text input. | "" | "Invalid height input. Please enter a valid height." | "Invalid height input. Please enter a valid height." | N/A | FALSE |
-| 24.0 | Testing Personal Details BMI label updating. | Age: 21, Height: 165, Weight: 80 | BMI label doesnt update. | Max Wilkinson | TRUE | Fix: Made the BMI label to update when pressing the submit handler. |
+| 24.0 | Testing Personal Details BMI label updating. | Age: 21, Height: 165, Weight: 80 | BMI label updates. | BMI label doesnt update. | Max Wilkinson | TRUE | Fix: Made the BMI label to update when pressing the submit handler. |
 | 24.1 | Testing Personal Details BMI label updating. | Age: 21, Height: 165, Weight: 80 | BMI label updates to: 29 | BMI label updates to: 29 | N/A | FALSE |
 | 25 | Testing Nutrition page's correct calorie text input. | "1500" | Program continues | Program continues | N/A | FALSE |
 | 26 | Testing Nutrition page's type calorie text input. | "sdsd" | "Error, please enter a valid number of calories" | "Error, please enter a valid number of calories" | N/A | FALSE |
@@ -111,3 +111,32 @@
 | 99 | Menu Bar's Health Analysis button directs to users predictions (data not complete). | Click health analysis button | directed properly and placement data is there. | directed properly and placement data is there. | N/A | FALSE |
 | 100 | Menu Bar's Main Menu button directs to choice menu. | Click main menu button | directed properly and choice menu is there. | directed properly and choice menu is there. | N/A | FALSE |
 | 101 | Cognitive page has reset button and score is reset when pressed. | Click reset score button | score is reset. (see in title label) | score is reset. (see in title label) | N/A | FALSE |
+| 102 | Checking the cognitive menu is displayed when the cognition button is pressed. | Pressing cognition button. | On press, button directs user to the cognitive menu page. | Cognitive menu page ran with the expected button. | N/A | FALSE |
+| 103.0 | Testing the functionality of the cognitive menu buttons.  | Pressing page buttons. | On press, buttons direct the user to their respective pages. | When pressed, it does nothing. | Sumayyah Mohd Azmi | TRUE | Issue was that one of the toga boxes had “background_color” in the wrong place so it wouldn’t run at all. |
+| 103.1 | Testing the functionality of the cognitive menu buttons. | Pressing page buttons. | On press, buttons direct the user to their respective pages. | On press, buttons direct the user to their respective pages. | N/A | FALSE |
+| 104.0 | Checking that the words are labelled correctly on the buttons. | Ran the code. | The words in the text file are displayed correctly. | The buttons were blank. | Sumayyah Mohd Azmi | TRUE | Issue was caused by logic being in the wrong order – the UI would not be updated with the new spellings. |
+| 104.1 | Checking that the words are labelled correctly on the buttons. | Ran the code. | The words in the text file are displayed correctly. | The words in the text file are displayed correctly. | N/A | FALSE |
+| 105 | Testing functionality of selecting a spelling choice.| Pressed one of the spelling choices. | If correct, the user’s correct answers are incremented and the UI updates with a new question. If incorrect, only the UI updates with a new question. | Functionality works as expected. | N/A | FALSE |
+| 106 | Testing the end of the game. | Played until all questions were answered. | End game dialog appears with the correct number of answers. User is returned to cognitive menu. | End game dialog appears with the correct number of answers. User is returned to cognitive menu. | N/A | FALSE |
+| 107 | Cognitive Spelling back button directs properly. | Click back button. | Directed properly. | Directed properly. | N/A | FALSE |
+| 108 | Check initialisation of memory game. | On memory button press, code is run. | Memory game UI is displayed with a label, play button and back button. | Memory game UI is displayed with a label, play button and back button. | N/A | FALSE |
+| 109 | Test playing the memory game. | Clicked on the “Play Memory Game” button. | A new game with hidden tiles is displayed. | A new game with hidden tiles is displayed. | N/A | FALSE |
+| 110 | Test tile clicking functionality. | Click tiles. | Tiles are revealed upon clicking. | Tiles are selected but not revealed upon clicking. | N/A | FALSE |
+| 111.0 | Test matching tiles functionality. | Clicked on two matching tiles. | Tiles remain revealed and status label shows “Match!” | Tiles remain revealed and status label shows “Match!” | Sumayyah Mohd Azmi | TRUE | After showing one pair, if another pair is chosen the UI is reset and the tiles, except the new pair, are shown as “?”. The issue was solved by a new list being added to have the total pairs (“end_selected”) that could then be shown in the updated UI. |
+| 111.1 | Test matching tiles functionality. | Clicked on two matching tiles. | Tiles remain revealed and status label shows “Match!” | Tiles remain revealed and status label shows “Match!” | N/A | FALSE |
+| 112 | Testing non-matching tiles functionality. | Clicked on two non-matching tiles. | Tiles are hidden again, and the status label shows “Try again!” | Tiles are hidden again, and the status label shows “Try again!” | N/A | FALSE |
+| 113 | Test ending the game with a score greater than 10. | Matched all tiles with less than 10 tries. | End game dialog displays, and cognitive score is 10. | End game dialog displays, and cognitive score is 10. | N/A | FALSE |
+| 114 | Test ending the game with a score less than or equal to 10. | Matched all tiles with 10 or more tries. | End game dialog displays, and cognitive score equals the score. | End game dialog displays, and cognitive score equals the score. | N/A| FALSE |
+| 115 | Exit button in memory game directs properly. | Click exit button. | Directed properly. | Directed properly. | N/A | FALSE |
+| 116 | Cognitive Memory back button directs properly. | Click back button. | Directed properly. | Directed properly. | N/A | FALSE |
+| 117 | Checking that a new maths question is generated upon initialisation. | Ran the code when Maths button is pressed in cognitive menu. | A new arithmetic question with the correct answer is displayed. | A new arithmetic question with the correct answer is displayed. | N/A | FALSE |
+| 118.0 | Maths correct integer input. | 9 | Program continues to the next question (UI updates), correct answers increase. | Program continues to the next question (UI updates), correct answers increase. | N/A | FALSE |
+| 118.1 | Maths incorrect integer input. | 14 | Program continues to the next question (UI updates). | Program continues to the next question (UI updates). | N/A | FALSE |
+| 118.2 | Maths float input when divide. | 0.23423 | Program continues to the next question (UI updates). | Program continues to the next question (UI updates). | N/A | FALSE |
+| 118.3 | Maths float input when not divide. | 1.43 | Program continues to the next question (UI updates). | Program continues to the next question (UI updates). | N/A | FALSE |
+| 118.4 | Maths text input. | “text” | Value Error, moves to the next question (UI updates). | Value Error, moves to the next question (UI updates). | N/A | FALSE |
+| 119 | Testing the end of the game. | Played until all questions were answered. | End game dialog appears with the correct number of answers. User is returned to cognitive menu. | End game dialog appears with the correct number of answers. User is returned to cognitive menu. | N/A | FALSE |
+| 120 | Cognitive Maths back button directs properly. | Click back button. | Directed properly. | Directed properly. | N/A | FALSE |
+| 121 | Checking variations of MLA predictions | Enter details of a healthy person (Low BMI, >100 mins of exercise, no risk factors) | A low percentage estimate of heart disease | Heart Disease Estimate: 18.15% | N/A | FALSE |
+| 121.1 | Checking variations of MLA predictions | Enter details of a mid-health person (Low BMI, >100 mins of exercise, several risk factors) | A greater estimate of heart disease | Heart Disease Estimate: 29.03% | N/A | FALSE |
+| 121.2 | Checking variations of MLA predictions | Enter details of an unhealthy person (High BMI, <100 mins of exercise, all the risk factors) | An even greater estimate of heart disease | Heart Disease Estimate: 48.52% | N/A | FALSE |
