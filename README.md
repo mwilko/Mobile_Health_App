@@ -1,3 +1,5 @@
+![BeeWare](https://img.shields.io/badge/🐝_beeware-F09436?style=for-the-badge&logo=beeware&logoColor=white) ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white) ![scikit-learn](https://img.shields.io/badge/scikit_learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white) ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white) 
+
 ![Static Badge](https://img.shields.io/badge/build-android-green) ![Static Badge](https://img.shields.io/badge/build-ios-red) 
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/mwilko/Mobile_Health_App) ![Static Badge](https://img.shields.io/badge/status-complete-green)
